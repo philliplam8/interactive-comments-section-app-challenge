@@ -18,7 +18,7 @@ function Link(props: LinkProps): JSX.Element {
 
 export default function Footer(): JSX.Element {
   return (
-    <footer className="flex flex-row flex-wrap justify-center mx-7 py-5 text-xs">
+    <footer className="flex flex-row flex-wrap justify-center mx-7 py-5 text-xs text-darkBlue">
       <p>
         Challenge by{" "}
         <Link
