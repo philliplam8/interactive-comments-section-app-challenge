@@ -1,9 +1,13 @@
-export default function Backdrop(props: { show: boolean }): JSX.Element {
+export default function Backdrop(props: {
+  show: any;
+  closeModal: any;
+}): JSX.Element {
   return (
     <>
-      {props.show && (
-        <div className="h-screen w-screen absolute top-0 left-0 bg-black/90 z-20"></div>
-      )}
+      <div
+        className="h-screen w-screen absolute top-0 left-0 bg-black/90 z-20"
+        onClick={props.closeModal}
+      ></div>
     </>
   );
 }

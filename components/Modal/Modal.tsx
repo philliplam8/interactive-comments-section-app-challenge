@@ -13,9 +13,13 @@ const TEXT = {
 export default function Modal(): JSX.Element {
   const [showModal, setShowModal] = useState(true);
 
+  const handleModalToggle = () => {
+    setShowModal(!showModal);
+  };
+
   function ModalContent(): JSX.Element {
     return (
-      <div className="h-full w-full absolute top-0 left-0 flex justify-center items-center mx-auto z-30">
+      <div className="absolute top-0 left-0 right-0 w-full max-w-[730px] mx-auto z-30">
         <Card>
           <div className="flex flex-col gap-4 p-2">
             <h1 className="text-xl sm:text-2xl text-darkBlue font-medium ">
@@ -37,7 +41,7 @@ export default function Modal(): JSX.Element {
       {showModal && (
         <>
           <ModalContent />
-          <Backdrop show={showModal} />
+          <Backdrop show={showModal} closeModal={handleModalToggle} />
         </>
       )}
     </>
