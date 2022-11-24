@@ -1,5 +1,5 @@
 import { Card } from "../UI/Card";
-import { Plus, Minus, Reply } from "../UI/Buttons";
+import { Plus, Minus, Reply, Edit, Delete } from "../UI/Buttons";
 import { Badge } from "../Badge";
 
 export default function Comment(props: { self: boolean }): JSX.Element {
@@ -10,7 +10,7 @@ export default function Comment(props: { self: boolean }): JSX.Element {
     self: boolean;
   }): JSX.Element {
     return (
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row flex-wrap gap-4">
         <div>Avatar</div>
         <h1 className="font-medium text-darkBlue">{props.username}</h1>
         {props.self && <Badge />}
@@ -29,11 +29,26 @@ export default function Comment(props: { self: boolean }): JSX.Element {
     );
   }
 
-  function CardFooterMobile(): JSX.Element {
+  function CardActions(props: { self: boolean }): JSX.Element {
+    return (
+      <>
+        {props.self ? (
+          <div className="flex flex-row gap-4">
+            <Delete />
+            <Edit />
+          </div>
+        ) : (
+          <Reply />
+        )}
+      </>
+    );
+  }
+
+  function CardFooterMobile(props: { self: boolean }): JSX.Element {
     return (
       <div className="sm:hidden flex flex-row justify-between">
         <Votes />
-        <Reply />
+        <CardActions self={props.self} />
       </div>
     );
   }
@@ -53,7 +68,7 @@ export default function Comment(props: { self: boolean }): JSX.Element {
               self={props.self}
             />
             <div className="hidden sm:block">
-              <Reply />
+              <CardActions self={props.self} />
             </div>
           </div>
 
@@ -63,7 +78,7 @@ export default function Comment(props: { self: boolean }): JSX.Element {
             assumenda, et porro! Doloremque, repellat. Dolor fuga et nam quos?
           </div>
 
-          <CardFooterMobile />
+          <CardFooterMobile self={props.self} />
         </div>
       </div>
     </Card>

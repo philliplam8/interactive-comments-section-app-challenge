@@ -6,7 +6,7 @@ import { ReplyInput } from "../components/ReplyInput";
 export default function Home() {
   return (
     <Layout>
-      <div id="card-group" className="flex flex-col gap-4">
+      <div id="card-group" className="flex flex-col gap-5">
         <Comment self={true} />
         <Comment self={false} />
         <Modal />
