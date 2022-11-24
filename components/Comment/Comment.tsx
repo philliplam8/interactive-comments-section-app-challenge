@@ -1,6 +1,7 @@
 import { Card } from "../UI/Card";
 import { Plus, Minus, Reply, Edit, Delete } from "../UI/Buttons";
 import { Badge } from "../Badge";
+import { Score } from "../Score";
 
 export default function Comment(props: { self: boolean }): JSX.Element {
   function CardHeader(props: {
@@ -15,16 +16,6 @@ export default function Comment(props: { self: boolean }): JSX.Element {
         <h1 className="font-medium text-darkBlue">{props.username}</h1>
         {props.self && <Badge />}
         <div>{props.time}</div>
-      </div>
-    );
-  }
-
-  function Votes(): JSX.Element {
-    return (
-      <div className="w-[100px] h-[35px] sm:w-[40px] sm:h-[100px] px-4 py-5 sm:px-2 sm:py-3 flex flex-row sm:flex-col justify-between items-center bg-veryLightGray text-moderateBlue font-medium rounded-xl">
-        <Plus />
-        <div>12</div>
-        <Minus />
       </div>
     );
   }
@@ -47,7 +38,7 @@ export default function Comment(props: { self: boolean }): JSX.Element {
   function CardFooterMobile(props: { self: boolean }): JSX.Element {
     return (
       <div className="sm:hidden flex flex-row justify-between">
-        <Votes />
+        <Score initialScore={12} />
         <CardActions self={props.self} />
       </div>
     );
@@ -57,7 +48,7 @@ export default function Comment(props: { self: boolean }): JSX.Element {
     <Card>
       <div className="h-full flex flex-col sm:flex-row justify-between sm:justify-start sm:gap-4 text-grayishBlue">
         <div className="hidden sm:block">
-          <Votes />
+          <Score initialScore={12} />
         </div>
         <div className="flex flex-col sm:flex-col gap-4">
           <div className="flex flex-row justify-between">
