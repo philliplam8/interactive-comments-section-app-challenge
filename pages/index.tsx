@@ -6,13 +6,15 @@ import { Backdrop } from "../components/Backdrop";
 
 export default function Home() {
   return (
-    <Layout>
-      <div id="card-group" className="flex flex-col gap-5">
-        <Comment self={true} />
-        <Comment self={false} />
-        <ReplyInput />
-      </div>
+    <>
+      <Layout>
+        <div id="card-group" className="flex flex-col gap-5">
+          <Comment self={true} />
+          <Comment self={false} />
+          <ReplyInput />
+        </div>
+      </Layout>
       <Modal />
-    </Layout>
+    </>
   );
 }
