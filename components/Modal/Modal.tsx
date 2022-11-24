@@ -1,5 +1,5 @@
-import { Card } from "../Card";
-import { TextButton } from "../Buttons";
+import { Card } from "../UI/Card";
+import { SecondaryButton, ErrorButton } from "../UI/Buttons";
 
 const TEXT = {
   DELETE_CONFIRMATION:
@@ -17,8 +17,8 @@ export default function Modal(): JSX.Element {
         </h1>
         <p className="text-grayishBlue">{TEXT.DELETE_CONFIRMATION}</p>
         <div className="flex flex-row gap-3 justify-start min-[375px]:justify-between">
-          <TextButton label={TEXT.BTN_NO} classStyle={"bg-grayishBlue"} />
-          <TextButton label={TEXT.BTN_YES} classStyle={"bg-softRed"} />
+          <SecondaryButton label={TEXT.BTN_NO} />
+          <ErrorButton label={TEXT.BTN_YES} />
         </div>
       </div>
     </Card>
