@@ -1,13 +1,12 @@
 export default function Backdrop(props: {
-  show: any;
-  closeModal: any;
+  show: boolean;
+  children: React.ReactNode;
 }): JSX.Element {
   return (
     <>
-      <div
-        className="h-screen w-screen absolute top-0 left-0 bg-black/90 z-20"
-        onClick={props.closeModal}
-      ></div>
+      <div className="h-screen w-screen px-4 absolute top-0 left-0 right-0 flex justify-center items-center bg-grayishBlue/70 z-20">
+        {props.children}
+      </div>
     </>
   );
 }
