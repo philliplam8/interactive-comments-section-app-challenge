@@ -19,7 +19,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="min-h-screen h-full mx-4 md:mx-auto flex flex-col justify-between">
+        <div className="min-h-screen h-full mx-4 md:mx-auto pt-14 flex flex-col justify-between">
           <div>{children}</div>
           <Footer />
         </div>

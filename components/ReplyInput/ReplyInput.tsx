@@ -14,23 +14,25 @@ export default function ReplyInput(): JSX.Element {
   }
 
   return (
-    <Card>
-      <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <div className="hidden sm:block">Avatar</div>
-        <textarea
-          name=""
-          id=""
-          cols={30}
-          rows={3}
-          placeholder={REPLY_PLACEHOLDER}
-          className={`w-full text-darkBlue px-4 py-2 rounded-lg border-2 border-lightGray focus:outline-none focus:border-transparent focus:ring-darkBlue focus:ring-1`}
-        ></textarea>
-        <div className="hidden sm:block">
-          <PrimaryButton label={"Send"} />
-        </div>
+    <div className="-mt-3">
+      <Card>
+        <div className="flex flex-col sm:flex-row justify-between gap-4">
+          <div className="hidden sm:block">Avatar</div>
+          <textarea
+            name=""
+            id=""
+            cols={30}
+            rows={3}
+            placeholder={REPLY_PLACEHOLDER}
+            className={`w-full text-darkBlue px-4 py-2 rounded-lg border-2 border-lightGray focus:outline-none focus:border-transparent focus:ring-darkBlue focus:ring-1`}
+          ></textarea>
+          <div className="hidden sm:block">
+            <PrimaryButton label={"Send"} />
+          </div>
 
-        <ReplyCardFooter />
-      </div>
-    </Card>
+          <ReplyCardFooter />
+        </div>
+      </Card>
+    </div>
   );
 }
