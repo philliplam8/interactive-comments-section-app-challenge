@@ -1,16 +1,19 @@
-import { Card } from "../Card";
-import { Plus, Minus, Reply } from "../Buttons";
+import { Card } from "../UI/Card";
+import { Plus, Minus, Reply } from "../UI/Buttons";
+import { Badge } from "../Badge";
 
-export default function Comment(): JSX.Element {
+export default function Comment(props: { self: boolean }): JSX.Element {
   function CardHeader(props: {
     avatar: string;
     username: string;
     time: string;
+    self: boolean;
   }): JSX.Element {
     return (
       <div className="flex flex-row gap-4">
         <div>Avatar</div>
         <h1 className="font-medium text-darkBlue">{props.username}</h1>
+        {props.self && <Badge />}
         <div>{props.time}</div>
       </div>
     );
@@ -47,6 +50,7 @@ export default function Comment(): JSX.Element {
               avatar={""}
               username={"amyrobson"}
               time={"1 month ago"}
+              self={props.self}
             />
             <div className="hidden sm:block">
               <Reply />
