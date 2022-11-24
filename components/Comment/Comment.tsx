@@ -1,29 +1,39 @@
 import { Card } from "../UI/Card";
-import { Plus, Minus, Reply, Edit, Delete } from "../UI/Buttons";
+import { Avatar } from "../Avatar";
+import { Reply, Edit, Delete } from "../UI/Buttons";
 import { Badge } from "../Badge";
 import { Score } from "../Score";
 
-export default function Comment(props: { self: boolean }): JSX.Element {
-  function CardHeader(props: {
-    avatar: string;
-    username: string;
-    time: string;
-    self: boolean;
-  }): JSX.Element {
+interface CardHeaderProps {
+  avatarPng: string;
+  avatarWebp: string;
+  username: string;
+  createdAt: string;
+  currentUser: boolean;
+}
+
+interface CardProps extends CardHeaderProps {
+  content: string;
+}
+
+export default function Comment(props: CardProps): JSX.Element {
+  function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
-      <div className="flex flex-row flex-wrap gap-4">
-        <div>Avatar</div>
+      <div className="flex flex-row flex-wrap items-center gap-4">
+        <div>
+          <Avatar pngSrc={props.avatarPng} webpSrc={props.avatarWebp} />
+        </div>
         <h1 className="font-medium text-darkBlue">{props.username}</h1>
-        {props.self && <Badge />}
-        <div>{props.time}</div>
+        {props.currentUser && <Badge />}
+        <div>{props.createdAt}</div>
       </div>
     );
   }
 
-  function CardActions(props: { self: boolean }): JSX.Element {
+  function CardActions(props: { currentUser: boolean }): JSX.Element {
     return (
       <>
-        {props.self ? (
+        {props.currentUser ? (
           <div className="flex flex-row gap-4">
             <Delete />
             <Edit />
@@ -35,11 +45,11 @@ export default function Comment(props: { self: boolean }): JSX.Element {
     );
   }
 
-  function CardFooterMobile(props: { self: boolean }): JSX.Element {
+  function CardFooterMobile(props: { currentUser: boolean }): JSX.Element {
     return (
       <div className="sm:hidden flex flex-row justify-between">
         <Score initialScore={12} />
-        <CardActions self={props.self} />
+        <CardActions currentUser={props.currentUser} />
       </div>
     );
   }
@@ -53,13 +63,14 @@ export default function Comment(props: { self: boolean }): JSX.Element {
         <div className="flex flex-col sm:flex-col gap-4">
           <div className="flex flex-row justify-between">
             <CardHeader
-              avatar={""}
+              avatarPng="/images/avatars/image-amyrobson.png"
+              avatarWebp="/images/avatars/image-amyrobson.webp"
               username={"amyrobson"}
-              time={"1 month ago"}
-              self={props.self}
+              createdAt={"1 month ago"}
+              currentUser={props.currentUser}
             />
             <div className="hidden sm:block">
-              <CardActions self={props.self} />
+              <CardActions currentUser={props.currentUser} />
             </div>
           </div>
 
@@ -67,9 +78,10 @@ export default function Comment(props: { self: boolean }): JSX.Element {
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Expedita
             in culpa odit qui eum explicabo ea placeat eaque libero obcaecati
             assumenda, et porro! Doloremque, repellat. Dolor fuga et nam quos?
+            {props.content}
           </div>
 
-          <CardFooterMobile self={props.self} />
+          <CardFooterMobile currentUser={props.currentUser} />
         </div>
       </div>
     </Card>
