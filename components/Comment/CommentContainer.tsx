@@ -17,7 +17,7 @@ export default function CommentContainer(
         score={props.score}
         username={props.username}
       />
-      {hasReplies && <CommentReplies />}
+      {hasReplies && <CommentReplies rawData={props.replies} />}
     </>
   );
 }

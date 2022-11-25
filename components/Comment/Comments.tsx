@@ -1,13 +1,13 @@
-import { CommentContainer, ParentCommentProps } from "./";
+import { CommentContainer, RawCommentInterface } from "./";
 
 export default function Comments(props: {
-  allComments: { comments: ParentCommentProps[] };
+  allComments: { comments: RawCommentInterface[] };
 }): JSX.Element {
   const parentComments = props.allComments.comments;
 
   return (
     <>
-      {parentComments.map((entry: ParentCommentProps) => {
+      {parentComments.map((entry: RawCommentInterface) => {
         return (
           <CommentContainer
             key={entry.id}

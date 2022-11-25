@@ -46,6 +46,14 @@ export default function Comment(props: CommentProps): JSX.Element {
     );
   }
 
+  function ReplyingTo(props: { username: string }): JSX.Element {
+    return (
+      <div className="inline-block font-medium text-moderateBlue mr-1">
+        @{props.username}
+      </div>
+    );
+  }
+
   return (
     <>
       <Card>
@@ -67,7 +75,10 @@ export default function Comment(props: CommentProps): JSX.Element {
               </div>
             </div>
 
-            <div id="comment">{props.content}</div>
+            <div id="comment">
+              {props.replyingTo && <ReplyingTo username={props.replyingTo} />}
+              <div className="inline">{props.content}</div>
+            </div>
 
             <CardFooterMobile
               currentUser={props.currentUser}
