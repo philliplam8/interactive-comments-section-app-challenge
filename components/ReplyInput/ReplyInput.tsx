@@ -2,11 +2,30 @@ import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
 import { PrimaryButton } from "../UI/Buttons";
 
-const REPLY_PLACEHOLDER = "Add a comment...";
-const avatarPng = "/images/avatars/image-amyrobson.png";
-const avatarWebp = "/images/avatars/image-amyrobson.webp";
+export interface RawReplyInput {
+  currentUser: {
+    image: {
+      png: string;
+      webp: string;
+    };
+    username: string;
+  };
+}
 
-export default function ReplyInput(): JSX.Element {
+export interface ReplyInputProps {
+  avatarPng: string;
+  avatarWebp: string;
+  username: string;
+}
+
+const REPLY_PLACEHOLDER = "Add a comment...";
+
+export default function ReplyInput(props: {
+  rawData: RawReplyInput;
+}): JSX.Element {
+  const avatarPng = props.rawData.currentUser.image.png;
+  const avatarWebp = props.rawData.currentUser.image.webp;
+
   function ReplyCardFooter(): JSX.Element {
     return (
       <div className={`flex sm:hidden flex-row justify-between items-center`}>

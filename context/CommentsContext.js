@@ -22,13 +22,19 @@ export const CommentsProvider = (props) => {
 
     const [currentUser, setCurrentUser] = useState({});
     const [displayedComments, setDisplayedComments] = useState({});
+    const [showModal, setShowModal] = useState(true);
+
+    const handleModalToggle = () => {
+        setShowModal(!showModal);
+    };
 
 
 
     return (
         <CommentsContext.Provider value={{
             uservalue: [currentUser, setCurrentUser],
-            commentsValue: [displayedComments, setDisplayedComments]
+            commentsValue: [displayedComments, setDisplayedComments],
+            modalValue: [showModal, handleModalToggle]
         }}>
             {props.children}
         </CommentsContext.Provider>

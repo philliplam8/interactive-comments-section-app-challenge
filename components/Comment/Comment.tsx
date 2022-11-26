@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
 import { Reply, Edit, Delete } from "../UI/Buttons";
@@ -6,6 +8,10 @@ import { Score } from "../Score";
 import { CardHeaderProps, CommentProps } from "./CommentInterface";
 
 export default function Comment(props: CommentProps): JSX.Element {
+  const isCurrentUser = props.currentUser === props.username;
+  const { modalValue } = useContext(CommentsContext);
+  const [showModal, handleModalToggle] = modalValue;
+
   function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
       <div className="flex flex-row flex-wrap items-center gap-4">
@@ -13,18 +19,18 @@ export default function Comment(props: CommentProps): JSX.Element {
           <Avatar pngSrc={props.avatarPng} webpSrc={props.avatarWebp} />
         </div>
         <h1 className="font-medium text-darkBlue">{props.username}</h1>
-        {props.currentUser && <Badge />}
+        {isCurrentUser && <Badge />}
         <div>{props.createdAt}</div>
       </div>
     );
   }
 
-  function CardActions(props: { currentUser: boolean }): JSX.Element {
+  function CardActions(): JSX.Element {
     return (
       <>
-        {props.currentUser ? (
+        {isCurrentUser ? (
           <div className="flex flex-row gap-4">
-            <Delete />
+            <Delete handleClick={handleModalToggle} />
             <Edit />
           </div>
         ) : (
@@ -34,14 +40,11 @@ export default function Comment(props: CommentProps): JSX.Element {
     );
   }
 
-  function CardFooterMobile(props: {
-    currentUser: boolean;
-    score: number;
-  }): JSX.Element {
+  function CardFooterMobile(props: { score: number }): JSX.Element {
     return (
       <div className="sm:hidden flex flex-row justify-between">
         <Score initialScore={props.score} />
-        <CardActions currentUser={props.currentUser} />
+        <CardActions />
       </div>
     );
   }
@@ -71,7 +74,7 @@ export default function Comment(props: CommentProps): JSX.Element {
                 currentUser={props.currentUser}
               />
               <div className="hidden sm:block">
-                <CardActions currentUser={props.currentUser} />
+                <CardActions />
               </div>
             </div>
 
@@ -80,10 +83,7 @@ export default function Comment(props: CommentProps): JSX.Element {
               <div className="inline">{props.content}</div>
             </div>
 
-            <CardFooterMobile
-              currentUser={props.currentUser}
-              score={props.score}
-            />
+            <CardFooterMobile score={props.score} />
           </div>
         </div>
       </Card>

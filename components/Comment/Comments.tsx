@@ -1,9 +1,11 @@
 import { CommentContainer, RawCommentInterface } from "./";
 
 export default function Comments(props: {
-  allComments: { comments: RawCommentInterface[] };
+  allComments: { comments: RawCommentInterface[] },
+  
 }): JSX.Element {
   const parentComments = props.allComments.comments;
+  const currentUser = props.allComments.currentUser.username;
 
   return (
     <>
@@ -11,7 +13,7 @@ export default function Comments(props: {
         return (
           <CommentContainer
             key={entry.id}
-            currentUser={false}
+            currentUser={currentUser}
             content={entry.content}
             avatarPng={entry.user.image.png}
             avatarWebp={entry.user.image.webp}

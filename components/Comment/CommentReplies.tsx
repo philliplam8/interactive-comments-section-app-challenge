@@ -2,6 +2,7 @@ import { Comment, RawReplyInterface } from "./";
 
 export default function CommentReplies(props: {
   rawData: RawReplyInterface[];
+  currentUser: string;
 }): JSX.Element {
   const replies = props.rawData;
 
@@ -17,7 +18,7 @@ export default function CommentReplies(props: {
           return (
             <Comment
               key={reply.id}
-              currentUser={false}
+              currentUser={props.currentUser}
               content={reply.content}
               avatarPng={reply.user.image.png}
               avatarWebp={reply.user.image.webp}

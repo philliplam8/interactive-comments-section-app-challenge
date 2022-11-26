@@ -26,7 +26,7 @@ export interface CardHeaderProps {
   avatarWebp: string;
   username: string;
   createdAt: string;
-  currentUser: boolean;
+  currentUser: string;
 }
 
 export interface CommentProps extends CardHeaderProps {

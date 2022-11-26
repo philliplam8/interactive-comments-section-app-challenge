@@ -9,7 +9,7 @@ export default function CommentContainer(
     <>
       <Comment
         key={props.id}
-        currentUser={false}
+        currentUser={props.currentUser}
         content={props.content}
         avatarPng={props.avatarPng}
         avatarWebp={props.avatarWebp}
@@ -17,7 +17,12 @@ export default function CommentContainer(
         score={props.score}
         username={props.username}
       />
-      {hasReplies && <CommentReplies rawData={props.replies} />}
+      {hasReplies && (
+        <CommentReplies
+          rawData={props.replies}
+          currentUser={props.currentUser}
+        />
+      )}
     </>
   );
 }

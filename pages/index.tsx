@@ -36,10 +36,11 @@ export default function Home() {
           {!data ? (
             "skeleton loading tbd"
           ) : (
-            <Comments allComments={JSON.parse(data.toString())} />
+            <>
+              <Comments allComments={JSON.parse(data.toString())} />
+              <ReplyInput rawData={JSON.parse(data.toString())} />
+            </>
           )}
-          {/* User's own new comment input */}
-          <ReplyInput />
         </div>
       </Layout>
       <Modal />
