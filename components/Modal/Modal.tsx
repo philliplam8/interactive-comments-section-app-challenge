@@ -45,7 +45,7 @@ export default function Modal(): JSX.Element {
   });
 
   return (
-    <>
+    <div className="sticky top-0">
       {showModal && (
         <>
           <Backdrop show={showModal}>
@@ -53,6 +53,6 @@ export default function Modal(): JSX.Element {
           </Backdrop>
         </>
       )}
-    </>
+    </div>
   );
 }

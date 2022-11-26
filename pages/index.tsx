@@ -31,6 +31,7 @@ export default function Home() {
   // mapped to the structure of the json file
   return (
     <>
+      <Modal />
       <Layout>
         <div id="card-group" className="flex flex-col gap-5">
           {!data ? (
@@ -43,7 +44,6 @@ export default function Home() {
           )}
         </div>
       </Layout>
-      <Modal />
     </>
   );
   // }
