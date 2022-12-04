@@ -16,7 +16,11 @@ export default function Score(props: { initialScore: number }): JSX.Element {
   return (
     <div className="w-[100px] h-[40px] sm:w-[40px] sm:h-[100px] flex flex-row sm:flex-col justify-between items-center bg-veryLightGray text-moderateBlue font-medium rounded-xl">
       <Plus handleClick={handleIncrement} />
-      <div className="w-20 h-full sm:h-24 flex justify-center items-center">
+      <div
+        className={`w-20 h-full sm:h-24 flex justify-center items-center ${
+          score >= 0 ? "text-moderateBlue" : "text-softRed"
+        }`}
+      >
         {score}
       </div>
       <Minus handleClick={handleDecrement} />
