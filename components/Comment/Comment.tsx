@@ -1,16 +1,26 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
-import { Reply, Edit, Delete } from "../UI/Buttons";
+import { Reply, Edit, Delete, PrimaryButton } from "../UI/Buttons";
 import { Badge } from "../Badge";
 import { Score } from "../Score";
+import { Textarea } from "../UI/Input";
 import { CardHeaderProps, CommentProps } from "./CommentInterface";
 
 export default function Comment(props: CommentProps): JSX.Element {
   const isCurrentUser = props.currentUser === props.username;
   const { modalValue } = useContext(CommentsContext);
   const [showModal, handleModalToggle] = modalValue;
+  const [readOnly, setReadOnly] = useState(true);
+
+  const toggleReadOnly = () => {
+    setReadOnly(!readOnly);
+  };
+
+  const handleUpdateComment = () => {
+    toggleReadOnly();
+  };
 
   function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
@@ -31,7 +41,7 @@ export default function Comment(props: CommentProps): JSX.Element {
         {isCurrentUser ? (
           <div className="flex flex-row gap-4">
             <Delete handleClick={handleModalToggle} />
-            <Edit />
+            <Edit handleClick={toggleReadOnly} readOnly={readOnly} />
           </div>
         ) : (
           <Reply />
@@ -64,7 +74,7 @@ export default function Comment(props: CommentProps): JSX.Element {
           <div className="hidden sm:block">
             <Score initialScore={props.score} />
           </div>
-          <div className="flex flex-col sm:flex-col gap-4">
+          <div className="w-full flex flex-col gap-4">
             <div className="flex flex-row justify-between">
               <CardHeader
                 avatarPng={props.avatarPng}
@@ -79,8 +89,24 @@ export default function Comment(props: CommentProps): JSX.Element {
             </div>
 
             <div id="comment">
-              {props.replyingTo && <ReplyingTo username={props.replyingTo} />}
-              <div className="inline">{props.content}</div>
+              {isCurrentUser && !readOnly ? (
+                <div className="flex flex-col gap-4">
+                  <Textarea content={props.content} />
+                  <div className="flex justify-end">
+                    <PrimaryButton
+                      label="Update"
+                      handleClick={handleUpdateComment}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {props.replyingTo && (
+                    <ReplyingTo username={props.replyingTo} />
+                  )}
+                  <div className="inline">{props.content}</div>
+                </>
+              )}
             </div>
 
             <CardFooterMobile score={props.score} />
