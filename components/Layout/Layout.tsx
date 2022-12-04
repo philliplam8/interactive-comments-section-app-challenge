@@ -1,6 +1,7 @@
 // components/Layout.tsx
 
 import Head from "next/head";
+import { Modal } from "../Modal";
 import { Footer } from "../Footer";
 
 type LayoutProps = {
@@ -19,6 +20,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <Modal />
         <div className="min-h-screen h-full mx-4 md:mx-auto pt-14 flex flex-col justify-between">
           <div>{children}</div>
           <Footer />
