@@ -1,6 +1,7 @@
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
 import { PrimaryButton } from "../UI/Buttons";
+import { Textarea } from "../UI/Input";
 
 export interface RawReplyInput {
   currentUser: {
@@ -42,14 +43,7 @@ export default function ReplyInput(props: {
           <div className="hidden sm:block">
             <Avatar pngSrc={avatarPng} webpSrc={avatarWebp} large={true} />
           </div>
-          <textarea
-            name=""
-            id=""
-            cols={25}
-            rows={3}
-            placeholder={REPLY_PLACEHOLDER}
-            className={`w-full text-darkBlue px-4 py-2 rounded-lg border-2 border-lightGray focus:outline-none focus:border-transparent focus:ring-darkBlue focus:ring-1`}
-          ></textarea>
+          <Textarea />
           <div className="hidden sm:block">
             <PrimaryButton label={"Send"} />
           </div>
