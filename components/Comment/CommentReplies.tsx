@@ -7,7 +7,7 @@ export default function CommentReplies(props: {
   const replies = props.rawData;
 
   function Divider(): JSX.Element {
-    return <div className="w-1 mx-8 border-r-2"></div>;
+    return <div className="w-1 ml-0 mr-4 sm:mx-8 border-r-2"></div>;
   }
 
   return (
