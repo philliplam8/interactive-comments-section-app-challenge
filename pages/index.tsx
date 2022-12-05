@@ -2,7 +2,11 @@ import useSWR from "swr";
 import { useState, useContext, useEffect, useMemo } from "react";
 import { CommentsContext } from "../context/CommentsContext";
 import { Layout } from "../components/Layout";
-import { Comments } from "../components/Comment";
+import {
+  Comments,
+  RawCurrentUserInterface,
+  RawCommentInterface,
+} from "../components/Comment";
 import { CommentInput } from "../components/CommentInput";
 
 export default function Home() {
@@ -31,7 +35,8 @@ export default function Home() {
   // Handle the happy path state
   else {
     const parsedData = JSON.parse(data.toString());
-    const currentUser = parsedData.currentUser;
+    const allComments: RawCommentInterface[] = parsedData.comments;
+    const currentUser: RawCurrentUserInterface = parsedData.currentUser;
     return (
       <>
         <Layout>
@@ -40,12 +45,7 @@ export default function Home() {
               "skeleton loading tbd"
             ) : (
               <>
-                <Comments
-                  allComments={parsedData.allComments}
-                  currentUser={parsedData.currentUser}
-                />
-                {/* <Comments allComments={displayedComments} /> */}
-                {/* <CommentInput rawData={currentUser} /> */}
+                <Comments currentUser={currentUser} comments={allComments} />
                 <CommentInput rawData={currentUser} isReply={false} />
               </>
             )}
