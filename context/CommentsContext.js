@@ -22,7 +22,7 @@ export const CommentsProvider = (props) => {
 
     const [currentUser, setCurrentUser] = useState({});
     const [displayedComments, setDisplayedComments] = useState({});
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     const handleModalToggle = () => {
         setShowModal(!showModal);
