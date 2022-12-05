@@ -40,7 +40,10 @@ export default function Home() {
               "skeleton loading tbd"
             ) : (
               <>
-                <Comments allComments={parsedData} />
+                <Comments
+                  allComments={parsedData.allComments}
+                  currentUser={parsedData.currentUser}
+                />
                 {/* <Comments allComments={displayedComments} /> */}
                 {/* <CommentInput rawData={currentUser} /> */}
                 <CommentInput rawData={currentUser} isReply={false} />
