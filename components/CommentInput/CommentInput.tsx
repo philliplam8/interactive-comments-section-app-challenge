@@ -1,9 +1,8 @@
+import { MouseEventHandler } from "react";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
 import { ReplyButton, SendButton } from "../UI/Buttons";
 import { Textarea } from "../UI/Input";
-
-const REPLY_PLACEHOLDER = "Add a comment...";
 
 export interface RawCommentInput {
   image: {
@@ -22,15 +21,28 @@ export interface CommentInputProps {
 export default function CommentInput(props: {
   rawData: RawCommentInput;
   isReply: boolean;
+  handleButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
   const avatarPng = props.rawData.image.png;
   const avatarWebp = props.rawData.image.webp;
+
+  function DynamicButton(): JSX.Element {
+    return (
+      <>
+        {props.isReply ? (
+          <ReplyButton handleClick={props.handleButtonClick} />
+        ) : (
+          <SendButton handleClick={props.handleButtonClick} />
+        )}
+      </>
+    );
+  }
 
   function ReplyCardFooter(): JSX.Element {
     return (
       <div className={`flex sm:hidden flex-row justify-between items-center`}>
         <Avatar pngSrc={avatarPng} webpSrc={avatarWebp} />
-        {props.isReply ? <ReplyButton /> : <SendButton />}
+        <DynamicButton />
       </div>
     );
   }
@@ -44,7 +56,7 @@ export default function CommentInput(props: {
           </div>
           <Textarea />
           <div className="hidden sm:block">
-            {props.isReply ? <ReplyButton /> : <SendButton />}
+            <DynamicButton />
           </div>
 
           <ReplyCardFooter />

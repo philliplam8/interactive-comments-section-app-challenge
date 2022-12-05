@@ -57,7 +57,9 @@ export default function Comment(props: CommentProps): JSX.Element {
   /**
    * Submit a comment reply
    */
-  const handleReplyButtonSubmit = () => {};
+  const handleReplyButtonSubmit = () => {
+    setshowReplyInput(false);
+  };
 
   function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
@@ -147,7 +149,13 @@ export default function Comment(props: CommentProps): JSX.Element {
           </div>
         </div>
       </Card>
-      {showReplyInput && <CommentInput rawData={commentInput} isReply={true} />}
+      {showReplyInput && (
+        <CommentInput
+          rawData={commentInput}
+          isReply={true}
+          handleButtonClick={handleReplyButtonSubmit}
+        />
+      )}
     </>
   );
 }
