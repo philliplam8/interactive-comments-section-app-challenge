@@ -1,11 +1,64 @@
+import { useContext, useState } from "react";
+import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
-import { Reply, Edit, Delete } from "../UI/Buttons";
+import { Reply, Edit, Delete, UpdateButton } from "../UI/Buttons";
 import { Badge } from "../Badge";
 import { Score } from "../Score";
+import { Textarea } from "../UI/Input";
 import { CardHeaderProps, CommentProps } from "./CommentInterface";
+import { CommentInput } from "../CommentInput";
 
 export default function Comment(props: CommentProps): JSX.Element {
+  // Determine if the author of the current comment is the current user logged in
+  const isCurrentUser = props.currentUser === props.username;
+
+  // Read-only/Editable state of comment from current user
+  const [readOnly, setReadOnly] = useState(true);
+
+  // Delete comment modal state
+  const { modalValue } = useContext(CommentsContext);
+  const [showModal, handleModalToggle] = modalValue;
+
+  // Display new reply input under comment
+  const [showReplyInput, setshowReplyInput] = useState(false);
+
+  const commentInput = {
+    image: {
+      png: props.avatarPng,
+      webp: props.avatarWebp,
+    },
+    username: props.currentUser,
+  };
+
+  /**
+   * Toggle between a read-only view and edit-view of a comment written by the current user.
+   * Note: this only applies to comments written by the current user.
+   */
+  const toggleReadOnly = () => {
+    setReadOnly(!readOnly);
+  };
+
+  /**
+   * Submit an update to a comment written by the current user.
+   * Note: this only applies to comments written by the current user.
+   */
+  const handleUpdateComment = () => {
+    toggleReadOnly();
+  };
+
+  /**
+   * Display an editable textarea reply under a read-only comment.
+   */
+  const handleReplyButtonToggle = () => {
+    setshowReplyInput(!showReplyInput);
+  };
+
+  /**
+   * Submit a comment reply
+   */
+  const handleReplyButtonSubmit = () => {};
+
   function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
       <div className="flex flex-row flex-wrap items-center gap-4">
@@ -13,35 +66,32 @@ export default function Comment(props: CommentProps): JSX.Element {
           <Avatar pngSrc={props.avatarPng} webpSrc={props.avatarWebp} />
         </div>
         <h1 className="font-medium text-darkBlue">{props.username}</h1>
-        {props.currentUser && <Badge />}
+        {isCurrentUser && <Badge />}
         <div>{props.createdAt}</div>
       </div>
     );
   }
 
-  function CardActions(props: { currentUser: boolean }): JSX.Element {
+  function CardActions(): JSX.Element {
     return (
       <>
-        {props.currentUser ? (
+        {isCurrentUser ? (
           <div className="flex flex-row gap-4">
-            <Delete />
-            <Edit />
+            <Delete handleClick={handleModalToggle} />
+            <Edit handleClick={toggleReadOnly} readOnly={readOnly} />
           </div>
         ) : (
-          <Reply />
+          <Reply handleClick={handleReplyButtonToggle} />
         )}
       </>
     );
   }
 
-  function CardFooterMobile(props: {
-    currentUser: boolean;
-    score: number;
-  }): JSX.Element {
+  function CardFooterMobile(props: { score: number }): JSX.Element {
     return (
       <div className="sm:hidden flex flex-row justify-between">
         <Score initialScore={props.score} />
-        <CardActions currentUser={props.currentUser} />
+        <CardActions />
       </div>
     );
   }
@@ -61,7 +111,7 @@ export default function Comment(props: CommentProps): JSX.Element {
           <div className="hidden sm:block">
             <Score initialScore={props.score} />
           </div>
-          <div className="flex flex-col sm:flex-col gap-4">
+          <div className="w-full flex flex-col gap-4">
             <div className="flex flex-row justify-between">
               <CardHeader
                 avatarPng={props.avatarPng}
@@ -71,22 +121,33 @@ export default function Comment(props: CommentProps): JSX.Element {
                 currentUser={props.currentUser}
               />
               <div className="hidden sm:block">
-                <CardActions currentUser={props.currentUser} />
+                <CardActions />
               </div>
             </div>
 
             <div id="comment">
-              {props.replyingTo && <ReplyingTo username={props.replyingTo} />}
-              <div className="inline">{props.content}</div>
+              {isCurrentUser && !readOnly ? (
+                <div className="flex flex-col gap-4">
+                  <Textarea content={props.content} />
+                  <div className="flex justify-end">
+                    <UpdateButton handleClick={handleUpdateComment} />
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {props.replyingTo && (
+                    <ReplyingTo username={props.replyingTo} />
+                  )}
+                  <div className="inline">{props.content}</div>
+                </>
+              )}
             </div>
 
-            <CardFooterMobile
-              currentUser={props.currentUser}
-              score={props.score}
-            />
+            <CardFooterMobile score={props.score} />
           </div>
         </div>
       </Card>
+      {showReplyInput && <CommentInput rawData={commentInput} isReply={true} />}
     </>
   );
 }

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { SecondaryButton, ErrorButton } from "../UI/Buttons";
 import { Backdrop } from "../Backdrop";
@@ -11,11 +12,8 @@ const TEXT = {
 };
 
 export default function Modal(): JSX.Element {
-  const [showModal, setShowModal] = useState(true);
-
-  const handleModalToggle = () => {
-    setShowModal(!showModal);
-  };
+  const { modalValue } = useContext(CommentsContext);
+  const [showModal, handleModalToggle] = modalValue;
 
   function ModalContent(): JSX.Element {
     return (
@@ -47,7 +45,7 @@ export default function Modal(): JSX.Element {
   });
 
   return (
-    <>
+    <div className="sticky top-0">
       {showModal && (
         <>
           <Backdrop show={showModal}>
@@ -55,6 +53,6 @@ export default function Modal(): JSX.Element {
           </Backdrop>
         </>
       )}
-    </>
+    </div>
   );
 }

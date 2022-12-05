@@ -1,17 +1,36 @@
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
-import { PrimaryButton } from "../UI/Buttons";
+import { ReplyButton, SendButton } from "../UI/Buttons";
+import { Textarea } from "../UI/Input";
 
 const REPLY_PLACEHOLDER = "Add a comment...";
-const avatarPng = "/images/avatars/image-amyrobson.png";
-const avatarWebp = "/images/avatars/image-amyrobson.webp";
 
-export default function ReplyInput(): JSX.Element {
+export interface RawCommentInput {
+  image: {
+    png: string;
+    webp: string;
+  };
+  username: string;
+}
+
+export interface CommentInputProps {
+  avatarPng: string;
+  avatarWebp: string;
+  username: string;
+}
+
+export default function CommentInput(props: {
+  rawData: RawCommentInput;
+  isReply: boolean;
+}): JSX.Element {
+  const avatarPng = props.rawData.image.png;
+  const avatarWebp = props.rawData.image.webp;
+
   function ReplyCardFooter(): JSX.Element {
     return (
       <div className={`flex sm:hidden flex-row justify-between items-center`}>
         <Avatar pngSrc={avatarPng} webpSrc={avatarWebp} />
-        <PrimaryButton label={"Send"} />
+        {props.isReply ? <ReplyButton /> : <SendButton />}
       </div>
     );
   }
@@ -23,16 +42,9 @@ export default function ReplyInput(): JSX.Element {
           <div className="hidden sm:block">
             <Avatar pngSrc={avatarPng} webpSrc={avatarWebp} large={true} />
           </div>
-          <textarea
-            name=""
-            id=""
-            cols={25}
-            rows={3}
-            placeholder={REPLY_PLACEHOLDER}
-            className={`w-full text-darkBlue px-4 py-2 rounded-lg border-2 border-lightGray focus:outline-none focus:border-transparent focus:ring-darkBlue focus:ring-1`}
-          ></textarea>
+          <Textarea />
           <div className="hidden sm:block">
-            <PrimaryButton label={"Send"} />
+            {props.isReply ? <ReplyButton /> : <SendButton />}
           </div>
 
           <ReplyCardFooter />

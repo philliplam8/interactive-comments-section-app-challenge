@@ -8,6 +8,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   ErrorButton,
+  SendButton,
+  ReplyButton,
+  UpdateButton,
 } from "./Buttons";
 
 export {
@@ -20,4 +23,7 @@ export {
   PrimaryButton,
   SecondaryButton,
   ErrorButton,
+  SendButton,
+  ReplyButton,
+  UpdateButton,
 };
