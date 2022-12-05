@@ -1,37 +1,36 @@
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
-import { PrimaryButton } from "../UI/Buttons";
+import { ReplyButton, SendButton } from "../UI/Buttons";
 import { Textarea } from "../UI/Input";
 
-export interface RawReplyInput {
-  currentUser: {
-    image: {
-      png: string;
-      webp: string;
-    };
-    username: string;
+const REPLY_PLACEHOLDER = "Add a comment...";
+
+export interface RawCommentInput {
+  image: {
+    png: string;
+    webp: string;
   };
+  username: string;
 }
 
-export interface ReplyInputProps {
+export interface CommentInputProps {
   avatarPng: string;
   avatarWebp: string;
   username: string;
 }
 
-const REPLY_PLACEHOLDER = "Add a comment...";
-
-export default function ReplyInput(props: {
-  rawData: RawReplyInput;
+export default function CommentInput(props: {
+  rawData: RawCommentInput;
+  isReply: boolean;
 }): JSX.Element {
-  const avatarPng = props.rawData.currentUser.image.png;
-  const avatarWebp = props.rawData.currentUser.image.webp;
+  const avatarPng = props.rawData.image.png;
+  const avatarWebp = props.rawData.image.webp;
 
   function ReplyCardFooter(): JSX.Element {
     return (
       <div className={`flex sm:hidden flex-row justify-between items-center`}>
         <Avatar pngSrc={avatarPng} webpSrc={avatarWebp} />
-        <PrimaryButton label={"Send"} />
+        {props.isReply ? <ReplyButton /> : <SendButton />}
       </div>
     );
   }
@@ -45,7 +44,7 @@ export default function ReplyInput(props: {
           </div>
           <Textarea />
           <div className="hidden sm:block">
-            <PrimaryButton label={"Send"} />
+            {props.isReply ? <ReplyButton /> : <SendButton />}
           </div>
 
           <ReplyCardFooter />

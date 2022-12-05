@@ -1,15 +1,15 @@
 import useSWR from "swr";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useMemo } from "react";
 import { CommentsContext } from "../context/CommentsContext";
 import { Layout } from "../components/Layout";
 import { Comments } from "../components/Comment";
-import { ReplyInput } from "../components/ReplyInput";
+import { CommentInput } from "../components/CommentInput";
 
 export default function Home() {
   // const userValue = useContext(CommentsContext);
   // const [currentUser, setCurrentUser] = useState(userValue);
-  // const commentsValue = useContext(CommentsContext);
-  // const [displayedComments, setDisplayedComments] = useState(commentsValue);
+  const commentsValue = useContext(CommentsContext);
+  const [displayedComments, setDisplayedComments] = useState(commentsValue);
   const [testComments, setTestComments] = useState([]);
 
   // Fetcher functop to wrap the native fetch function and return the result of a call to url in json format
@@ -31,6 +31,7 @@ export default function Home() {
   // Handle the happy path state
   else {
     const parsedData = JSON.parse(data.toString());
+    const currentUser = parsedData.currentUser;
     return (
       <>
         <Layout>
@@ -41,8 +42,8 @@ export default function Home() {
               <>
                 <Comments allComments={parsedData} />
                 {/* <Comments allComments={displayedComments} /> */}
-                {/* <ReplyInput rawData={currentUser} /> */}
-                <ReplyInput rawData={parsedData} />
+                {/* <CommentInput rawData={currentUser} /> */}
+                <CommentInput rawData={currentUser} isReply={false} />
               </>
             )}
           </div>

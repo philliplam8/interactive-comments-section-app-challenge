@@ -2,25 +2,62 @@ import { useContext, useState } from "react";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
-import { Reply, Edit, Delete, PrimaryButton } from "../UI/Buttons";
+import { Reply, Edit, Delete, UpdateButton } from "../UI/Buttons";
 import { Badge } from "../Badge";
 import { Score } from "../Score";
 import { Textarea } from "../UI/Input";
 import { CardHeaderProps, CommentProps } from "./CommentInterface";
+import { CommentInput } from "../CommentInput";
 
 export default function Comment(props: CommentProps): JSX.Element {
+  // Determine if the author of the current comment is the current user logged in
   const isCurrentUser = props.currentUser === props.username;
-  const { modalValue } = useContext(CommentsContext);
-  const [showModal, handleModalToggle] = modalValue;
+
+  // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
 
+  // Delete comment modal state
+  const { modalValue } = useContext(CommentsContext);
+  const [showModal, handleModalToggle] = modalValue;
+
+  // Display new reply input under comment
+  const [showReplyInput, setshowReplyInput] = useState(false);
+
+  const commentInput = {
+    image: {
+      png: props.avatarPng,
+      webp: props.avatarWebp,
+    },
+    username: props.currentUser,
+  };
+
+  /**
+   * Toggle between a read-only view and edit-view of a comment written by the current user.
+   * Note: this only applies to comments written by the current user.
+   */
   const toggleReadOnly = () => {
     setReadOnly(!readOnly);
   };
 
+  /**
+   * Submit an update to a comment written by the current user.
+   * Note: this only applies to comments written by the current user.
+   */
   const handleUpdateComment = () => {
     toggleReadOnly();
   };
+
+  /**
+   * Display an editable textarea reply under a read-only comment.
+   */
+  const handleReplyButtonToggle = () => {
+    setshowReplyInput(!showReplyInput);
+  };
+
+  /**
+   * Submit a comment reply
+   */
+  const handleReplyButtonSubmit = () => {};
 
   function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
@@ -44,7 +81,7 @@ export default function Comment(props: CommentProps): JSX.Element {
             <Edit handleClick={toggleReadOnly} readOnly={readOnly} />
           </div>
         ) : (
-          <Reply />
+          <Reply handleClick={handleReplyButtonToggle} />
         )}
       </>
     );
@@ -93,10 +130,7 @@ export default function Comment(props: CommentProps): JSX.Element {
                 <div className="flex flex-col gap-4">
                   <Textarea content={props.content} />
                   <div className="flex justify-end">
-                    <PrimaryButton
-                      label="Update"
-                      handleClick={handleUpdateComment}
-                    />
+                    <UpdateButton handleClick={handleUpdateComment} />
                   </div>
                 </div>
               ) : (
@@ -113,6 +147,7 @@ export default function Comment(props: CommentProps): JSX.Element {
           </div>
         </div>
       </Card>
+      {showReplyInput && <CommentInput rawData={commentInput} isReply={true} />}
     </>
   );
 }
