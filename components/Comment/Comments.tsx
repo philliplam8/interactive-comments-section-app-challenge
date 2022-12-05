@@ -8,13 +8,9 @@ import {
 
 export default function Comments(props: {
   currentUser: RawCurrentUserInterface;
-  allComments: {
-    comments: RawCommentInterface[];
-  };
+  comments: RawCommentInterface[];
 }): JSX.Element {
-  const [parentComments, setParentComments] = useState(
-    props.allComments.comments
-  );
+  const [parentComments, setParentComments] = useState(props.comments);
   const [currentUser, setCurrentUser] = useState(props.currentUser.username);
 
   // const userValue = useContext(CommentsContext);
