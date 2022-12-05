@@ -1,16 +1,21 @@
 import { useState, useContext, useEffect } from "react";
 import { CommentsContext } from "../../context/CommentsContext";
-import { CommentContainer, RawCommentInterface } from "./";
+import {
+  CommentContainer,
+  RawCommentInterface,
+  RawCurrentUserInterface,
+} from "./";
 
 export default function Comments(props: {
-  allComments: { comments: RawCommentInterface[]; username: any };
+  currentUser: RawCurrentUserInterface;
+  allComments: {
+    comments: RawCommentInterface[];
+  };
 }): JSX.Element {
   const [parentComments, setParentComments] = useState(
     props.allComments.comments
   );
-  const [currentUser, setCurrentUser] = useState(
-    props.allComments.currentUser.username
-  );
+  const [currentUser, setCurrentUser] = useState(props.currentUser.username);
 
   // const userValue = useContext(CommentsContext);
   // const [currentUser, setCurrentUser] = useState(userValue);

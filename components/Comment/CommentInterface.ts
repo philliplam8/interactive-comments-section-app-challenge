@@ -20,6 +20,14 @@ export interface RawCommentInterface extends RawCoreDataInterface {
   replies: [];
 }
 
+export interface RawCurrentUserInterface {
+  image: {
+    png: string;
+    webp: string;
+  };
+  username: string;
+}
+
 // Flattened Data ----------------------------------------------------
 export interface CardHeaderProps {
   avatarPng: string;

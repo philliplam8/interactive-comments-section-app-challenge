@@ -3,6 +3,7 @@ import CommentReplies from "./CommentReplies";
 import CommentContainer from "./CommentContainer";
 import Comments from "./Comments";
 import {
+  RawCurrentUserInterface,
   RawCommentInterface,
   RawReplyInterface,
   CardHeaderProps,
@@ -12,6 +13,7 @@ import {
 
 export { Comment, CommentReplies, CommentContainer, Comments };
 export type {
+  RawCurrentUserInterface,
   RawCommentInterface,
   RawReplyInterface,
   CardHeaderProps,
