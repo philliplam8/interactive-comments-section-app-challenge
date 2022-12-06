@@ -1,10 +1,14 @@
+import { LegacyRef } from "react";
+
 const REPLY_PLACEHOLDER = "Add a comment...";
 
-export default function Textarea(props: { content?: string }): JSX.Element {
+export default function Textarea(props: {
+  textareaRef: LegacyRef<HTMLTextAreaElement>;
+  content: string;
+}): JSX.Element {
   return (
     <textarea
-      name=""
-      id=""
+      ref={props.textareaRef}
       cols={25}
       rows={3}
       placeholder={REPLY_PLACEHOLDER}

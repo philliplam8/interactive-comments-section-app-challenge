@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
@@ -15,6 +15,8 @@ export default function Comment(props: CommentProps): JSX.Element {
 
   // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [commentContent, setCommentContent] = useState(props.content);
 
   // Delete comment modal state
   const { modalValue } = useContext(CommentsContext);
@@ -36,6 +38,12 @@ export default function Comment(props: CommentProps): JSX.Element {
    * Note: this only applies to comments written by the current user.
    */
   const handleUpdateComment = () => {
+    // Update the read-only comment value with the new value updated in the textarea
+    if (textareaRef.current !== null) {
+      let textVal = textareaRef.current.value;
+      setCommentContent(textVal);
+    }
+    // Change the comment card from edit-view to read-only
     toggleReadOnly();
   };
 
@@ -122,7 +130,10 @@ export default function Comment(props: CommentProps): JSX.Element {
             <div id="comment">
               {isCurrentUser && !readOnly ? (
                 <div className="flex flex-col gap-4">
-                  <Textarea content={props.content} />
+                  <Textarea
+                    content={commentContent}
+                    textareaRef={textareaRef}
+                  />
                   <div className="flex justify-end">
                     <UpdateButton handleClick={handleUpdateComment} />
                   </div>
@@ -132,7 +143,7 @@ export default function Comment(props: CommentProps): JSX.Element {
                   {props.replyingTo && (
                     <ReplyingTo username={props.replyingTo} />
                   )}
-                  <div className="inline">{props.content}</div>
+                  {commentContent}
                 </>
               )}
             </div>
