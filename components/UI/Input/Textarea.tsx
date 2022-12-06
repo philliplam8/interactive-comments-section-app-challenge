@@ -3,8 +3,8 @@ import { LegacyRef } from "react";
 const REPLY_PLACEHOLDER = "Add a comment...";
 
 export default function Textarea(props: {
-  textareaRef: LegacyRef<HTMLTextAreaElement>;
-  content: string;
+  textareaRef?: LegacyRef<HTMLTextAreaElement>;
+  content?: string;
 }): JSX.Element {
   return (
     <textarea
