@@ -1,8 +1,8 @@
-import { Comment, RawReplyInterface } from "./";
+import { Comment, RawReplyInterface, RawCurrentUserInterface } from "./";
 
 export default function CommentReplies(props: {
   rawData: RawReplyInterface[];
-  currentUser: string;
+  currentUser: RawCurrentUserInterface;
 }): JSX.Element {
   const replies = props.rawData;
 

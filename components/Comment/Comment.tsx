@@ -11,7 +11,7 @@ import { CommentInput } from "../CommentInput";
 
 export default function Comment(props: CommentProps): JSX.Element {
   // Determine if the author of the current comment is the current user logged in
-  const isCurrentUser = props.currentUser === props.username;
+  const isCurrentUser = props.currentUser.username === props.username;
 
   // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
@@ -22,14 +22,6 @@ export default function Comment(props: CommentProps): JSX.Element {
 
   // Display new reply input under comment
   const [showReplyInput, setshowReplyInput] = useState(false);
-
-  const commentInput = {
-    image: {
-      png: props.avatarPng,
-      webp: props.avatarWebp,
-    },
-    username: props.currentUser,
-  };
 
   /**
    * Toggle between a read-only view and edit-view of a comment written by the current user.
@@ -151,7 +143,7 @@ export default function Comment(props: CommentProps): JSX.Element {
       </Card>
       {showReplyInput && (
         <CommentInput
-          rawData={commentInput}
+          rawData={props.currentUser}
           isReply={true}
           handleButtonClick={handleReplyButtonSubmit}
         />

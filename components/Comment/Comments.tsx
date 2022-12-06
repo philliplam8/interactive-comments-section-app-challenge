@@ -11,7 +11,6 @@ export default function Comments(props: {
   comments: RawCommentInterface[];
 }): JSX.Element {
   const [parentComments, setParentComments] = useState(props.comments);
-  const [currentUser, setCurrentUser] = useState(props.currentUser.username);
 
   // const userValue = useContext(CommentsContext);
   // const [currentUser, setCurrentUser] = useState(userValue);
@@ -23,7 +22,7 @@ export default function Comments(props: {
         return (
           <CommentContainer
             key={entry.id}
-            currentUser={currentUser}
+            currentUser={props.currentUser}
             content={entry.content}
             avatarPng={entry.user.image.png}
             avatarWebp={entry.user.image.webp}
