@@ -1,7 +1,7 @@
-import { useState, useContext, useEffect } from "react";
-import { CommentsContext } from "../../context/CommentsContext";
+import { useState } from "react";
 import {
-  CommentContainer,
+  Comment,
+  CommentReplies,
   RawCommentInterface,
   RawCurrentUserInterface,
 } from "./";
@@ -12,25 +12,31 @@ export default function Comments(props: {
 }): JSX.Element {
   const [parentComments, setParentComments] = useState(props.comments);
 
-  // const userValue = useContext(CommentsContext);
-  // const [currentUser, setCurrentUser] = useState(userValue);
-  // const commentsValue = useContext(CommentsContext);
-  // const [displayedComments, setDisplayedComments] = useState(commentsValue);
   return (
     <>
       {parentComments.map((entry: RawCommentInterface) => {
+        const hasReplies = entry.replies.length > 0;
         return (
-          <CommentContainer
-            key={entry.id}
-            currentUser={props.currentUser}
-            content={entry.content}
-            avatarPng={entry.user.image.png}
-            avatarWebp={entry.user.image.webp}
-            createdAt={entry.createdAt}
-            score={entry.score}
-            username={entry.user.username}
-            replies={entry.replies}
-          />
+          <>
+            {/* Parent Comment */}
+            <Comment
+              key={entry.id}
+              currentUser={props.currentUser}
+              content={entry.content}
+              avatarPng={entry.user.image.png}
+              avatarWebp={entry.user.image.webp}
+              createdAt={entry.createdAt}
+              score={entry.score}
+              username={entry.user.username}
+            />
+            {/* Child Replies */}
+            {hasReplies && (
+              <CommentReplies
+                rawData={entry.replies}
+                currentUser={props.currentUser}
+              />
+            )}
+          </>
         );
       })}
     </>

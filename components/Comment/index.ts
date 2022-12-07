@@ -1,6 +1,5 @@
 import Comment from "./Comment";
 import CommentReplies from "./CommentReplies";
-import CommentContainer from "./CommentContainer";
 import Comments from "./Comments";
 import {
   RawCurrentUserInterface,
@@ -11,7 +10,7 @@ import {
   ParentCommentProps,
 } from "./CommentInterface";
 
-export { Comment, CommentReplies, CommentContainer, Comments };
+export { Comment, CommentReplies, Comments };
 export type {
   RawCurrentUserInterface,
   RawCommentInterface,
