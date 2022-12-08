@@ -10,15 +10,15 @@ import { Reply, Edit, Delete, UpdateButton } from "../UI/Buttons";
 import { Badge } from "../Badge";
 import { Score } from "../Score";
 import { Textarea } from "../UI/Input";
-import { CardHeaderProps, CommentProps } from "./CommentInterface";
+import { RawComment, CardHeaderProps, CommentProps } from "./CommentInterface";
 import { CommentInput } from "../CommentInput";
 
-export default function Comment(props: CommentProps): JSX.Element {
+export default function Comment(props): JSX.Element {
   // const { mutate: addNewReply } = useAddCommentsData();
   // const { mutate: updateComment } = useUpdateCommentData();
 
   // Determine if the author of the current comment is the current user logged in
-  const isCurrentUser = props.currentUser.username === props.username;
+  const isCurrentUser = props.currentUser === props.username;
 
   // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
@@ -175,7 +175,7 @@ export default function Comment(props: CommentProps): JSX.Element {
       </Card>
       {showReplyInput && (
         <CommentInput
-          rawData={props.currentUser}
+          username={props.currentUser}
           isReply={true}
           handleButtonClick={handleReplyButtonSubmit}
         />

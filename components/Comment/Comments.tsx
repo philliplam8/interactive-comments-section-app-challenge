@@ -1,21 +1,21 @@
 import { useState } from "react";
-import {
-  Comment,
-  CommentReplies,
-  RawCommentInterface,
-  RawCurrentUserInterface,
-} from "./";
+import { Comment, CommentReplies, RawComment, RawReply, RawImage } from "./";
 
 export default function Comments(props: {
-  currentUser: RawCurrentUserInterface;
-  comments: RawCommentInterface[];
+  currentUser: string;
+  comments: RawComment[];
+  replies: { [x: string]: { [s: string]: RawReply } | ArrayLike<RawReply> };
+  userAvatars: { [x: string]: RawImage };
 }): JSX.Element {
   const [parentComments, setParentComments] = useState(props.comments);
 
   return (
     <>
-      {parentComments.map((entry: RawCommentInterface) => {
-        const hasReplies = entry.replies.length > 0;
+      {parentComments.map((entry: RawComment) => {
+        const avatarImages = props.userAvatars[entry.username];
+        const png = avatarImages.png;
+        const webp = avatarImages.webp;
+
         return (
           <>
             {/* Parent Comment */}
@@ -23,16 +23,17 @@ export default function Comments(props: {
               key={entry.id}
               currentUser={props.currentUser}
               content={entry.content}
-              avatarPng={entry.user.image.png}
-              avatarWebp={entry.user.image.webp}
+              avatarPng={png}
+              avatarWebp={webp}
               createdAt={entry.createdAt}
               score={entry.score}
-              username={entry.user.username}
+              username={entry.username}
             />
             {/* Child Replies */}
-            {hasReplies && (
+            {entry.hasReplies && (
               <CommentReplies
-                rawData={entry.replies}
+                rawData={props.replies[entry.id]}
+                userAvatars={props.userAvatars}
                 currentUser={props.currentUser}
               />
             )}
