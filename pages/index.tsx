@@ -1,5 +1,4 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { CommentsContext } from "../context/CommentsContext";
+import { useCommentsData } from "../hooks/useCommentsData";
 import { Layout } from "../components/Layout";
 import {
   Comments,
@@ -9,16 +8,12 @@ import {
 import { CommentInput } from "../components/CommentInput";
 
 export default function Home() {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["comments"],
-    queryFn: () => fetch("/api/staticdata").then((res) => res.json()),
-  });
+  const { isLoading, error, data } = useCommentsData();
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <h2>Loading...</h2>;
 
-  if (error) return "An error has occurred: ";
+  if (error) return <h2>An error has occurred</h2>;
 
-  console.log(data);
   const parsedData = JSON.parse(data.toString());
   const allComments: RawCommentInterface[] = parsedData.comments;
   const currentUser: RawCurrentUserInterface = parsedData.currentUser;

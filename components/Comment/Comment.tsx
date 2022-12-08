@@ -1,4 +1,8 @@
 import { useContext, useState, useRef } from "react";
+// import {
+//   useAddCommentsData,
+//   useUpdateCommentData,
+// } from "../../hooks/useCommentsData";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
@@ -10,6 +14,9 @@ import { CardHeaderProps, CommentProps } from "./CommentInterface";
 import { CommentInput } from "../CommentInput";
 
 export default function Comment(props: CommentProps): JSX.Element {
+  // const { mutate: addNewReply } = useAddCommentsData();
+  // const { mutate: updateComment } = useUpdateCommentData();
+
   // Determine if the author of the current comment is the current user logged in
   const isCurrentUser = props.currentUser.username === props.username;
 
@@ -22,7 +29,7 @@ export default function Comment(props: CommentProps): JSX.Element {
   const { modalValue } = useContext(CommentsContext);
   const [showModal, handleModalToggle] = modalValue;
 
-  // Display new reply input under comment
+  // Toggle for displaying a new reply input under comment
   const [showReplyInput, setshowReplyInput] = useState(false);
 
   /**
@@ -42,6 +49,8 @@ export default function Comment(props: CommentProps): JSX.Element {
     if (textareaRef.current !== null) {
       let textVal = textareaRef.current.value;
       setCommentContent(textVal);
+
+      // updateComment(textVal);
     }
     // Change the comment card from edit-view to read-only
     toggleReadOnly();
@@ -58,6 +67,18 @@ export default function Comment(props: CommentProps): JSX.Element {
    * Submit a comment reply
    */
   const handleReplyButtonSubmit = () => {
+    // const test = {
+    //   id: 12,
+    //   content: commentContent,
+    //   score: props.score,
+    //   replyingTo: props.username,
+    //   avatarPng: "",
+    //   avatarWebp: "",
+    //   username: props.username,
+    //   createdAt: "today",
+    //   currentUser: props.currentUser,
+    // };
+    // addNewReply(test);
     setshowReplyInput(false);
   };
 
