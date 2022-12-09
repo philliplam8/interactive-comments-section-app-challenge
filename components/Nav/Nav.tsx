@@ -1,13 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState, useContext, useMemo } from "react";
 import Link from "next/link";
-import { NavAvatar, NavLinksDesktop, Hamburger } from "./";
+import { NavAvatar, NavLinksDesktop, Hamburger, Menu } from "./";
 
 export default function Nav(): JSX.Element {
   // const handleAvatarClick = (): void => {
   //   setshowCart(false);
   //   setShowDarkMenu(!showDarkMenu);
   // };
+
+  const [showMenu, setShowMenu] = useState(false);
+  const handleAvatarClick = (): void => {
+    setShowMenu(!showMenu);
+  };
 
   return (
     <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white shadow-sm">
@@ -27,7 +32,8 @@ export default function Nav(): JSX.Element {
         </div>
 
         <div className="flex flex-row gap-5 md:gap-10 items-center">
-          <NavAvatar />
+          <NavAvatar onButtonClick={handleAvatarClick} />
+          <Menu status={showMenu} handleClick={handleAvatarClick} />
         </div>
       </nav>
     </div>
