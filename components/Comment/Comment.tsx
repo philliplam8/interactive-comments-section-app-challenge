@@ -13,7 +13,7 @@ import { Textarea } from "../UI/Input";
 import { RawComment, CardHeaderProps, CommentProps } from "./CommentInterface";
 import { CommentInput } from "../CommentInput";
 
-export default function Comment(props): JSX.Element {
+export default function Comment(props: CommentProps): JSX.Element {
   // const { mutate: addNewReply } = useAddCommentsData();
   // const { mutate: updateComment } = useUpdateCommentData();
 
