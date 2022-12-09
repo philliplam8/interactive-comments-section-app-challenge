@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { SecondaryButton, ErrorButton } from "../UI/Buttons";
-import { Backdrop } from "../Backdrop";
+import { Backdrop } from "../UI/Backdrop";
 
 const TEXT = {
   DELETE_CONFIRMATION:
