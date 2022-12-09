@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-import { useState, useContext } from "react";
-import { NavContext } from "../../context/NavContext";
-import { CloseButton } from "../UI/Buttons";
+import { useContext } from "react";
+import { NavContext } from "../../../context/NavContext";
+import { CloseButton } from "../Buttons";
 
 type DrawerProps = {
   direction: string;
