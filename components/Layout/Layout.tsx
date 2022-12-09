@@ -1,6 +1,7 @@
 // components/Layout.tsx
 
 import Head from "next/head";
+import { Nav } from "../Nav";
 import { Modal } from "../Modal";
 import { Footer } from "../Footer";
 
@@ -21,8 +22,9 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
       </Head>
       <main>
         <Modal />
-        <div className="min-h-screen h-full mx-4 md:mx-auto pt-14 flex flex-col justify-between">
-          <div>{children}</div>
+        <div className="min-h-screen h-full flex flex-col justify-between">
+          <Nav />
+          <div className="mx-4 md:mx-auto min-mt-5">{children}</div>
           <Footer />
         </div>
       </main>

@@ -3,14 +3,7 @@ import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
 import { ReplyButton, SendButton } from "../UI/Buttons";
 import { Textarea } from "../UI/Input";
-
-export interface RawCommentInput {
-  image: {
-    png: string;
-    webp: string;
-  };
-  username: string;
-}
+import { useCommentsData } from "../../hooks/useCommentsData";
 
 export interface CommentInputProps {
   avatarPng: string;
@@ -19,12 +12,13 @@ export interface CommentInputProps {
 }
 
 export default function CommentInput(props: {
-  rawData: RawCommentInput;
+  username: string;
   isReply: boolean;
   handleButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
-  const avatarPng = props.rawData.image.png;
-  const avatarWebp = props.rawData.image.webp;
+  const { data } = useCommentsData();
+  const avatarImages = JSON.parse(data.toString()).users;
+  const { png, webp } = avatarImages[props.username];
 
   function DynamicButton(): JSX.Element {
     return (
@@ -41,7 +35,7 @@ export default function CommentInput(props: {
   function ReplyCardFooter(): JSX.Element {
     return (
       <div className={`flex sm:hidden flex-row justify-between items-center`}>
-        <Avatar pngSrc={avatarPng} webpSrc={avatarWebp} />
+        <Avatar pngSrc={png} webpSrc={webp} />
         <DynamicButton />
       </div>
     );
@@ -52,7 +46,7 @@ export default function CommentInput(props: {
       <Card>
         <div className="flex flex-col sm:flex-row justify-between gap-4">
           <div className="hidden sm:block">
-            <Avatar pngSrc={avatarPng} webpSrc={avatarWebp} large={true} />
+            <Avatar pngSrc={png} webpSrc={webp} large={true} />
           </div>
           <Textarea />
           <div className="hidden sm:block">

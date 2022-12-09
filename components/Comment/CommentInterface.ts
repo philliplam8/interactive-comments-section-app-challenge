@@ -1,30 +1,26 @@
 // Raw Data from JSON file ------------------------------------------
-interface RawCoreDataInterface {
-  id: number;
+
+export interface RawImage {
+  png: string;
+  webp: string;
+}
+export interface RawComment {
+  id: string;
   content: string;
   createdAt: string;
+  displayedDate: string;
   score: number;
-  user: {
-    image: {
-      png: string;
-      webp: string;
-    };
-    username: string;
-  };
+  username: string;
+  hasReplies: boolean;
 }
 
-export interface RawReplyInterface extends RawCoreDataInterface {
+export interface RawReply {
+  id: string;
+  content: string;
+  createdAt: string;
+  displayedDate: string;
+  score: number;
   replyingTo: string;
-}
-export interface RawCommentInterface extends RawCoreDataInterface {
-  replies: [];
-}
-
-export interface RawCurrentUserInterface {
-  image: {
-    png: string;
-    webp: string;
-  };
   username: string;
 }
 
@@ -34,7 +30,7 @@ export interface CardHeaderProps {
   avatarWebp: string;
   username: string;
   createdAt: string;
-  currentUser: RawCurrentUserInterface;
+  currentUser: string;
 }
 
 export interface CommentProps extends CardHeaderProps {
@@ -42,8 +38,4 @@ export interface CommentProps extends CardHeaderProps {
   content: string;
   score: number;
   replyingTo?: string;
-}
-
-export interface ParentCommentProps extends CommentProps {
-  replies: RawReplyInterface[];
 }

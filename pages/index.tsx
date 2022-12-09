@@ -2,8 +2,9 @@ import { useCommentsData } from "../hooks/useCommentsData";
 import { Layout } from "../components/Layout";
 import {
   Comments,
-  RawCurrentUserInterface,
-  RawCommentInterface,
+  RawComment,
+  RawReply,
+  RawImage,
 } from "../components/Comment";
 import { CommentInput } from "../components/CommentInput";
 
@@ -14,15 +15,32 @@ export default function Home() {
 
   if (error) return <h2>An error has occurred</h2>;
 
+  // All data
   const parsedData = JSON.parse(data.toString());
-  const allComments: RawCommentInterface[] = parsedData.comments;
-  const currentUser: RawCurrentUserInterface = parsedData.currentUser;
+
+  // Current User
+  const currentUser: string = parsedData.currentUser;
+
+  // Images
+  const userAvatars: { [x: string]: RawImage } = parsedData.users;
+
+  // Comments
+  const parentComments: RawComment[] = Object.values(parsedData.comments);
+
+  // Replies
+  const childReplies = parsedData.replies;
+
   return (
     <>
       <Layout>
         <div id="card-group" className="flex flex-col gap-5">
-          <Comments currentUser={currentUser} comments={allComments} />
-          <CommentInput rawData={currentUser} isReply={false} />
+          <Comments
+            currentUser={currentUser}
+            comments={parentComments}
+            replies={childReplies}
+            userAvatars={userAvatars}
+          />
+          <CommentInput username={currentUser} isReply={false} />
         </div>
       </Layout>
     </>
