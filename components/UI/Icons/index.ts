@@ -1,3 +1,3 @@
-import { LogoutIcon, SettingsIcon } from "./Icons";
+import { LoginIcon, LogoutIcon, SettingsIcon } from "./Icons";
 
-export { LogoutIcon, SettingsIcon };
+export { LoginIcon, LogoutIcon, SettingsIcon };

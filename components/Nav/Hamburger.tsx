@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { NavContext } from "../../context/NavContext";
-import Footer from "../Footer/Footer";
 import { NavLink, navLabels } from "./";
 import { Drawer } from "../UI/Drawer";
+import { Footer } from "../Footer";
 
 export default function Hamburger(): JSX.Element {
   const { menuValue } = useContext(NavContext);

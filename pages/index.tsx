@@ -31,18 +31,16 @@ export default function Home() {
   const childReplies = parsedData.replies;
 
   return (
-    <>
-      <Layout>
-        <div id="card-group" className="flex flex-col gap-5">
-          <Comments
-            currentUser={currentUser}
-            comments={parentComments}
-            replies={childReplies}
-            userAvatars={userAvatars}
-          />
-          <CommentInput username={currentUser} isReply={false} />
-        </div>
-      </Layout>
-    </>
+    <Layout>
+      <div id="card-group" className="flex flex-col gap-5">
+        <Comments
+          currentUser={currentUser}
+          comments={parentComments}
+          replies={childReplies}
+          userAvatars={userAvatars}
+        />
+        <CommentInput username={currentUser} isReply={false} />
+      </div>
+    </Layout>
   );
 }
