@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
+import { Avatar } from "../Avatar";
 import { formatId } from "../../helpers";
 import { LogoutIcon, SettingsIcon } from "../UI/Icons";
-
-const MENU_LINK_OPTIONS = ["Settings", "Sign out as demo user"];
 
 export default function Menu(props: {
   handleClick: () => void;
   status: boolean;
+  currentUser: string;
+  png: string;
+  webp: string;
 }): JSX.Element {
+  const MENU_LINK_OPTIONS = ["Settings", "Sign out"];
+
   function OptionIcon(props: { option: string }): JSX.Element {
     switch (props.option) {
       case MENU_LINK_OPTIONS[0]:
@@ -69,8 +73,9 @@ export default function Menu(props: {
           props.status ? "flex" : "hidden"
         }`}
       >
-        <div className="w-full flex items-center border-b border-lightGray py-5 px-4">
-          <h3>Profile</h3>
+        <div className="w-full flex flex-row gap-4 items-center border-b border-lightGray py-5 px-4">
+          <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
+          <h3>{props.currentUser}</h3>
         </div>
         <div className="py-5 px-4">
           <Options />

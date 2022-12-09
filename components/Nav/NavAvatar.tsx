@@ -4,14 +4,10 @@ import { useCommentsData } from "../../hooks/useCommentsData";
 import { Avatar } from "../Avatar";
 
 export default function NavAvatar(props: {
+  png: string;
+  webp: string;
   onButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
-  const { data } = useCommentsData();
-  const allData = JSON.parse(data.toString());
-  const currentUser = allData.currentUser;
-  const avatarImages = allData.users;
-  const { png, webp } = avatarImages[currentUser];
-
   return (
     <div className="h-[35px] w-[35px] md:h-[50px] md:w-[50px]">
       <button
@@ -20,7 +16,7 @@ export default function NavAvatar(props: {
         }
         onClick={props.onButtonClick}
       >
-        <Avatar pngSrc={png} webpSrc={webp} large={true} />
+        <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
       </button>
     </div>
   );

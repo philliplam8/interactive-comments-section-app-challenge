@@ -24,7 +24,7 @@ export default function Layout({ children }: LayoutProps): JSX.Element {
         <Modal />
         <div className="min-h-screen h-full flex flex-col justify-between">
           <Nav />
-          <div className="mx-4 md:mx-auto min-mt-5">{children}</div>
+          <div className="max-w-[1180px] m-4 md:mx-auto">{children}</div>
           <Footer />
         </div>
       </main>
