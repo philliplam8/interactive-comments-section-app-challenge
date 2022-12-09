@@ -11,6 +11,7 @@ import {
   SendButton,
   ReplyButton,
   UpdateButton,
+  CloseButton,
 } from "./Buttons";
 
 export {
@@ -26,4 +27,5 @@ export {
   SendButton,
   ReplyButton,
   UpdateButton,
+  CloseButton,
 };
