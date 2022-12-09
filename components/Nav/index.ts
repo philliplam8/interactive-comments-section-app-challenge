@@ -5,6 +5,6 @@ import Hamburger from "./Hamburger";
 import NavAvatar from "./NavAvatar";
 import Menu from "./Menu";
 
-const navLabels = ["About", "Sign In"];
+const navLabels = ["About"];
 
 export { Nav, NavLink, NavLinksDesktop, Hamburger, NavAvatar, Menu, navLabels };
