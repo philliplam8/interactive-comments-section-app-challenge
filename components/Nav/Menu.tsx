@@ -99,7 +99,9 @@ export default function Menu(props: {
           <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
           <div>
             <h3>{props.currentUser}</h3>
-            {user ? "" : <h3 className="text-moderateBlue">Demo User</h3>}
+            <h3 className={`text-moderateBlue ${user && "font-medium"}`}>
+              {user ? `${user.email}` : "Demo User"}
+            </h3>
           </div>
         </div>
         <div className="py-5 px-4">
