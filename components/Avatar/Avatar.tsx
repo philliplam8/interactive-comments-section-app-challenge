@@ -16,6 +16,7 @@ export default function Avatar(props: AvatarProps): JSX.Element {
         alt={`User avatar image`}
         height={dimension}
         width={dimension}
+        className={"rounded-full"}
       />
     </picture>
   );

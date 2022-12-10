@@ -1,15 +1,21 @@
-/* eslint-disable @next/next/no-img-element */
+import { getAuth } from "firebase/auth";
 import { useState, useContext, useMemo } from "react";
 import Link from "next/link";
 import { useCommentsData } from "../../hooks/useCommentsData";
 import { NavAvatar, NavLinksDesktop, Hamburger, Menu } from "./";
 
 export default function Nav(): JSX.Element {
+  // Google Firebase Authentication API
+  const auth = getAuth();
+  const user = auth.currentUser;
+  // React Query
   const { data } = useCommentsData();
   const allData = JSON.parse(data.toString());
-  const currentUser = allData.currentUser;
+  // const currentUser: string = allData.currentUser;
+  const currentUser = user ? user.displayName : allData.currentUser;
   const avatarImages = allData.users;
-  const { png, webp } = avatarImages[currentUser];
+  const png = user ? user.photoURL : avatarImages[currentUser].png;
+  const webp = user ? user.photoURL : avatarImages[currentUser].webp;
 
   const [showMenu, setShowMenu] = useState(false);
   const handleAvatarClick = (): void => {

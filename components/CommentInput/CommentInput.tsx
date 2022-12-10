@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import { MouseEventHandler } from "react";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
@@ -16,9 +17,21 @@ export default function CommentInput(props: {
   isReply: boolean;
   handleButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
+  // Google Firebase Authentication API
+  const auth = getAuth();
+  const signedInUser = auth.currentUser;
+
+  // React Query
   const { data } = useCommentsData();
   const avatarImages = JSON.parse(data.toString()).users;
-  const { png, webp } = avatarImages[props.username];
+  // const { png, webp } = avatarImages[props.username];
+
+  const png = signedInUser
+    ? signedInUser.photoURL
+    : avatarImages[props.username].png;
+  const webp = signedInUser
+    ? signedInUser.photoURL
+    : avatarImages[props.username].webp;
 
   function DynamicButton(): JSX.Element {
     return (
