@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Layout } from "../../components/Layout";
+import { NavAvatar } from "../../components/Nav";
 
 export default function Login() {
   const [user, loading] = useAuthState(auth);
@@ -15,6 +15,11 @@ export default function Login() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       console.log(result.user);
+      console.log(
+        result.user.displayName,
+        result.user.photoURL,
+        result.user.metadata
+      );
 
       // Automatically redirect user to landing page after signing in
       route.push("/");
@@ -33,19 +38,17 @@ export default function Login() {
   }, [route, user]);
 
   return (
-    <Layout>
-      <div className="mt-32 p-10 shadow-xl rounded-lg">
-        <h2 className="text-3xl font-medium">Join Today</h2>
-        <h3 className="py-4">Sign in with one of the providers</h3>
-        <div className="flex flex-col gap-4">
-          <button
-            onClick={handleGoogleLogin}
-            className="w-full flex gap-2 align-middle p-4 font-medium text-white bg-gray-700"
-          >
-            Sign in with Google
-          </button>
-        </div>
+    <div className="mt-32 p-10 shadow-xl rounded-lg">
+      <h2 className="text-3xl font-medium">Join Today</h2>
+      <h3 className="py-4">Sign in with one of the providers</h3>
+      <div className="flex flex-col gap-4">
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex gap-2 align-middle p-4 font-medium text-white bg-gray-700"
+        >
+          Sign in with Google
+        </button>
       </div>
-    </Layout>
+    </div>
   );
 }

@@ -18,7 +18,7 @@ export default function Menu(props: {
   const MENU_LINK_OPTIONS = [
     { name: "Settings", link: "/settings" },
     { name: "Sign In", link: "/auth/login" },
-    { name: "Sign Out", link: "" },
+    { name: "Sign Out", link: "/auth/logout" },
   ];
 
   function OptionIcon(props: { option: string }): JSX.Element {
@@ -88,7 +88,7 @@ export default function Menu(props: {
   return (
     <div
       id="profile-menu"
-      className="w-full md:w-[280px] absolute top-20 right-0 md:px-0 px-2 sm:px-8 md:mr-2"
+      className="w-full md:w-[280px] absolute top-14 md:top-20 right-0 md:px-0 px-2 sm:px-8 md:mr-2"
     >
       <div
         className={`h-full w-full flex-col font-bold text-sm shadow-2xl z-10 bg-white rounded-lg ${
@@ -97,10 +97,10 @@ export default function Menu(props: {
       >
         <div className="w-full flex flex-row gap-4 items-center border-b border-lightGray py-5 px-4">
           <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
-          <h3>
-            {props.currentUser}
-            {user ? "" : " (Demo User)"}
-          </h3>
+          <div>
+            <h3>{props.currentUser}</h3>
+            {user ? "" : <h3 className="text-moderateBlue">Demo User</h3>}
+          </div>
         </div>
         <div className="py-5 px-4">
           <Options />
