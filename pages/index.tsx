@@ -1,4 +1,5 @@
-import { getAuth } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useCommentsData } from "../hooks/useCommentsData";
 import { Layout } from "../components/Layout";
 import {
@@ -11,11 +12,10 @@ import { CommentInput } from "../components/CommentInput";
 
 export default function Home() {
   // Google Firebase Authentication API
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const [user, loading] = useAuthState(auth);
   // React Query
   const { isLoading, error, data } = useCommentsData();
-  if (isLoading) return <h2>Loading...</h2>;
+  if (isLoading || loading) return <h2>Loading...</h2>;
   if (error) return <h2>An error has occurred</h2>;
 
   // All data
