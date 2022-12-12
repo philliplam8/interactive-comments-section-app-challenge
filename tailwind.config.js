@@ -23,7 +23,11 @@ module.exports = {
       lightGray: 'hsl(223, 19%, 93%)',
       veryLightGray: 'hsl(228, 33%, 97%)'
     },
-    extend: {},
+    extend: {
+      dropShadow: {
+        '3xl': '0px 3px 3px rgba(0, 0, 0, 0.3)'
+      }
+    },
   },
   plugins: [],
 }

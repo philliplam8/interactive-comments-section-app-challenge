@@ -1,3 +1,9 @@
-import { LoginIcon, LogoutIcon, SettingsIcon } from "./Icons";
+import {
+  LoginIcon,
+  LogoutIcon,
+  SettingsIcon,
+  SunIcon,
+  MoonIcon,
+} from "./Icons";
 
-export { LoginIcon, LogoutIcon, SettingsIcon };
+export { LoginIcon, LogoutIcon, SettingsIcon, SunIcon, MoonIcon };

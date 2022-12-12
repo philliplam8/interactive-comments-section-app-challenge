@@ -4,7 +4,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import { Avatar } from "../Avatar";
 import { formatId } from "../../utils";
-import { LoginIcon, LogoutIcon, SettingsIcon } from "../UI/Icons";
+import {
+  LoginIcon,
+  LogoutIcon,
+  SettingsIcon,
+  SunIcon,
+  MoonIcon,
+} from "../UI/Icons";
 
 export default function Menu(props: {
   handleClick: () => void;
@@ -17,6 +23,7 @@ export default function Menu(props: {
 
   const MENU_LINK_OPTIONS = [
     { name: "Settings", link: "/settings" },
+    { name: "Display", link: "/" },
     { name: "Sign In", link: "/auth/login" },
     { name: "Sign Out", link: "/auth/logout" },
   ];
@@ -26,8 +33,10 @@ export default function Menu(props: {
       case MENU_LINK_OPTIONS[0].name:
         return <SettingsIcon />;
       case MENU_LINK_OPTIONS[1].name:
-        return <LoginIcon />;
+        return <SunIcon />;
       case MENU_LINK_OPTIONS[2].name:
+        return <LoginIcon />;
+      case MENU_LINK_OPTIONS[3].name:
         return <LogoutIcon />;
       default:
         return <></>;
@@ -91,14 +100,14 @@ export default function Menu(props: {
       className="w-full md:w-[280px] absolute top-14 md:top-20 right-0 md:px-0 px-2 sm:px-8 md:mr-2"
     >
       <div
-        className={`h-full w-full flex-col font-bold text-sm shadow-2xl z-10 bg-white rounded-lg ${
+        className={`h-full w-full flex-col font-bold text-sm drop-shadow-3xl z-10 bg-white rounded-lg ${
           props.status ? "flex" : "hidden"
         }`}
       >
         <div className="w-full flex flex-row gap-4 items-center border-b border-lightGray py-5 px-4">
           <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
           <div>
-            <h3>{props.currentUser}</h3>
+            <h3 className="text-darkBlue">{props.currentUser}</h3>
             <h3 className={`text-moderateBlue ${user && "font-medium"}`}>
               {user ? `${user.email}` : "Demo User"}
             </h3>
