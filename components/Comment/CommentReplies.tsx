@@ -32,6 +32,7 @@ export default function CommentReplies(props: {
               score={reply.score}
               replyingTo={reply.replyingTo}
               username={reply.username}
+              hasReplies={false}
             />
           );
         })}

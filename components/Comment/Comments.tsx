@@ -17,7 +17,7 @@ export default function Comments(props: {
         const webp = avatarImages.webp;
 
         return (
-          <>
+          <div key={`group-${entry.id}`} className="flex flex-col gap-4">
             {/* Parent Comment */}
             <Comment
               key={entry.id}
@@ -28,6 +28,7 @@ export default function Comments(props: {
               createdAt={entry.createdAt}
               score={entry.score}
               username={entry.username}
+              hasReplies={entry.hasReplies}
             />
             {/* Child Replies */}
             {entry.hasReplies && (
@@ -37,7 +38,7 @@ export default function Comments(props: {
                 currentUser={props.currentUser}
               />
             )}
-          </>
+          </div>
         );
       })}
     </>

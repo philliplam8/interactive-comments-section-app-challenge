@@ -30,6 +30,7 @@ export interface CardHeaderProps {
   avatarWebp: string;
   username: string;
   createdAt: string;
+  displayedDate?: string;
   currentUser: string;
 }
 
@@ -38,4 +39,5 @@ export interface CommentProps extends CardHeaderProps {
   content: string;
   score: number;
   replyingTo?: string;
+  hasReplies: boolean;
 }
