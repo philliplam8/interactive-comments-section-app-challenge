@@ -73,18 +73,30 @@ export default function Menu(props: {
   function Options(): JSX.Element {
     return (
       <div className="flex flex-col gap-6 py-2">
-        {MENU_LINK_OPTIONS.map((linkOption) =>
-          !user && linkOption.name == "Sign Out" ? (
-            <></>
-          ) : user && linkOption.name === "Sign In" ? (
-            <></>
-          ) : (
-            <Option
-              key={linkOption.name}
-              label={linkOption.name}
-              link={linkOption.link}
-            />
-          )
+        <Option
+          key={MENU_LINK_OPTIONS[0].name}
+          label={MENU_LINK_OPTIONS[0].name}
+          link={MENU_LINK_OPTIONS[0].link}
+        />
+        <Option
+          key={MENU_LINK_OPTIONS[1].name}
+          label={MENU_LINK_OPTIONS[1].name}
+          link={MENU_LINK_OPTIONS[1].link}
+        />
+
+        {/* Sign In / Sign Out Links */}
+        {!user ? (
+          <Option
+            key={MENU_LINK_OPTIONS[2].name}
+            label={MENU_LINK_OPTIONS[2].name}
+            link={MENU_LINK_OPTIONS[2].link}
+          />
+        ) : (
+          <Option
+            key={MENU_LINK_OPTIONS[3].name}
+            label={MENU_LINK_OPTIONS[3].name}
+            link={MENU_LINK_OPTIONS[3].link}
+          />
         )}
       </div>
     );
