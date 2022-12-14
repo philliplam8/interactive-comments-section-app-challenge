@@ -1,3 +1,3 @@
-import formatId from "./helpers";
+import { formatHyphenDelimiters, formatNoSpaces, getTime } from "./helpers";
 
-export { formatId };
+export { formatHyphenDelimiters, formatNoSpaces, getTime };
