@@ -35,7 +35,8 @@ export interface CardHeaderProps {
 }
 
 export interface CommentProps extends CardHeaderProps {
-  commentId?: string;
+  commentId: string;
+  groupId: string;
   content: string;
   score: number;
   replyingTo?: string;

@@ -156,7 +156,7 @@ export default function Comment(props: CommentProps): JSX.Element {
         <CommentInput
           username={props.currentUser}
           replyingTo={props.username}
-          parentCommentId={props.commentId}
+          groupId={props.groupId}
           isReply={true}
           handleButtonClick={handleReplyButtonSubmit}
         />

@@ -19,7 +19,7 @@ export default function CommentInput(props: {
   username: string;
   isReply: boolean;
   replyingTo?: string;
-  parentCommentId?: string;
+  groupId?: string;
   handleButtonClick?: () => void;
 }): JSX.Element {
   // Comments Context
@@ -34,11 +34,8 @@ export default function CommentInput(props: {
   const auth = getAuth();
   const signedInUser = auth.currentUser;
 
-  // React Query
-  const { data } = useCommentsData();
-  const avatarImages = JSON.parse(data.toString()).users;
-
   // Dyanmically display avatar of default demo user if no user logged in or logged in user's avatar if there is a user logged in
+  const avatarImages = allData.users;
   const png = signedInUser
     ? signedInUser.photoURL
     : avatarImages[props.username].png;
@@ -69,13 +66,10 @@ export default function CommentInput(props: {
 
       // Create deep copy of comments context state
       let updatedComments = cloneDeep(allData);
-
       // Append this to context
       updatedComments.comments[newId] = newCommentBody;
-
       // Update context
       setAllData(updatedComments);
-
       // Clear textarea
       textareaRef.current.value = "";
     }
@@ -84,7 +78,7 @@ export default function CommentInput(props: {
   const handleClickReplyButton = (): void => {
     if (
       textareaRef.current !== null &&
-      props.parentCommentId &&
+      props.groupId &&
       props.handleButtonClick
     ) {
       // Get the value updated in the textarea
@@ -108,16 +102,17 @@ export default function CommentInput(props: {
       // Create deep copy of comments context state
       let updatedComments = cloneDeep(allData);
       // Access replies from context
-      const parentId = props.parentCommentId;
+      const groupId = props.groupId;
       // Append this to context
-      console.log(parentId);
-      if (updatedComments.replies[parentId]) {
-        updatedComments.replies[parentId][newId] = newReplyBody;
+      // Existing comment group exists
+      console.log(groupId);
+      if (updatedComments.replies[groupId]) {
+        updatedComments.replies[groupId][newId] = newReplyBody;
       } else {
-        // TODO HUH???????
-        updatedComments.comments[parentId].hasReplies = true;
-        updatedComments.replies[parentId] = {};
-        updatedComments.replies[parentId][newId] = newReplyBody;
+        // No comment group exists, create one
+        updatedComments.comments[groupId].hasReplies = true;
+        updatedComments.replies[groupId] = {};
+        updatedComments.replies[groupId][newId] = newReplyBody;
       }
 
       // Update context

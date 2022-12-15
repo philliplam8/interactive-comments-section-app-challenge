@@ -24,6 +24,7 @@ export default function Comments(props: {
             <Comment
               key={entry.id}
               commentId={entry.id}
+              groupId={entry.id}
               currentUser={props.currentUser}
               content={entry.content}
               avatarPng={png}
@@ -39,6 +40,7 @@ export default function Comments(props: {
                 rawData={props.replies[entry.id]}
                 userAvatars={props.userAvatars}
                 currentUser={props.currentUser}
+                groupId={entry.id}
               />
             )}
           </div>

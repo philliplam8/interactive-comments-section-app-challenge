@@ -1,10 +1,13 @@
 import { Comment, RawReply, RawImage } from "./";
 
-export default function CommentReplies(props: {
+interface RepliesInterface {
   rawData: { [s: string]: RawReply } | ArrayLike<RawReply>;
   userAvatars: { [x: string]: RawImage };
   currentUser: string;
-}): JSX.Element {
+  groupId: string;
+}
+
+export default function CommentReplies(props: RepliesInterface): JSX.Element {
   // Get array of all replies for this specific comment
   const replies: RawReply[] = Object.values(props.rawData);
 
@@ -24,6 +27,8 @@ export default function CommentReplies(props: {
           return (
             <Comment
               key={reply.id}
+              commentId={reply.id}
+              groupId={props.groupId}
               currentUser={props.currentUser}
               content={reply.content}
               avatarPng={png}
