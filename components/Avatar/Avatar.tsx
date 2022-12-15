@@ -17,6 +17,7 @@ export default function Avatar(props: AvatarProps): JSX.Element {
         height={dimension}
         width={dimension}
         className={"rounded-full"}
+        referrerPolicy={"no-referrer"}
       />
     </picture>
   );
