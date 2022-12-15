@@ -1,10 +1,13 @@
 import { getAuth } from "firebase/auth";
-import { MouseEventHandler, useRef } from "react";
+import { MouseEventHandler, useRef, useContext } from "react";
+import cloneDeep from "lodash/cloneDeep";
+import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
 import { ReplyButton, SendButton } from "../UI/Buttons";
 import { Textarea } from "../UI/Input";
 import { useCommentsData } from "../../hooks/useCommentsData";
+import { formatNoSpaces, getTime } from "../../utils";
 
 export interface CommentInputProps {
   avatarPng: string;
@@ -15,8 +18,15 @@ export interface CommentInputProps {
 export default function CommentInput(props: {
   username: string;
   isReply: boolean;
-  handleButtonClick?: MouseEventHandler<HTMLButtonElement>;
+  replyingTo?: string;
+  parentCommentId?: string;
+  handleButtonClick?: () => void;
 }): JSX.Element {
+  // Comments Context
+  const { commentsValue, currentUserValue } = useContext(CommentsContext);
+  const [allData, setAllData] = commentsValue;
+  const [currentUser, setCurrentUser] = currentUserValue;
+
   // Read-only/Editable state of comment from current user
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -27,7 +37,6 @@ export default function CommentInput(props: {
   // React Query
   const { data } = useCommentsData();
   const avatarImages = JSON.parse(data.toString()).users;
-  // const { png, webp } = avatarImages[props.username];
 
   // Dyanmically display avatar of default demo user if no user logged in or logged in user's avatar if there is a user logged in
   const png = signedInUser
@@ -38,13 +47,83 @@ export default function CommentInput(props: {
     : avatarImages[props.username].webp;
 
   const handleClickSendButton = (): void => {
-    // Get the value updated in the textarea
     if (textareaRef.current !== null) {
+      // Get the value updated in the textarea
       let textVal = textareaRef.current.value;
-      console.log("Comment Input: ", textVal);
-      // TODO Create new Comment body
-      // TODO Append this to context
+      // Get username
+      const username = signedInUser
+        ? formatNoSpaces(signedInUser.displayName)
+        : props.username;
+      // Create new id
+      const newId = `${username}-${getTime()}`;
+      // Create new Comment body
+      const newCommentBody = {
+        id: newId,
+        content: textVal,
+        createdAt: "1 minute ago",
+        displayedDate: "1 minute ago",
+        score: 0,
+        username: username,
+        hasReplies: false,
+      };
 
+      // Create deep copy of comments context state
+      let updatedComments = cloneDeep(allData);
+
+      // Append this to context
+      updatedComments.comments[newId] = newCommentBody;
+
+      // Update context
+      setAllData(updatedComments);
+
+      // Clear textarea
+      textareaRef.current.value = "";
+    }
+  };
+
+  const handleClickReplyButton = (): void => {
+    if (
+      textareaRef.current !== null &&
+      props.parentCommentId &&
+      props.handleButtonClick
+    ) {
+      // Get the value updated in the textarea
+      let textVal = textareaRef.current.value;
+      // Get username
+      const username = signedInUser
+        ? formatNoSpaces(signedInUser.displayName)
+        : props.username;
+      // Create new id
+      const newId = `${username}-${getTime()}`;
+      // Create new reply body
+      const newReplyBody = {
+        id: newId,
+        content: textVal,
+        createdAt: "1 minute ago",
+        displayedDate: "1 minute ago",
+        score: 0,
+        replyingTo: props.replyingTo,
+        username: username,
+      };
+      // Create deep copy of comments context state
+      let updatedComments = cloneDeep(allData);
+      // Access replies from context
+      const parentId = props.parentCommentId;
+      // Append this to context
+      console.log(parentId);
+      if (updatedComments.replies[parentId]) {
+        updatedComments.replies[parentId][newId] = newReplyBody;
+      } else {
+        // TODO HUH???????
+        updatedComments.comments[parentId].hasReplies = true;
+        updatedComments.replies[parentId] = {};
+        updatedComments.replies[parentId][newId] = newReplyBody;
+      }
+
+      // Update context
+      setAllData(updatedComments);
+      // Hide Input Field
+      props.handleButtonClick();
       // Clear textarea
       textareaRef.current.value = "";
     }
@@ -54,7 +133,7 @@ export default function CommentInput(props: {
     return (
       <>
         {props.isReply ? (
-          <ReplyButton handleClick={props.handleButtonClick} />
+          <ReplyButton handleClick={handleClickReplyButton} />
         ) : (
           <SendButton handleClick={handleClickSendButton} />
         )}

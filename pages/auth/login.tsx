@@ -1,11 +1,18 @@
-import { useEffect, useState } from "react";
+import cloneDeep from "lodash/cloneDeep";
+import { useEffect, useContext } from "react";
+import { CommentsContext } from "../../context/CommentsContext";
 import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { NavAvatar } from "../../components/Nav";
+import { formatNoSpaces } from "../../utils/helpers";
 
 export default function Login() {
+  const { commentsValue } = useContext(CommentsContext);
+  const [allData, setAllData] = commentsValue;
+
+  // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
   const route = useRouter();
 
@@ -20,6 +27,18 @@ export default function Login() {
         result.user.photoURL,
         result.user.metadata
       );
+
+      // TODO: abstract this into function addUser
+      // Make deep copy of comments data context
+      let newData = cloneDeep(allData);
+      // Add new user entry along with their avatar photo URLs
+      const displayName = result.user.displayName;
+      const newUsername = formatNoSpaces(displayName);
+      newData.users[newUsername] = {
+        png: result.user.photoURL,
+        webp: result.user.photoURL,
+      };
+      setAllData(newData);
 
       // Automatically redirect user to landing page after signing in
       route.push("/");
@@ -51,4 +70,7 @@ export default function Login() {
       </div>
     </div>
   );
+}
+function deepCopy(parsedData: any) {
+  throw new Error("Function not implemented.");
 }

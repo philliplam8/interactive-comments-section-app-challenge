@@ -13,9 +13,9 @@ export default function CommentReplies(props: {
   }
 
   return (
-    <div className="max-w-[730px] flex flex-row justify-center mx-auto">
+    <div className="max-w-[730px] w-full flex flex-row">
       <Divider />
-      <div className="flex flex-col gap-5">
+      <div className="w-full flex flex-col gap-4">
         {replies.map((reply) => {
           const avatarImages = props.userAvatars[reply.username];
           const png = avatarImages.png;

@@ -1,8 +1,4 @@
 import { useContext, useState, useRef } from "react";
-// import {
-//   useAddCommentsData,
-//   useUpdateCommentData,
-// } from "../../hooks/useCommentsData";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
@@ -10,15 +6,13 @@ import { Reply, Edit, Delete, UpdateButton } from "../UI/Buttons";
 import { Badge } from "../Badge";
 import { Score } from "../Score";
 import { Textarea } from "../UI/Input";
-import { RawComment, CardHeaderProps, CommentProps } from "./CommentInterface";
 import { CommentInput } from "../CommentInput";
+import { formatNoSpaces } from "../../utils";
+import { RawComment, CardHeaderProps, CommentProps } from "./CommentInterface";
 
 export default function Comment(props: CommentProps): JSX.Element {
-  // const { mutate: addNewReply } = useAddCommentsData();
-  // const { mutate: updateComment } = useUpdateCommentData();
-
   // Determine if the author of the current comment is the current user logged in
-  const isCurrentUser = props.currentUser === props.username;
+  const isCurrentUser = formatNoSpaces(props.currentUser) === props.username;
 
   // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
@@ -48,6 +42,7 @@ export default function Comment(props: CommentProps): JSX.Element {
     // Update the read-only comment value with the new value updated in the textarea
     if (textareaRef.current !== null) {
       let textVal = textareaRef.current.value;
+      // TODO we shouldn't be updating the frontend, we should be updating localStorage, and allow the page to rerender
       setCommentContent(textVal);
 
       // updateComment(textVal);
@@ -63,25 +58,9 @@ export default function Comment(props: CommentProps): JSX.Element {
     setshowReplyInput(!showReplyInput);
   };
 
-  /**
-   * Submit a comment reply
-   */
   const handleReplyButtonSubmit = () => {
-    // const test = {
-    //   id: 12,
-    //   content: commentContent,
-    //   score: props.score,
-    //   replyingTo: props.username,
-    //   avatarPng: "",
-    //   avatarWebp: "",
-    //   username: props.username,
-    //   createdAt: "today",
-    //   currentUser: props.currentUser,
-    // };
-    // addNewReply(test);
     setshowReplyInput(false);
   };
-
   function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
       <div className="flex flex-row flex-wrap items-center gap-4">
@@ -176,6 +155,8 @@ export default function Comment(props: CommentProps): JSX.Element {
       {showReplyInput && (
         <CommentInput
           username={props.currentUser}
+          replyingTo={props.username}
+          parentCommentId={props.commentId}
           isReply={true}
           handleButtonClick={handleReplyButtonSubmit}
         />

@@ -3,7 +3,7 @@ import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import { Avatar } from "../Avatar";
-import { formatId } from "../../utils";
+import { formatHyphenDelimiters } from "../../utils";
 import {
   LoginIcon,
   LogoutIcon,
@@ -52,7 +52,7 @@ export default function Menu(props: {
       >
         <div className="flex flex-row gap-2">
           <div
-            id={`option-icon-${formatId(props.label)}`}
+            id={`option-icon-${formatHyphenDelimiters(props.label)}`}
             className={`h-5 w-5`}
           >
             <OptionIcon option={props.label} />
@@ -63,7 +63,9 @@ export default function Menu(props: {
               "w-full border-y-2 border-white hover:border-b-moderateBlue"
             }
           >
-            <h3 id={`option-label-${formatId(props.label)}`}>{props.label}</h3>
+            <h3 id={`option-label-${formatHyphenDelimiters(props.label)}`}>
+              {props.label}
+            </h3>
           </Link>
         </div>
       </div>

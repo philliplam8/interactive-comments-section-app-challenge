@@ -1,6 +1,8 @@
 import { auth } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCommentsData } from "../hooks/useCommentsData";
+import { useContext } from "react";
+import { CommentsContext } from "../context/CommentsContext";
 import { Layout } from "../components/Layout";
 import {
   Comments,
@@ -11,6 +13,9 @@ import {
 import { CommentInput } from "../components/CommentInput";
 
 export default function Home() {
+  const { commentsValue } = useContext(CommentsContext);
+  const [allData, setAllData] = commentsValue;
+
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
   // React Query
@@ -19,18 +24,15 @@ export default function Home() {
   if (error) return <h2>An error has occurred</h2>;
 
   // All data
-  const parsedData = JSON.parse(data.toString());
-
+  const parsedData = allData;
   // Current User
   // const currentUser: string = parsedData.currentUser;
-  console.log(user?.displayName);
+  // console.log(user?.displayName);
   const currentUser: string = user ? user?.displayName : parsedData.currentUser;
   // Images
   const userAvatars: { [x: string]: RawImage } = parsedData.users;
-
   // Comments
   const parentComments: RawComment[] = Object.values(parsedData.comments);
-
   // Replies
   const childReplies = parsedData.replies;
 
@@ -39,7 +41,6 @@ export default function Home() {
       <div id="card-group" className="flex flex-col gap-5">
         <Comments
           currentUser={currentUser}
-          comments={parentComments}
           replies={childReplies}
           userAvatars={userAvatars}
         />
