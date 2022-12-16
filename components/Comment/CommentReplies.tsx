@@ -34,6 +34,7 @@ export default function CommentReplies(props: RepliesInterface): JSX.Element {
               avatarPng={png}
               avatarWebp={webp}
               createdAt={reply.createdAt}
+              displayedDate={reply.displayedDate}
               score={reply.score}
               replyingTo={reply.replyingTo}
               username={reply.username}

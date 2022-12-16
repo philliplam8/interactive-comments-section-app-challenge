@@ -28,7 +28,7 @@ export default function Home() {
   // Current User
   // const currentUser: string = parsedData.currentUser;
   // console.log(user?.displayName);
-  const currentUser: string = user ? user?.displayName : parsedData.currentUser;
+  const currentUser: string = user ? user?.displayName : parsedData.demoUser;
   // Images
   const userAvatars: { [x: string]: RawImage } = parsedData.users;
   // Comments
@@ -36,8 +36,14 @@ export default function Home() {
   // Replies
   const childReplies = parsedData.replies;
 
+  const resetLocalStorage = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   return (
     <Layout>
+      <button onClick={resetLocalStorage}>Reset</button>
       <div id="card-group" className="flex flex-col gap-5">
         <Comments
           currentUser={currentUser}

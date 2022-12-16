@@ -69,7 +69,7 @@ export default function Comment(props: CommentProps): JSX.Element {
         </div>
         <h1 className="font-medium text-darkBlue">{props.username}</h1>
         {isCurrentUser && <Badge />}
-        <div>{props.createdAt}</div>
+        <div>{props.displayedDate}</div>
       </div>
     );
   }
@@ -120,6 +120,7 @@ export default function Comment(props: CommentProps): JSX.Element {
                 avatarWebp={props.avatarWebp}
                 username={props.username}
                 createdAt={props.createdAt}
+                displayedDate={props.displayedDate}
                 currentUser={props.currentUser}
               />
               <div className="hidden sm:block">

@@ -11,8 +11,7 @@ export default function Nav(): JSX.Element {
   // React Query
   const { data } = useCommentsData();
   const allData = JSON.parse(data.toString());
-  // const currentUser: string = allData.currentUser;
-  const currentUser = user ? user.displayName : allData.currentUser;
+  const currentUser = user ? user.displayName : allData.demoUser;
   const avatarImages = allData.users;
   const png = user ? user.photoURL : avatarImages[currentUser].png;
   const webp = user ? user.photoURL : avatarImages[currentUser].webp;

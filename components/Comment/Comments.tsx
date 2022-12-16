@@ -8,9 +8,10 @@ export default function Comments(props: {
   userAvatars: { [x: string]: RawImage };
 }): JSX.Element {
   // Comments Context
-  const { currentUserValue, commentsValue } = useContext(CommentsContext);
+  const { commentsValue } = useContext(CommentsContext);
   const [allData, setAllData] = commentsValue;
   const parentComments: RawComment[] = Object.values(allData.comments);
+
   return (
     <>
       {parentComments.map((entry: RawComment) => {
@@ -30,6 +31,7 @@ export default function Comments(props: {
               avatarPng={png}
               avatarWebp={webp}
               createdAt={entry.createdAt}
+              displayedDate={entry.displayedDate}
               score={entry.score}
               username={entry.username}
               hasReplies={entry.hasReplies}

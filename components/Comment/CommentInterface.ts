@@ -7,7 +7,7 @@ export interface RawImage {
 export interface RawComment {
   id: string;
   content: string;
-  createdAt: string;
+  createdAt: number;
   displayedDate: string;
   score: number;
   username: string;
@@ -17,7 +17,7 @@ export interface RawComment {
 export interface RawReply {
   id: string;
   content: string;
-  createdAt: string;
+  createdAt: number;
   displayedDate: string;
   score: number;
   replyingTo: string;
@@ -29,8 +29,8 @@ export interface CardHeaderProps {
   avatarPng: string;
   avatarWebp: string;
   username: string;
-  createdAt: string;
-  displayedDate?: string;
+  createdAt: number;
+  displayedDate: string;
   currentUser: string;
 }
 

@@ -1,10 +1,7 @@
-import { auth } from "../utils/firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { createContext, useEffect, useState } from "react";
-import { formatNoSpaces, getTime } from "../utils";
 
 const INITIAL_JSON = {
-    "currentUser": "juliusomo",
+    "demoUser": "juliusomo",
     "users": {
         "amyrobson": {
             "png": "./images/avatars/image-amyrobson.png",
@@ -27,7 +24,7 @@ const INITIAL_JSON = {
         "amyrobson-1667275200000": {
             "id": "amyrobson-1667275200000",
             "content": "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
-            "createdAt": "1 month ago",
+            "createdAt": 1667275200000,
             "displayedDate": "1 month ago",
             "score": 12,
             "username": "amyrobson",
@@ -36,7 +33,7 @@ const INITIAL_JSON = {
         "maxblagun-1669266000000": {
             "id": "maxblagun-1669266000000",
             "content": "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
-            "createdAt": "2 weeks ago",
+            "createdAt": 1669266000000,
             "displayedDate": "2 weeks ago",
             "score": 5,
             "username": "maxblagun",
@@ -48,7 +45,7 @@ const INITIAL_JSON = {
             "ramsesmiron-1669870800000": {
                 "id": "ramsesmiron-1669870800000",
                 "content": "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
-                "createdAt": "1 week ago",
+                "createdAt": 1669870800000,
                 "displayedDate": "1 week ago",
                 "score": 4,
                 "replyingTo": "maxblagun",
@@ -57,7 +54,7 @@ const INITIAL_JSON = {
             "juliusomo-1670302800000": {
                 "id": "juliusomo-1670302800000",
                 "content": "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
-                "createdAt": "2 days ago",
+                "createdAt": 1670302800000,
                 "displayedDate": "2 days ago",
                 "score": 2,
                 "replyingTo": "ramsesmiron",
@@ -70,11 +67,7 @@ const INITIAL_JSON = {
 export const CommentsContext = createContext();
 
 export const CommentsProvider = (props) => {
-    // Google Firebase Authentication API
-    const [user, loading] = useAuthState(auth);
-
-    const [currentUser, setCurrentUser] = useState(user ? formatNoSpaces(user?.displayName) : INITIAL_JSON.currentUser)
-
+    const [demoUser, setDemoUser] = useState(INITIAL_JSON.demoUser)
     const [allData, setAllData] = useState(() => {
         if (typeof window !== "undefined") {
             const storage = localStorage.getItem('interactiveComments');
@@ -86,12 +79,14 @@ export const CommentsProvider = (props) => {
             }
         }
     });
-    const [showModal, setShowModal] = useState(false);
 
+    // Delete Comment Modal
+    const [showModal, setShowModal] = useState(false);
     const handleModalToggle = () => {
         setShowModal(!showModal);
     };
 
+    // Update localStorage data comments data has changed
     useEffect(() => {
         const newComments = { ...allData }
         localStorage.setItem('interactiveComments', JSON.stringify(newComments));
@@ -99,7 +94,7 @@ export const CommentsProvider = (props) => {
 
     return (
         <CommentsContext.Provider value={{
-            currentUserValue: [currentUser, setCurrentUser],
+            demoUserValue: [demoUser, setDemoUser],
             commentsValue: [allData, setAllData],
             modalValue: [showModal, handleModalToggle]
         }}>
