@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { MouseEventHandler } from "react";
-import { useCommentsData } from "../../hooks/useCommentsData";
 import { Avatar } from "../Avatar";
 
 export default function NavAvatar(props: {
