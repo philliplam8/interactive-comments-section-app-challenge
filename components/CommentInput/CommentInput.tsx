@@ -71,7 +71,7 @@ export default function CommentInput(props: {
 
   /**
    * Create a new reply id and reply comment object body
-   * @param replyingTo The
+   * @param replyingTo The username of the comment's recipient
    * @param replyContent Text input from the user
    * @returns A unique reply id and a ready to use reply comment object
    */
