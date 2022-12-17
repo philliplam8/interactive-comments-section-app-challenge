@@ -1,4 +1,5 @@
 import { useContext, useState, useRef } from "react";
+import cloneDeep from "lodash/cloneDeep";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
@@ -14,14 +15,14 @@ export default function Comment(props: CommentProps): JSX.Element {
   // Determine if the author of the current comment is the current user logged in
   const isCurrentUser = formatNoSpaces(props.currentUser) === props.username;
 
+  // Comments state and Delete comment modal state
+  const { commentsValue, modalValue } = useContext(CommentsContext);
+  const [allData, setAllData] = commentsValue;
+  const [showModal, handleModalToggle] = modalValue;
+
   // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [commentContent, setCommentContent] = useState(props.content);
-
-  // Delete comment modal state
-  const { modalValue } = useContext(CommentsContext);
-  const [showModal, handleModalToggle] = modalValue;
 
   // Toggle for displaying a new reply input under comment
   const [showReplyInput, setshowReplyInput] = useState(false);
@@ -42,10 +43,23 @@ export default function Comment(props: CommentProps): JSX.Element {
     // Update the read-only comment value with the new value updated in the textarea
     if (textareaRef.current !== null) {
       let textVal = textareaRef.current.value;
-      // TODO we shouldn't be updating the frontend, we should be updating localStorage, and allow the page to rerender
-      setCommentContent(textVal);
 
-      // updateComment(textVal);
+      // Create deep copy of the comments context state
+      let updatedComments = cloneDeep(allData);
+
+      // Determine if this is a parent comment or reply
+      const isParent = props.groupId === props.commentId;
+      // Update comment content value
+      if (isParent) {
+        updatedComments.comments[props.groupId].content = textVal;
+      } else {
+        updatedComments.replies[props.groupId][props.commentId].content =
+          textVal;
+      }
+
+      // Update context state
+      setAllData(updatedComments);
+      console.log(props.groupId, props.commentId);
     }
     // Change the comment card from edit-view to read-only
     toggleReadOnly();
@@ -131,10 +145,7 @@ export default function Comment(props: CommentProps): JSX.Element {
             <div id="comment">
               {isCurrentUser && !readOnly ? (
                 <div className="flex flex-col gap-4">
-                  <Textarea
-                    content={commentContent}
-                    textareaRef={textareaRef}
-                  />
+                  <Textarea content={props.content} textareaRef={textareaRef} />
                   <div className="flex justify-end">
                     <UpdateButton handleClick={handleUpdateComment} />
                   </div>
@@ -144,7 +155,7 @@ export default function Comment(props: CommentProps): JSX.Element {
                   {props.replyingTo && (
                     <ReplyingTo username={props.replyingTo} />
                   )}
-                  {commentContent}
+                  {props.content}
                 </>
               )}
             </div>
