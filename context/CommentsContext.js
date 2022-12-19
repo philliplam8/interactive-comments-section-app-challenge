@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import cloneDeep from "lodash/cloneDeep";
 
 const INITIAL_JSON = {
     "demoUser": "juliusomo",
@@ -85,6 +86,42 @@ export const CommentsProvider = (props) => {
     const handleModalToggle = () => {
         setShowModal(!showModal);
     };
+    const [currentComment, setCurrentComment] = useState({ groupId: "", commentId: "" })
+
+    /**
+     * Delete comment and their child replies, if they exist
+     */
+    const handleDeleteComment = () => {
+
+        const groupId = currentComment.groupId;
+        const commentId = currentComment.commentId;
+
+        // Create deep copy of the comments context state
+        let updatedComments = cloneDeep(allData);
+
+        // Determine if this is a parent comment or reply
+        const isParent = groupId === commentId;
+
+        // Delete comment and child replies
+        if (isParent) {
+            // If comment has replies, delete comment's replies as well
+            if (updatedComments.comments[groupId].hasReplies) {
+                delete updatedComments.replies[groupId];
+            }
+            // Delete main comment
+            delete updatedComments.comments[groupId];
+        }
+        // Delete single reply
+        else {
+            delete updatedComments.replies[groupId][commentId];
+        }
+
+        // Update context state
+        setAllData(updatedComments);
+
+        // Hide Delete Modal
+        handleModalToggle();
+    };
 
     // Update localStorage data comments data has changed
     useEffect(() => {
@@ -95,8 +132,9 @@ export const CommentsProvider = (props) => {
     return (
         <CommentsContext.Provider value={{
             demoUserValue: [demoUser, setDemoUser],
-            commentsValue: [allData, setAllData],
-            modalValue: [showModal, handleModalToggle]
+            allDataValue: [allData, setAllData],
+            modalValue: [showModal, handleModalToggle, handleDeleteComment],
+            currentCommentsValue: [currentComment, setCurrentComment]
         }}>
             {props.children}
         </CommentsContext.Provider>

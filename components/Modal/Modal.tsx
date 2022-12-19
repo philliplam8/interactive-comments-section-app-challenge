@@ -13,7 +13,7 @@ const TEXT = {
 
 export default function Modal(): JSX.Element {
   const { modalValue } = useContext(CommentsContext);
-  const [showModal, handleModalToggle] = modalValue;
+  const [showModal, handleModalToggle, handleDeleteComment] = modalValue;
 
   function ModalContent(): JSX.Element {
     return (
@@ -29,7 +29,10 @@ export default function Modal(): JSX.Element {
                 label={TEXT.BTN_NO}
                 handleClick={handleModalToggle}
               />
-              <ErrorButton label={TEXT.BTN_YES} />
+              <ErrorButton
+                label={TEXT.BTN_YES}
+                handleClick={handleDeleteComment}
+              />
             </div>
           </div>
         </Card>

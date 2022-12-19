@@ -125,11 +125,15 @@ export function SecondaryButton(props: {
   );
 }
 
-export function ErrorButton(props: { label: string }): JSX.Element {
+export function ErrorButton(props: {
+  label: string;
+  handleClick: MouseEventHandler<HTMLButtonElement>;
+}): JSX.Element {
   return (
     <TextButton
       label={props.label}
       classStyle={"bg-softRed hover:bg-paleRed w-full"}
+      handleClick={props.handleClick}
     />
   );
 }

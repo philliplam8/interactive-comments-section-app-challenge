@@ -16,9 +16,11 @@ export default function Comment(props: CommentProps): JSX.Element {
   const isCurrentUser = formatNoSpaces(props.currentUser) === props.username;
 
   // Comments state and Delete comment modal state
-  const { commentsValue, modalValue } = useContext(CommentsContext);
-  const [allData, setAllData] = commentsValue;
+  const { allDataValue, modalValue, currentCommentsValue } =
+    useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
   const [showModal, handleModalToggle] = modalValue;
+  const [currentComment, setCurrentComment] = currentCommentsValue;
 
   // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
@@ -33,6 +35,20 @@ export default function Comment(props: CommentProps): JSX.Element {
    */
   const toggleReadOnly = () => {
     setReadOnly(!readOnly);
+  };
+
+  /**
+   * Toggle the editable textarea reply under a read-only comment.
+   */
+  const handleReplyButtonToggle = () => {
+    setshowReplyInput(!showReplyInput);
+  };
+
+  /**
+   * Hide the editable textarea reply under a read-only comment.
+   */
+  const handleHideReplyInput = () => {
+    setshowReplyInput(false);
   };
 
   /**
@@ -59,22 +75,26 @@ export default function Comment(props: CommentProps): JSX.Element {
 
       // Update context state
       setAllData(updatedComments);
-      console.log(props.groupId, props.commentId);
     }
     // Change the comment card from edit-view to read-only
     toggleReadOnly();
   };
 
   /**
-   * Display an editable textarea reply under a read-only comment.
+   * Show the Delete Modal and update context with the current comment's groupId and commentId
    */
-  const handleReplyButtonToggle = () => {
-    setshowReplyInput(!showReplyInput);
+  const handleClickDeleteButton = () => {
+    // Show Delete Modal
+    handleModalToggle();
+
+    // Pass the current comment's groupId and commentId to context state
+    const newCurrentComment = {
+      groupId: props.groupId,
+      commentId: props.commentId,
+    };
+    setCurrentComment(newCurrentComment);
   };
 
-  const handleReplyButtonSubmit = () => {
-    setshowReplyInput(false);
-  };
   function CardHeader(props: CardHeaderProps): JSX.Element {
     return (
       <div className="flex flex-row flex-wrap items-center gap-4">
@@ -93,7 +113,7 @@ export default function Comment(props: CommentProps): JSX.Element {
       <>
         {isCurrentUser ? (
           <div className="flex flex-row gap-4">
-            <Delete handleClick={handleModalToggle} />
+            <Delete handleClick={handleClickDeleteButton} />
             <Edit handleClick={toggleReadOnly} readOnly={readOnly} />
           </div>
         ) : (
@@ -170,7 +190,7 @@ export default function Comment(props: CommentProps): JSX.Element {
           replyingTo={props.username}
           groupId={props.groupId}
           isReply={true}
-          handleButtonClick={handleReplyButtonSubmit}
+          handleButtonClick={handleHideReplyInput}
         />
       )}
     </>
