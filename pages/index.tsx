@@ -13,8 +13,8 @@ import {
 import { CommentInput } from "../components/CommentInput";
 
 export default function Home() {
-  const { commentsValue } = useContext(CommentsContext);
-  const [allData, setAllData] = commentsValue;
+  const { allDataValue } = useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
 
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);

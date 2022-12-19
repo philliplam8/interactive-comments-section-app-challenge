@@ -33,8 +33,8 @@ export default function CommentInput(props: {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Comments Context
-  const { commentsValue } = useContext(CommentsContext);
-  const [allData, setAllData] = commentsValue;
+  const { allDataValue } = useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
   // Dyanmically display avatar of default demo user if no user logged in or logged in user's avatar if there is a user logged in
   const avatarImages = allData.users;
   const png = signedInUser

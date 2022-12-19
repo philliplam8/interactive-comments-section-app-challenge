@@ -8,8 +8,8 @@ export default function Comments(props: {
   userAvatars: { [x: string]: RawImage };
 }): JSX.Element {
   // Comments Context
-  const { commentsValue } = useContext(CommentsContext);
-  const [allData, setAllData] = commentsValue;
+  const { allDataValue } = useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
   const parentComments: RawComment[] = Object.values(allData.comments);
 
   return (

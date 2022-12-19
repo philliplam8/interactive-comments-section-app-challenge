@@ -9,8 +9,8 @@ import { NavAvatar } from "../../components/Nav";
 import { formatNoSpaces } from "../../utils/helpers";
 
 export default function Login() {
-  const { commentsValue } = useContext(CommentsContext);
-  const [allData, setAllData] = commentsValue;
+  const { allDataValue } = useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
 
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
@@ -70,7 +70,4 @@ export default function Login() {
       </div>
     </div>
   );
-}
-function deepCopy(parsedData: any) {
-  throw new Error("Function not implemented.");
 }
