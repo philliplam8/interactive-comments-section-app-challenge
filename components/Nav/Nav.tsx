@@ -1,8 +1,30 @@
 import { getAuth } from "firebase/auth";
-import { useState, useContext, useMemo } from "react";
+import { useState, useContext } from "react";
+import { NavContext } from "../../context/NavContext";
 import Link from "next/link";
 import { useCommentsData } from "../../hooks/useCommentsData";
-import { NavAvatar, NavLinksDesktop, Hamburger, Menu } from "./";
+import { NavAvatar, Menu } from "./";
+import { Drawer } from "../UI/Drawer";
+import { Footer } from "../Footer";
+import { OutgoingLink } from "../UI/Icons";
+
+const NAV_LINKS = [
+  {
+    name: "About",
+    link: "/about",
+    newTab: false,
+  },
+  {
+    name: "Reset",
+    link: "",
+    newTab: false,
+  },
+  {
+    name: "Frontend Mentor",
+    link: "https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9",
+    newTab: true,
+  },
+];
 
 export default function Nav(): JSX.Element {
   // Google Firebase Authentication API
@@ -20,6 +42,77 @@ export default function Nav(): JSX.Element {
   const handleAvatarClick = (): void => {
     setShowMenu(!showMenu);
   };
+
+  function NavLink(props: {
+    name: string;
+    link: string;
+    newTab: boolean;
+  }): JSX.Element {
+    return (
+      <Link
+        key={props.link}
+        href={props.link}
+        className={
+          "h-full flex flex-row gap-1 items-center text-lg font-bold md:font-light md:text-sm border-b-4 border-white hover:border-moderateBlue hover:text-black"
+        }
+        target={props.newTab ? "_blank" : ""}
+      >
+        {props.name}
+        {props.newTab && (
+          <div className="flex items-center h-5 w-5 sm:h-4 sm:w-4 ">
+            <OutgoingLink />
+          </div>
+        )}
+      </Link>
+    );
+  }
+
+  function NavLinks(): JSX.Element {
+    return (
+      <>
+        {NAV_LINKS.map((item) => {
+          return (
+            <NavLink
+              key={item.name}
+              link={item.link}
+              name={item.name}
+              newTab={item.newTab}
+            />
+          );
+        })}
+      </>
+    );
+  }
+
+  function Hamburger(): JSX.Element {
+    const { menuValue } = useContext(NavContext);
+    const [showMenu, setShowMenu] = menuValue;
+
+    return (
+      <div className="md:hidden bg-white dark:bg-black z-40">
+        <Drawer direction={"left"}>
+          <div className="h-full flex flex-col justify-between">
+            <div
+              className="flex flex-col gap-6"
+              onClick={() => setShowMenu(!showMenu)}
+            >
+              <NavLinks />
+            </div>
+
+            <Footer />
+          </div>
+        </Drawer>
+      </div>
+    );
+  }
+
+  function NavLinksDesktop(): JSX.Element {
+    return (
+      <div className="h-full hidden md:flex flex-row md:gap-8 lg:gap-10 items-center light:bg-white dark:bg-black">
+        <NavLinks />
+      </div>
+    );
+  }
 
   return (
     <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white shadow-sm">

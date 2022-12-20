@@ -9,6 +9,7 @@ import {
   EditIcon,
   DeleteIcon,
   CloseIcon,
+  OutgoingLink,
 } from "./Icons";
 
 export {
@@ -22,4 +23,5 @@ export {
   EditIcon,
   DeleteIcon,
   CloseIcon,
+  OutgoingLink,
 };
