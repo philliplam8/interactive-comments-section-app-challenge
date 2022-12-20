@@ -25,20 +25,18 @@ export interface RawReply {
 }
 
 // Flattened Data ----------------------------------------------------
-export interface CardHeaderProps {
-  avatarPng: string;
-  avatarWebp: string;
-  username: string;
-  createdAt: number;
-  displayedDate: string;
-  currentUser: string;
-}
 
-export interface CommentProps extends CardHeaderProps {
+export interface CommentProps {
   commentId: string;
   groupId: string;
   content: string;
   score: number;
   replyingTo?: string;
   hasReplies: boolean;
+  avatarPng: string;
+  avatarWebp: string;
+  username: string;
+  createdAt: number;
+  displayedDate: string;
+  currentUser: string;
 }

@@ -86,20 +86,18 @@ export const CommentsProvider = (props) => {
     const handleModalToggle = () => {
         setShowModal(!showModal);
     };
-    const [currentComment, setCurrentComment] = useState({ groupId: "", commentId: "" })
+    const [commentToDelete, setCommentToDelete] = useState({ groupId: "", commentId: "" })
 
     /**
      * Delete comment and their child replies, if they exist
      */
     const handleDeleteComment = () => {
 
-        const groupId = currentComment.groupId;
-        const commentId = currentComment.commentId;
-
         // Create deep copy of the comments context state
         let updatedComments = cloneDeep(allData);
 
         // Determine if this is a parent comment or reply
+        const { groupId, commentId } = commentToDelete;
         const isParent = groupId === commentId;
 
         // Delete comment and child replies
@@ -134,7 +132,7 @@ export const CommentsProvider = (props) => {
             demoUserValue: [demoUser, setDemoUser],
             allDataValue: [allData, setAllData],
             modalValue: [showModal, handleModalToggle, handleDeleteComment],
-            currentCommentsValue: [currentComment, setCurrentComment]
+            commentToDeleteValue: [commentToDelete, setCommentToDelete],
         }}>
             {props.children}
         </CommentsContext.Provider>

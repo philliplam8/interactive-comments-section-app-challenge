@@ -9,18 +9,18 @@ import { Score } from "../Score";
 import { Textarea } from "../UI/Input";
 import { CommentInput } from "../CommentInput";
 import { formatNoSpaces } from "../../utils";
-import { RawComment, CardHeaderProps, CommentProps } from "./CommentInterface";
+import { CommentProps } from "./CommentInterface";
 
 export default function Comment(props: CommentProps): JSX.Element {
   // Determine if the author of the current comment is the current user logged in
   const isCurrentUser = formatNoSpaces(props.currentUser) === props.username;
 
   // Comments state and Delete comment modal state
-  const { allDataValue, modalValue, currentCommentsValue } =
+  const { allDataValue, modalValue, commentToDeleteValue } =
     useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
   const [showModal, handleModalToggle] = modalValue;
-  const [currentComment, setCurrentComment] = currentCommentsValue;
+  const [commentToDelete, setCommentToDelete] = commentToDeleteValue;
 
   // Read-only/Editable state of comment from current user
   const [readOnly, setReadOnly] = useState(true);
@@ -88,14 +88,14 @@ export default function Comment(props: CommentProps): JSX.Element {
     handleModalToggle();
 
     // Pass the current comment's groupId and commentId to context state
-    const newCurrentComment = {
+    const newCommentToDelete = {
       groupId: props.groupId,
       commentId: props.commentId,
     };
-    setCurrentComment(newCurrentComment);
+    setCommentToDelete(newCommentToDelete);
   };
 
-  function CardHeader(props: CardHeaderProps): JSX.Element {
+  function CardHeader(): JSX.Element {
     return (
       <div className="flex flex-row flex-wrap items-center gap-4">
         <div>
@@ -123,10 +123,14 @@ export default function Comment(props: CommentProps): JSX.Element {
     );
   }
 
-  function CardFooterMobile(props: { score: number }): JSX.Element {
+  function CardFooterMobile(): JSX.Element {
     return (
       <div className="sm:hidden flex flex-row justify-between">
-        <Score initialScore={props.score} />
+        <Score
+          initialScore={props.score}
+          groupId={props.groupId}
+          commentId={props.commentId}
+        />
         <CardActions />
       </div>
     );
@@ -145,18 +149,15 @@ export default function Comment(props: CommentProps): JSX.Element {
       <Card>
         <div className="h-full flex flex-col sm:flex-row justify-between sm:justify-start sm:gap-4 text-grayishBlue">
           <div className="hidden sm:block">
-            <Score initialScore={props.score} />
+            <Score
+              initialScore={props.score}
+              groupId={props.groupId}
+              commentId={props.commentId}
+            />
           </div>
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-row justify-between">
-              <CardHeader
-                avatarPng={props.avatarPng}
-                avatarWebp={props.avatarWebp}
-                username={props.username}
-                createdAt={props.createdAt}
-                displayedDate={props.displayedDate}
-                currentUser={props.currentUser}
-              />
+              <CardHeader />
               <div className="hidden sm:block">
                 <CardActions />
               </div>
@@ -180,7 +181,7 @@ export default function Comment(props: CommentProps): JSX.Element {
               )}
             </div>
 
-            <CardFooterMobile score={props.score} />
+            <CardFooterMobile />
           </div>
         </div>
       </Card>

@@ -18,7 +18,6 @@ export default function Comments(props: {
         const avatarImages = props.userAvatars[entry.username];
         const png = avatarImages.png;
         const webp = avatarImages.webp;
-        console.log(props.currentUser, entry.username);
         return (
           <div key={`group-${entry.id}`} className="flex flex-col gap-4">
             {/* Parent Comment */}
