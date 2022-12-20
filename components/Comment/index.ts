@@ -5,9 +5,8 @@ import {
   RawImage,
   RawComment,
   RawReply,
-  CardHeaderProps,
   CommentProps,
 } from "./CommentInterface";
 
 export { Comment, CommentReplies, Comments };
-export type { RawImage, RawComment, RawReply, CardHeaderProps, CommentProps };
+export type { RawImage, RawComment, RawReply, CommentProps };
