@@ -8,11 +8,7 @@ export default function Textarea(props: {
   showError: boolean;
 }): JSX.Element {
   function ErrorMessage(): JSX.Element {
-    return (
-      <p className={`text-softRed ${true ? "" : "hidden"}`}>
-        Error: comment cannot be empty
-      </p>
-    );
+    return <p className={"text-softRed"}>Error: comment cannot be empty</p>;
   }
 
   return (
