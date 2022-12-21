@@ -4,12 +4,14 @@ import { ReplyIcon } from "../Icons/Icons";
 
 function ScoreButton(props: {
   children: React.ReactNode;
+  ariaLabel: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
   return (
     <button
       className="flex justify-center items-center h-full sm:h-24 w-full fill-lightGrayishBlue hover:fill-moderateBlue"
       onClick={props.handleClick}
+      aria-label={props.ariaLabel}
     >
       {props.children}
     </button>
@@ -20,7 +22,7 @@ export function Plus(props: {
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
   return (
-    <ScoreButton handleClick={props.handleClick}>
+    <ScoreButton handleClick={props.handleClick} ariaLabel={"Upvote comment"}>
       <PlusIcon />
     </ScoreButton>
   );
@@ -30,7 +32,7 @@ export function Minus(props: {
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
   return (
-    <ScoreButton handleClick={props.handleClick}>
+    <ScoreButton handleClick={props.handleClick} ariaLabel={"Downvote comment"}>
       <MinusIcon />
     </ScoreButton>
   );
@@ -43,6 +45,7 @@ export function Reply(props: {
     <button
       className="flex flex-row gap-2 items-center justify-center font-medium text-moderateBlue hover:text-lightGrayishBlue fill-moderateBlue hover:fill-lightGrayishBlue"
       onClick={props.handleClick}
+      aria-label={"Add a comment reply"}
     >
       <ReplyIcon />
       Reply
@@ -63,6 +66,7 @@ export function Edit(props: {
       } `}
       disabled={!props.readOnly}
       onClick={props.handleClick}
+      aria-label={"Edit comment"}
     >
       <EditIcon />
       Edit
@@ -77,6 +81,7 @@ export function Delete(props: {
     <button
       className="flex flex-row gap-2 items-center justify-center font-medium text-softRed hover:text-paleRed fill-softRed hover:fill-paleRed"
       onClick={props.handleClick}
+      aria-label={"Delete comment"}
     >
       <DeleteIcon />
       Delete
@@ -161,7 +166,11 @@ export function CloseButton(props: {
   handleClose: MouseEventHandler<HTMLButtonElement>;
 }): JSX.Element {
   return (
-    <button className="w-[16px]" onClick={props.handleClose}>
+    <button
+      className="w-[16px]"
+      onClick={props.handleClose}
+      aria-label="Close menu"
+    >
       <CloseIcon />
     </button>
   );
