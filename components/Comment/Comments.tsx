@@ -1,23 +1,21 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { CommentsContext } from "../../context/CommentsContext";
-import { Comment, CommentReplies, RawComment, RawReply, RawImage } from "./";
+import { Comment, CommentReplies, RawComment, RawImage } from "./";
 
-export default function Comments(props: {
-  currentUser: string;
-  replies: { [x: string]: { [s: string]: RawReply } | ArrayLike<RawReply> };
-  userAvatars: { [x: string]: RawImage };
-}): JSX.Element {
+export default function Comments(props: { currentUser: string }): JSX.Element {
   // Comments Context
   const { allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
   const parentComments: RawComment[] = Object.values(allData.comments);
-
+  // Images
+  const userAvatars: { [x: string]: RawImage } = allData.users;
+  // Replies
+  const childReplies = allData.replies;
   return (
     <>
       {parentComments.map((entry: RawComment) => {
-        const avatarImages = props.userAvatars[entry.username];
-        const png = avatarImages.png;
-        const webp = avatarImages.webp;
+        const { png, webp } = userAvatars[entry.username];
+
         return (
           <div key={`group-${entry.id}`} className="flex flex-col gap-4">
             {/* Parent Comment */}
@@ -38,8 +36,8 @@ export default function Comments(props: {
             {/* Child Replies */}
             {entry.hasReplies && (
               <CommentReplies
-                rawData={props.replies[entry.id]}
-                userAvatars={props.userAvatars}
+                rawData={childReplies[entry.id]}
+                userAvatars={userAvatars}
                 currentUser={props.currentUser}
                 groupId={entry.id}
               />

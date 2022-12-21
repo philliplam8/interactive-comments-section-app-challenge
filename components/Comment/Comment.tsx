@@ -187,10 +187,9 @@ export default function Comment(props: CommentProps): JSX.Element {
       </Card>
       {showReplyInput && (
         <CommentInput
-          username={props.currentUser}
+          isReply={true}
           replyingTo={props.username}
           groupId={props.groupId}
-          isReply={true}
           handleButtonClick={handleHideReplyInput}
         />
       )}

@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { MouseEventHandler, useRef, useContext } from "react";
+import { useRef, useContext } from "react";
 import cloneDeep from "lodash/cloneDeep";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
@@ -15,34 +15,34 @@ export interface CommentInputProps {
 }
 
 export default function CommentInput(props: {
-  username: string;
   isReply: boolean;
   replyingTo?: string;
   groupId?: string;
   handleButtonClick?: () => void;
 }): JSX.Element {
+  // Comments Context
+  const { allDataValue } = useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
+
   // Google Firebase Authentication API
   const auth = getAuth();
   const signedInUser = auth.currentUser;
   // Get username
   const username = signedInUser
     ? formatNoSpaces(signedInUser.displayName)
-    : props.username;
+    : allData.demoUser;
 
   // Read-only/Editable state of comment from current user
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Comments Context
-  const { allDataValue } = useContext(CommentsContext);
-  const [allData, setAllData] = allDataValue;
   // Dyanmically display avatar of default demo user if no user logged in or logged in user's avatar if there is a user logged in
   const avatarImages = allData.users;
   const png = signedInUser
     ? signedInUser.photoURL
-    : avatarImages[props.username].png;
+    : avatarImages[allData.demoUser].png;
   const webp = signedInUser
     ? signedInUser.photoURL
-    : avatarImages[props.username].webp;
+    : avatarImages[allData.demoUser].webp;
 
   /**
    * Create a new comment id and comment object body
