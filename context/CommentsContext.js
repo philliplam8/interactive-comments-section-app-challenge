@@ -5,20 +5,20 @@ const INITIAL_JSON = {
     "demoUser": "juliusomo",
     "users": {
         "amyrobson": {
-            "png": "./images/avatars/image-amyrobson.png",
-            "webp": "./images/avatars/image-amyrobson.webp"
+            "png": "/images/avatars/image-amyrobson.png",
+            "webp": "/images/avatars/image-amyrobson.webp"
         },
         "maxblagun": {
-            "png": "./images/avatars/image-maxblagun.png",
-            "webp": "./images/avatars/image-maxblagun.webp"
+            "png": "/images/avatars/image-maxblagun.png",
+            "webp": "/images/avatars/image-maxblagun.webp"
         },
         "ramsesmiron": {
-            "png": "./images/avatars/image-ramsesmiron.png",
-            "webp": "./images/avatars/image-ramsesmiron.webp"
+            "png": "/images/avatars/image-ramsesmiron.png",
+            "webp": "/images/avatars/image-ramsesmiron.webp"
         },
         "juliusomo": {
-            "png": "./images/avatars/image-juliusomo.png",
-            "webp": "./images/avatars/image-juliusomo.webp"
+            "png": "/images/avatars/image-juliusomo.png",
+            "webp": "/images/avatars/image-juliusomo.webp"
         }
     },
     "comments": {

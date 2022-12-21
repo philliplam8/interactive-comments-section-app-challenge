@@ -18,11 +18,6 @@ const NAV_LINKS = [
     newTab: false,
   },
   {
-    name: "Reset",
-    link: "",
-    newTab: false,
-  },
-  {
     name: "Frontend Mentor",
     link: "https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9",
     newTab: true,
@@ -100,7 +95,7 @@ function NavLinksDesktop(): JSX.Element {
   );
 }
 
-export default function Nav(): JSX.Element {
+export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
   const [showMenu, setShowMenu] = useState(false);
   const handleAvatarClick = (): void => {
     setShowMenu(!showMenu);
@@ -125,6 +120,7 @@ export default function Nav(): JSX.Element {
   const avatarImages = allData.users;
   const png = user ? user.photoURL : avatarImages[currentUser].png;
   const webp = user ? user.photoURL : avatarImages[currentUser].webp;
+  console.log(png, webp);
 
   return (
     <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white shadow-sm">
@@ -142,17 +138,22 @@ export default function Nav(): JSX.Element {
           </Link>
           <NavLinksDesktop />
         </div>
-
-        <div className="flex flex-row gap-5 md:gap-10 items-center">
-          <NavAvatar png={png} webp={webp} onButtonClick={handleAvatarClick} />
-          <Menu
-            status={showMenu}
-            handleClick={handleAvatarClick}
-            currentUser={currentUser}
-            png={png}
-            webp={webp}
-          />
-        </div>
+        {prop.showAvatar && (
+          <div className="flex flex-row gap-5 md:gap-10 items-center">
+            <NavAvatar
+              png={png}
+              webp={webp}
+              onButtonClick={handleAvatarClick}
+            />
+            <Menu
+              status={showMenu}
+              handleClick={handleAvatarClick}
+              currentUser={currentUser}
+              png={png}
+              webp={webp}
+            />
+          </div>
+        )}
       </nav>
     </div>
   );

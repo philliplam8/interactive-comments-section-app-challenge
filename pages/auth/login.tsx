@@ -5,8 +5,9 @@ import { useRouter } from "next/router";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { NavAvatar } from "../../components/Nav";
+import { FcGoogle } from "react-icons/fc";
 import { formatNoSpaces } from "../../utils/helpers";
+import { LayoutLogin } from "../../components/Layout";
 
 export default function Login() {
   const { allDataValue } = useContext(CommentsContext);
@@ -21,8 +22,8 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log(result.user);
       console.log(
+        result.user,
         result.user.displayName,
         result.user.photoURL,
         result.user.metadata
@@ -57,17 +58,22 @@ export default function Login() {
   }, [route, user]);
 
   return (
-    <div className="mt-32 p-10 shadow-xl rounded-lg">
-      <h2 className="text-3xl font-medium">Join Today</h2>
-      <h3 className="py-4">Sign in with one of the providers</h3>
-      <div className="flex flex-col gap-4">
-        <button
-          onClick={handleGoogleLogin}
-          className="w-full flex gap-2 align-middle p-4 font-medium text-white bg-gray-700"
-        >
-          Sign in with Google
-        </button>
+    <LayoutLogin>
+      <div className="max-w-[500px] mx-auto p-10 shadow-xl rounded-lg text-darkBlue bg-white">
+        <h2 className="text-3xl font-medium">Join Today</h2>
+        <h3 className="py-4">Sign in with one of the providers</h3>
+
+        <div className="flex flex-col gap-4">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex flex-row items-center gap-2 align-middle p-4 font-medium text-white bg-darkBlue hover:bg-grayishBlue rounded-lg"
+            aria-label="Sign in with Google"
+          >
+            <FcGoogle />
+            Sign in with Google
+          </button>
+        </div>
       </div>
-    </div>
+    </LayoutLogin>
   );
 }
