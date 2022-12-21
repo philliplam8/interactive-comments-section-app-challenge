@@ -26,6 +26,9 @@ export default function Comment(props: CommentProps): JSX.Element {
   const [readOnly, setReadOnly] = useState(true);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  // Error Message Display State
+  const [showError, setShowError] = useState(false);
+
   // Toggle for displaying a new reply input under comment
   const [showReplyInput, setshowReplyInput] = useState(false);
 
@@ -59,25 +62,30 @@ export default function Comment(props: CommentProps): JSX.Element {
     // Update the read-only comment value with the new value updated in the textarea
     if (textareaRef.current !== null) {
       let textVal = textareaRef.current.value;
-
-      // Create deep copy of the comments context state
-      let updatedComments = cloneDeep(allData);
-
-      // Determine if this is a parent comment or reply
-      const isParent = props.groupId === props.commentId;
-      // Update comment content value
-      if (isParent) {
-        updatedComments.comments[props.groupId].content = textVal;
+      if (textVal == "") {
+        setShowError(true);
       } else {
-        updatedComments.replies[props.groupId][props.commentId].content =
-          textVal;
-      }
+        // Create deep copy of the comments context state
+        let updatedComments = cloneDeep(allData);
 
-      // Update context state
-      setAllData(updatedComments);
+        // Determine if this is a parent comment or reply
+        const isParent = props.groupId === props.commentId;
+        // Update comment content value
+        if (isParent) {
+          updatedComments.comments[props.groupId].content = textVal;
+        } else {
+          updatedComments.replies[props.groupId][props.commentId].content =
+            textVal;
+        }
+
+        // Update context state
+        setAllData(updatedComments);
+        // Remove error message
+        setShowError(false);
+        // Change the comment card from edit-view to read-only
+        toggleReadOnly();
+      }
     }
-    // Change the comment card from edit-view to read-only
-    toggleReadOnly();
   };
 
   /**
@@ -166,7 +174,11 @@ export default function Comment(props: CommentProps): JSX.Element {
             <div id="comment">
               {isCurrentUser && !readOnly ? (
                 <div className="flex flex-col gap-4">
-                  <Textarea content={props.content} textareaRef={textareaRef} />
+                  <Textarea
+                    content={props.content}
+                    textareaRef={textareaRef}
+                    showError={showError}
+                  />
                   <div className="flex justify-end">
                     <UpdateButton handleClick={handleUpdateComment} />
                   </div>

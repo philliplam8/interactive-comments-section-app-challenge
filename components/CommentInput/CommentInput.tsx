@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { useRef, useContext } from "react";
+import { useRef, useState, useContext } from "react";
 import cloneDeep from "lodash/cloneDeep";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
@@ -34,6 +34,9 @@ export default function CommentInput(props: {
 
   // Read-only/Editable state of comment from current user
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Error Message Display State
+  const [showError, setShowError] = useState(false);
 
   // Dyanmically display avatar of default demo user if no user logged in or logged in user's avatar if there is a user logged in
   const avatarImages = allData.users;
@@ -102,16 +105,21 @@ export default function CommentInput(props: {
     if (textareaRef.current !== null) {
       // Get the value updated in the textarea
       let textVal = textareaRef.current.value;
-      // Create new id and comment object
-      const { newId, newCommentBody } = createComment(textVal);
-      // Create deep copy of comments context state
-      let updatedComments = cloneDeep(allData);
-      // Append this to context
-      updatedComments.comments[newId] = newCommentBody;
-      // Update context
-      setAllData(updatedComments);
-      // Clear textarea
-      textareaRef.current.value = "";
+      if (textVal === "") {
+        setShowError(true);
+      } else {
+        // Create new id and comment object
+        const { newId, newCommentBody } = createComment(textVal);
+        // Create deep copy of comments context state
+        let updatedComments = cloneDeep(allData);
+        // Append this to context
+        updatedComments.comments[newId] = newCommentBody;
+        // Update context
+        setAllData(updatedComments);
+        // Clear textarea and error message
+        textareaRef.current.value = "";
+        setShowError(false);
+      }
     }
   };
 
@@ -127,30 +135,34 @@ export default function CommentInput(props: {
     ) {
       // Get the value updated in the textarea
       let textVal = textareaRef.current.value;
-      // Create new id and reply object
-      const { newId, newReplyBody } = createReply(props.replyingTo, textVal);
-      // Create deep copy of comments context state
-      let updatedComments = cloneDeep(allData);
-      // Access replies from context
-      const groupId = props.groupId;
-      // Append this to context
-      // Existing comment group exists
-      console.log(groupId);
-      if (updatedComments.replies[groupId]) {
-        updatedComments.replies[groupId][newId] = newReplyBody;
+      if (textVal === "") {
+        setShowError(true);
       } else {
-        // No comment group exists, create one
-        updatedComments.comments[groupId].hasReplies = true;
-        updatedComments.replies[groupId] = {};
-        updatedComments.replies[groupId][newId] = newReplyBody;
-      }
+        // Create new id and reply object
+        const { newId, newReplyBody } = createReply(props.replyingTo, textVal);
+        // Create deep copy of comments context state
+        let updatedComments = cloneDeep(allData);
+        // Access replies from context
+        const groupId = props.groupId;
+        // Append this to context
+        // Existing comment group exists
+        console.log(groupId);
+        if (updatedComments.replies[groupId]) {
+          updatedComments.replies[groupId][newId] = newReplyBody;
+        } else {
+          // No comment group exists, create one
+          updatedComments.comments[groupId].hasReplies = true;
+          updatedComments.replies[groupId] = {};
+          updatedComments.replies[groupId][newId] = newReplyBody;
+        }
 
-      // Update context
-      setAllData(updatedComments);
-      // Hide Input Field
-      props.handleButtonClick();
-      // Clear textarea
-      textareaRef.current.value = "";
+        // Update context
+        setAllData(updatedComments);
+        // Hide Input Field
+        props.handleButtonClick();
+        // Clear textarea
+        textareaRef.current.value = "";
+      }
     }
   };
 
@@ -182,7 +194,9 @@ export default function CommentInput(props: {
           <div className="hidden sm:block">
             <Avatar pngSrc={png} webpSrc={webp} large={true} />
           </div>
-          <Textarea textareaRef={textareaRef} />
+          <div className="w-full flex flex-col gap-2">
+            <Textarea textareaRef={textareaRef} showError={showError} />
+          </div>
           <div className="hidden sm:block">
             <DynamicButton />
           </div>
