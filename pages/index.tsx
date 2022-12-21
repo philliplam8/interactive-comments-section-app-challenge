@@ -1,16 +1,11 @@
 import { auth } from "../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCommentsData } from "../hooks/useCommentsData";
 import { useContext } from "react";
 import { CommentsContext } from "../context/CommentsContext";
 import { Layout } from "../components/Layout";
-import {
-  Comments,
-  RawComment,
-  RawReply,
-  RawImage,
-} from "../components/Comment";
+import { Comments } from "../components/Comment";
 import { CommentInput } from "../components/CommentInput";
+import { SkeletonGroup } from "../components/Skeleton";
 
 export default function Home() {
   const { allDataValue } = useContext(CommentsContext);
@@ -18,23 +13,10 @@ export default function Home() {
 
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
-  // React Query
-  const { isLoading, error, data } = useCommentsData();
-  if (isLoading || loading) return <h2>Loading...</h2>;
-  if (error) return <h2>An error has occurred</h2>;
+  if (loading) return <SkeletonGroup />;
 
-  // All data
-  const parsedData = allData;
   // Current User
-  // const currentUser: string = parsedData.currentUser;
-  // console.log(user?.displayName);
-  const currentUser: string = user ? user?.displayName : parsedData.demoUser;
-  // Images
-  const userAvatars: { [x: string]: RawImage } = parsedData.users;
-  // Comments
-  const parentComments: RawComment[] = Object.values(parsedData.comments);
-  // Replies
-  const childReplies = parsedData.replies;
+  const currentUser: string = user ? user?.displayName : allData.demoUser;
 
   const resetLocalStorage = () => {
     localStorage.clear();
@@ -45,12 +27,14 @@ export default function Home() {
     <Layout>
       <button onClick={resetLocalStorage}>Reset</button>
       <div id="card-group" className="flex flex-col gap-5">
-        <Comments
-          currentUser={currentUser}
-          replies={childReplies}
-          userAvatars={userAvatars}
-        />
-        <CommentInput username={currentUser} isReply={false} />
+        {loading ? (
+          <SkeletonGroup />
+        ) : (
+          <>
+            <Comments currentUser={currentUser} />
+            <CommentInput isReply={false} />
+          </>
+        )}
       </div>
     </Layout>
   );
