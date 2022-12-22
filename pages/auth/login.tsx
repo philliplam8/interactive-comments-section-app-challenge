@@ -19,6 +19,22 @@ export default function Login() {
   const { allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
 
+  const addNewUser = (
+    newUsername: string,
+    png: string | null,
+    webp: string | null
+  ): void => {
+    // Make deep copy of comments data context
+    let newData = cloneDeep(allData);
+
+    // TODO: if there is no photo, use default image
+    newData.users[newUsername] = {
+      png: png,
+      webp: webp,
+    };
+    setAllData(newData);
+  };
+
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
   const route = useRouter();
@@ -28,24 +44,12 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log(
-        result.user,
-        result.user.displayName,
-        result.user.photoURL,
-        result.user.metadata
-      );
+      console.log(result.user);
 
-      // TODO: abstract this into function addUser
-      // Make deep copy of comments data context
-      let newData = cloneDeep(allData);
       // Add new user entry along with their avatar photo URLs
       const displayName = result.user.displayName;
       const newUsername = formatNoSpaces(displayName);
-      newData.users[newUsername] = {
-        png: result.user.photoURL,
-        webp: result.user.photoURL,
-      };
-      setAllData(newData);
+      addNewUser(newUsername, result.user.photoURL, result.user.photoURL);
 
       // Automatically redirect user to landing page after signing in
       route.push("/");
@@ -60,9 +64,15 @@ export default function Login() {
     try {
       const result = await signInWithPopup(auth, twitterProvider);
       console.log(result);
+
+      // Add new user entry along with their avatar photo URLs
       const displayName = result.user.displayName;
+      const newUsername = formatNoSpaces(displayName);
       // const screenName = result._tokenResponse.screenName;
       // console.log({ displayName, screenName });
+      addNewUser(newUsername, result.user.photoURL, result.user.photoURL);
+      // Automatically redirect user to landing page after signing in
+      route.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -74,9 +84,15 @@ export default function Login() {
     try {
       const result = await signInWithPopup(auth, githubProvider);
       console.log(result);
+
+      // Add new user entry along with their avatar photo URLs
       const displayName = result.user.displayName;
+      const newUsername = formatNoSpaces(displayName);
       // const screenName = result._tokenResponse.screenName;
       // console.log({ displayName, screenName });
+      addNewUser(newUsername, result.user.photoURL, result.user.photoURL);
+      // Automatically redirect user to landing page after signing in
+      route.push("/");
     } catch (error) {
       console.log(error);
     }

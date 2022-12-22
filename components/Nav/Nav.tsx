@@ -9,7 +9,7 @@ import { NavAvatar, Menu } from "./";
 import { Drawer } from "../UI/Drawer";
 import { Footer } from "../Footer";
 import { OutgoingLink } from "../UI/Icons";
-import { Skeleton } from "../Skeleton";
+import { AiOutlineReload } from "react-icons/ai";
 
 const NAV_LINKS = [
   {
@@ -95,33 +95,7 @@ function NavLinksDesktop(): JSX.Element {
   );
 }
 
-export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
-  const [showMenu, setShowMenu] = useState(false);
-  const handleAvatarClick = (): void => {
-    setShowMenu(!showMenu);
-  };
-
-  // Context State
-  const { allDataValue } = useContext(CommentsContext);
-  const [allData, setAllData] = allDataValue;
-
-  // Google Firebase Authentication API
-  // const auth = getAuth();
-  // const user = auth.currentUser;
-  const [user, loading] = useAuthState(auth);
-
-  // React Query
-  // const { isLoading, data } = useCommentsData();
-  // const allData = JSON.parse(data.toString());
-
-  if (loading) return <h1>Loading...</h1>;
-
-  const currentUser = user ? user.displayName : allData.demoUser;
-  const avatarImages = allData.users;
-  const png = user ? user.photoURL : avatarImages[currentUser].png;
-  const webp = user ? user.photoURL : avatarImages[currentUser].webp;
-  console.log(png, webp);
-
+function NavContainer(props: { children: React.ReactNode }): JSX.Element {
   return (
     <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white shadow-sm">
       <nav className="max-w-[1180px] w-full h-16 md:h-24 relative flex justify-between items-center border-b border-white text-grayishBlue px-8 mx-0 md:min-mx-8 md:mx-auto">
@@ -138,23 +112,55 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
           </Link>
           <NavLinksDesktop />
         </div>
-        {prop.showAvatar && (
-          <div className="flex flex-row gap-5 md:gap-10 items-center">
-            <NavAvatar
-              png={png}
-              webp={webp}
-              onButtonClick={handleAvatarClick}
-            />
-            <Menu
-              status={showMenu}
-              handleClick={handleAvatarClick}
-              currentUser={currentUser}
-              png={png}
-              webp={webp}
-            />
-          </div>
-        )}
+        {props.children}
       </nav>
     </div>
+  );
+}
+
+function NavLoading(): JSX.Element {
+  return (
+    <NavContainer>
+      <div className="w-8 h-8 md:w-[50px] md:h-[50px] bg-lightGray border-2 rounded-full animate-spin">
+        <AiOutlineReload className="h-full w-full" />
+      </div>
+    </NavContainer>
+  );
+}
+
+export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
+  const [showMenu, setShowMenu] = useState(false);
+  const handleAvatarClick = (): void => {
+    setShowMenu(!showMenu);
+  };
+
+  // Context State
+  const { allDataValue } = useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
+
+  // Google Firebase Authentication API
+  const [user, loading] = useAuthState(auth);
+  if (loading) return <NavLoading />;
+
+  const demoUser = allData.demoUser;
+  const currentUser = user ? user.displayName : demoUser;
+  const png = user ? user.photoURL : allData.users[demoUser].png;
+  const webp = user ? user.photoURL : allData.users[demoUser].webp;
+
+  return (
+    <NavContainer>
+      {prop.showAvatar && (
+        <div className="flex flex-row gap-5 md:gap-10 items-center">
+          <NavAvatar png={png} webp={webp} onButtonClick={handleAvatarClick} />
+          <Menu
+            status={showMenu}
+            handleClick={handleAvatarClick}
+            currentUser={currentUser}
+            png={png}
+            webp={webp}
+          />
+        </div>
+      )}
+    </NavContainer>
   );
 }
