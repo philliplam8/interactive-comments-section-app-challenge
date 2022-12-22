@@ -6,11 +6,14 @@ export default function Comments(props: { currentUser: string }): JSX.Element {
   // Comments Context
   const { allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
-  const parentComments: RawComment[] = Object.values(allData.comments);
+
   // Images
   const userAvatars: { [x: string]: RawImage } = allData.users;
+  // Comments
+  const parentComments: RawComment[] = Object.values(allData.comments);
   // Replies
   const childReplies = allData.replies;
+
   return (
     <>
       {parentComments.map((entry: RawComment) => {
