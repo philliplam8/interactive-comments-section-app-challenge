@@ -18,6 +18,11 @@ const NAV_LINKS = [
     newTab: false,
   },
   {
+    name: "Settings",
+    link: "/settings",
+    newTab: false,
+  },
+  {
     name: "Frontend Mentor",
     link: "https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9",
     newTab: true,

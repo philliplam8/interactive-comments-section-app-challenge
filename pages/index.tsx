@@ -14,7 +14,6 @@ export default function Home() {
 
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
-  // if (loading) return <SkeletonGroup />;
 
   const resetLocalStorage = () => {
     localStorage.clear();

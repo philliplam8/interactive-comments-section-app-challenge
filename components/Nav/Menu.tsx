@@ -11,6 +11,7 @@ import {
   SunIcon,
   MoonIcon,
 } from "../UI/Icons";
+import { MdOutlineManageAccounts } from "react-icons/md";
 
 export default function Menu(props: {
   handleClick: () => void;
@@ -22,7 +23,7 @@ export default function Menu(props: {
   const [user, loading] = useAuthState(auth);
 
   const MENU_LINK_OPTIONS = [
-    { name: "Settings", link: "/settings" },
+    { name: "Switch Demo User", link: "/settings" },
     { name: "Display", link: "/" },
     { name: "Sign In", link: "/auth/login" },
     { name: "Sign Out", link: "/auth/logout" },
@@ -31,7 +32,7 @@ export default function Menu(props: {
   function OptionIcon(props: { option: string }): JSX.Element {
     switch (props.option) {
       case MENU_LINK_OPTIONS[0].name:
-        return <SettingsIcon />;
+        return <MdOutlineManageAccounts className="w-[24px] h-[24px]" />;
       case MENU_LINK_OPTIONS[1].name:
         return <SunIcon />;
       case MENU_LINK_OPTIONS[2].name:
