@@ -9,7 +9,7 @@ import { NavAvatar, Menu } from "./";
 import { Drawer } from "../UI/Drawer";
 import { Footer } from "../Footer";
 import { OutgoingLink } from "../UI/Icons";
-import { AiOutlineReload } from "react-icons/ai";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const NAV_LINKS = [
   {
@@ -122,7 +122,7 @@ function NavLoading(): JSX.Element {
   return (
     <NavContainer>
       <div className="w-8 h-8 md:w-[50px] md:h-[50px] bg-lightGray border-2 rounded-full animate-spin">
-        <AiOutlineReload className="h-full w-full" />
+        <AiOutlineLoading3Quarters className="h-full w-full" />
       </div>
     </NavContainer>
   );
