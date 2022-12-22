@@ -18,7 +18,8 @@ export default function Textarea(props: {
         cols={25}
         rows={3}
         placeholder={REPLY_PLACEHOLDER}
-        className={`w-full text-darkBlue px-4 py-2 rounded-lg border-2 border-lightGray focus:outline-none focus:border-transparent focus:ring-moderateBlue focus:ring-1 caret-moderateBlue selection:bg-lightGrayishBlue`}
+        className={`w-full text-darkBlue px-4 py-2 rounded-lg border-2 focus:outline-none focus:border-transparent focus:ring-moderateBlue focus:ring-1 caret-moderateBlue selection:bg-lightGrayishBlue 
+        ${props.showError ? "border-softRed" : "border-lightGray"}`}
         defaultValue={props.content}
       ></textarea>
       {props.showError && <ErrorMessage />}
