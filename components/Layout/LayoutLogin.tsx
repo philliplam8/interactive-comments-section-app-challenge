@@ -12,7 +12,7 @@ export default function LayoutLogin({ children }: LayoutProps): JSX.Element {
   return (
     <>
       <Head>
-        <title>Interactive Comments Section | Login</title>
+        <title>Login | Interactive Comments Section</title>
         <meta
           name="description"
           content="Frontend Mentor - Interactive Comments Section"
@@ -22,7 +22,7 @@ export default function LayoutLogin({ children }: LayoutProps): JSX.Element {
       <main>
         <div className="min-h-screen h-full flex flex-col justify-between">
           <Nav showAvatar={false} />
-          <div className="max-w-[1180px] mx-8">{children}</div>
+          <div className="max-w-[500px] w-full mx-auto">{children}</div>
           <Footer />
         </div>
       </main>
