@@ -61,8 +61,8 @@ export default function Login() {
       const result = await signInWithPopup(auth, twitterProvider);
       console.log(result);
       const displayName = result.user.displayName;
-      const screenName = result._tokenResponse.screenName;
-      console.log({ displayName, screenName });
+      // const screenName = result._tokenResponse.screenName;
+      // console.log({ displayName, screenName });
     } catch (error) {
       console.log(error);
     }
@@ -75,8 +75,8 @@ export default function Login() {
       const result = await signInWithPopup(auth, githubProvider);
       console.log(result);
       const displayName = result.user.displayName;
-      const screenName = result._tokenResponse.screenName;
-      console.log({ displayName, screenName });
+      // const screenName = result._tokenResponse.screenName;
+      // console.log({ displayName, screenName });
     } catch (error) {
       console.log(error);
     }
