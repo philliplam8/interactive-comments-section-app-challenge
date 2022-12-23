@@ -8,6 +8,7 @@ import {
   MinusIcon,
   EditIcon,
   DeleteIcon,
+  MenuIcon,
   CloseIcon,
   OutgoingLink,
 } from "./Icons";
@@ -22,6 +23,7 @@ export {
   MinusIcon,
   EditIcon,
   DeleteIcon,
+  MenuIcon,
   CloseIcon,
   OutgoingLink,
 };
