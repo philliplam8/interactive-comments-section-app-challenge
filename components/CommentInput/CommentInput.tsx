@@ -1,5 +1,5 @@
 import { getAuth } from "firebase/auth";
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext, useEffect } from "react";
 import cloneDeep from "lodash/cloneDeep";
 import { CommentsContext } from "../../context/CommentsContext";
 import { Card } from "../UI/Card";
@@ -186,6 +186,13 @@ export default function CommentInput(props: {
       </div>
     );
   }
+
+  // When the textarea is triggered/becomes editable, auto-focus the textarea
+  useEffect(() => {
+    if (textareaRef.current !== null && props.isReply) {
+      textareaRef.current.focus();
+    }
+  });
 
   return (
     <div className="-mt-3">

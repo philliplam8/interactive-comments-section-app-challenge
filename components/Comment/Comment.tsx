@@ -178,6 +178,7 @@ export default function Comment(props: CommentProps): JSX.Element {
                     content={props.content}
                     textareaRef={textareaRef}
                     showError={showError}
+                    currentUser={true}
                   />
                   <div className="flex justify-end">
                     <UpdateButton handleClick={handleUpdateComment} />
