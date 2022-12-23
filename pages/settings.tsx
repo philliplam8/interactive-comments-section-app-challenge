@@ -1,39 +1,23 @@
+import { useCommentsData } from "../hooks/useCommentsData";
 import cloneDeep from "lodash/cloneDeep";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { CommentsContext } from "../context/CommentsContext";
 import { Layout } from "../components/Layout";
 import { Card } from "../components/UI/Card";
 import { Avatar } from "../components/Avatar";
 import { BsFillPatchCheckFill } from "react-icons/bs";
 import { MdSupervisorAccount } from "react-icons/md";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Link from "next/link";
-
-const DEMO_USERS = {
-  users: {
-    amyrobson: {
-      png: "/images/avatars/image-amyrobson.png",
-      webp: "/images/avatars/image-amyrobson.webp",
-    },
-    maxblagun: {
-      png: "/images/avatars/image-maxblagun.png",
-      webp: "/images/avatars/image-maxblagun.webp",
-    },
-    ramsesmiron: {
-      png: "/images/avatars/image-ramsesmiron.png",
-      webp: "/images/avatars/image-ramsesmiron.webp",
-    },
-    juliusomo: {
-      png: "/images/avatars/image-juliusomo.png",
-      webp: "/images/avatars/image-juliusomo.webp",
-    },
-  },
-};
 
 export default function Settings(): JSX.Element {
   // Context State
   const { allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
-  const [currentUser, setCurrentUser] = useState(allData.demoUser);
+  const [currentUser, setCurrentUser] = useState("");
+
+  // React Query
+  const { isLoading, error, data } = useCommentsData();
 
   const handleRowClick = (newCurrentUser: string) => {
     setCurrentUser(newCurrentUser);
@@ -75,6 +59,19 @@ export default function Settings(): JSX.Element {
     );
   }
 
+  useEffect(() => {
+    setCurrentUser(allData.demoUser);
+  }, [allData]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen min-w-screen h-full w-full flex justify-center items-center">
+        <AiOutlineLoading3Quarters className="animate-spin h-12 w-12 text-moderateBlue" />
+      </div>
+    );
+  }
+  const parsedData = JSON.parse(data.toString());
+
   return (
     <Layout>
       <Card>
@@ -89,17 +86,14 @@ export default function Settings(): JSX.Element {
               href={"/auth/login"}
               className="text-moderateBlue font-medium hover:underline"
             >
-              sign in with a live user.
+              sign in with a live user
             </Link>
           </div>
         </div>
 
         <div className="flex flex-col gap-4 py-2">
-          {Object.keys(DEMO_USERS.users).map((user) => {
-            console.log(user);
-
-            const png = allData.users[user].png;
-            const webp = allData.users[user].webp;
+          {Object.keys(parsedData.users).map((user) => {
+            const { png, webp } = parsedData.users[user];
             return <DemoUserRow key={user} name={user} png={png} webp={webp} />;
           })}
         </div>
