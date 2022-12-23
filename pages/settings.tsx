@@ -77,8 +77,8 @@ export default function Settings(): JSX.Element {
       <Card>
         <div className="py-4 md:w-[628px] text-grayishBlue">
           <div className="flex flex-row items-center gap-2">
-            <MdSupervisorAccount className="h-7 w-7" />
             <h1 className="text-darkBlue text-2xl font-medium">Settings</h1>
+            <MdSupervisorAccount className="h-7 w-7 text-grayishBlue" />
           </div>
           <div className="pt-2">
             Switch the default demo user or{" "}
