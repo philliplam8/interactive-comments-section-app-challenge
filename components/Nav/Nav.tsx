@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useContext } from "react";
@@ -12,11 +13,6 @@ import { OutgoingLink } from "../UI/Icons";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const NAV_LINKS = [
-  {
-    name: "About",
-    link: "/about",
-    newTab: false,
-  },
   {
     name: "Settings",
     link: "/settings",
@@ -34,13 +30,16 @@ function NavLink(props: {
   link: string;
   newTab: boolean;
 }): JSX.Element {
+  // Get the current page route via "router.asPath" and show NavLink selected if current route matches navlink name
+  const router = useRouter();
+
   return (
     <Link
       key={props.link}
       href={props.link}
-      className={
-        "h-full flex flex-row gap-1 items-center text-lg font-bold md:font-light md:text-sm border-b-4 border-white hover:border-moderateBlue hover:text-black"
-      }
+      className={`h-full flex flex-row gap-1 items-center text-lg font-bold md:font-light md:text-sm border-b-4 border-white hover:border-moderateBlue hover:text-black ${
+        router.asPath == props.link && "md:border-moderateBlue md:text-black"
+      }`}
       target={props.newTab ? "_blank" : ""}
     >
       {props.name}
@@ -54,6 +53,11 @@ function NavLink(props: {
 }
 
 function NavLinks(): JSX.Element {
+  const resetLocalStorage = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   return (
     <>
       {NAV_LINKS.map((item) => {
@@ -66,6 +70,15 @@ function NavLinks(): JSX.Element {
           />
         );
       })}
+      {/* if local storage, dynamically show button to reset demo here */}
+      <button
+        onClick={resetLocalStorage}
+        className={
+          "flex items-center text-lg font-bold md:font-light md:text-sm border-t-2 py-6 md:border-b-4 md:border-t-0 md:border-transparent md:p-0 md:h-full text-softRed hover:text-paleRed"
+        }
+      >
+        Reset Demo
+      </button>
     </>
   );
 }

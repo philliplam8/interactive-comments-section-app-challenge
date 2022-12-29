@@ -3,6 +3,7 @@ import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
 import { Avatar } from "../Avatar";
+import { Toggle } from "../UI/Toggle";
 import { formatHyphenDelimiters } from "../../utils";
 import {
   LoginIcon,
@@ -11,7 +12,16 @@ import {
   SunIcon,
   MoonIcon,
 } from "../UI/Icons";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
 import { MdOutlineManageAccounts } from "react-icons/md";
+
+const MENU_LINK_OPTIONS = [
+  { name: "Switch Demo User", link: "/settings" },
+  { name: "Display", link: "/" },
+  { name: "Sign In", link: "/auth/login" },
+  { name: "Sign Out", link: "/auth/logout" },
+];
 
 export default function Menu(props: {
   handleClick: () => void;
@@ -22,12 +32,33 @@ export default function Menu(props: {
 }): JSX.Element {
   const [user, loading] = useAuthState(auth);
 
-  const MENU_LINK_OPTIONS = [
-    { name: "Switch Demo User", link: "/settings" },
-    { name: "Display", link: "/" },
-    { name: "Sign In", link: "/auth/login" },
-    { name: "Sign Out", link: "/auth/logout" },
-  ];
+  const secondaryInfo = () => {
+    // Display secondary info based on the provider used
+    switch (user?.providerData[0].providerId) {
+      // Gmail - show email
+      case "google.com":
+        return user.email;
+      default:
+        return "";
+    }
+  };
+
+  function ProviderIcon(): JSX.Element {
+    // Display icon based on the provider used
+    switch (user?.providerData[0].providerId) {
+      // Gmail
+      case "google.com":
+        return <FcGoogle />;
+      // Twitter
+      case "twitter.com":
+        return <AiOutlineTwitter />;
+      // Github
+      case "github.com":
+        return <AiFillGithub />;
+      default:
+        return <></>;
+    }
+  }
 
   function OptionIcon(props: { option: string }): JSX.Element {
     switch (props.option) {
@@ -58,6 +89,7 @@ export default function Menu(props: {
           >
             <OptionIcon option={props.label} />
           </div>
+
           <Link
             href={props.link}
             className={
@@ -84,7 +116,6 @@ export default function Menu(props: {
             link={MENU_LINK_OPTIONS[0].link}
           />
         )}
-
         <Option
           key={MENU_LINK_OPTIONS[1].name}
           label={MENU_LINK_OPTIONS[1].name}
@@ -125,10 +156,13 @@ export default function Menu(props: {
       >
         <div className="w-full flex flex-row gap-4 items-center border-b border-lightGray py-5 px-4">
           <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
-          <div>
-            <h3 className="text-darkBlue">{props.currentUser}</h3>
+          <div className="flex flex-col">
+            <div className="flex flex-row gap-1 items-center text-moderateBlue">
+              <h3 className="text-darkBlue">{props.currentUser}</h3>
+              {user ? <ProviderIcon /> : <></>}
+            </div>
             <h3 className={`text-moderateBlue ${user && "font-medium"}`}>
-              {user ? `${user.email}` : "Demo User"}
+              {user ? `${secondaryInfo()}` : "Demo User"}
             </h3>
           </div>
         </div>

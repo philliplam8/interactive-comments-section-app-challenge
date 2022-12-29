@@ -15,11 +15,6 @@ export default function Home() {
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
 
-  const resetLocalStorage = () => {
-    localStorage.clear();
-    window.location.reload();
-  };
-
   useEffect(() => {
     if (!loading) {
       setLoading(false);
@@ -31,15 +26,10 @@ export default function Home() {
       {isLoading ? (
         <SkeletonGroup />
       ) : (
-        <>
-          <button onClick={resetLocalStorage}>Reset</button>
-          <div id="card-group" className="flex flex-col gap-5">
-            <Comments
-              currentUser={user ? user?.displayName : allData.demoUser}
-            />
-            <CommentInput isReply={false} />
-          </div>
-        </>
+        <div id="card-group" className="flex flex-col gap-5">
+          <Comments currentUser={user ? user?.displayName : allData.demoUser} />
+          <CommentInput isReply={false} />
+        </div>
       )}
     </Layout>
   );
