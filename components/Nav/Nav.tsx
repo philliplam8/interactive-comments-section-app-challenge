@@ -11,6 +11,7 @@ import { Drawer } from "../UI/Drawer";
 import { Footer } from "../Footer";
 import { OutgoingLink } from "../UI/Icons";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Popover } from "../UI/Popover";
 
 const NAV_LINKS = [
   {
@@ -58,6 +59,24 @@ function NavLinks(): JSX.Element {
     window.location.reload();
   };
 
+  function ResetDemoButton(): JSX.Element {
+    return (
+      <Popover
+        width={56}
+        label="Submitted comment/reply data is stored in Local Storage and can be cleared"
+      >
+        <button
+          onClick={resetLocalStorage}
+          className={
+            "w-full flex items-center text-lg font-bold md:font-light md:text-sm border-t-2 py-6 md:border-b-4 md:border-t-0 md:border-transparent md:p-0 md:h-full text-softRed hover:text-paleRed"
+          }
+        >
+          Reset Demo
+        </button>
+      </Popover>
+    );
+  }
+
   return (
     <>
       {NAV_LINKS.map((item) => {
@@ -71,14 +90,7 @@ function NavLinks(): JSX.Element {
         );
       })}
       {/* if local storage, dynamically show button to reset demo here */}
-      <button
-        onClick={resetLocalStorage}
-        className={
-          "flex items-center text-lg font-bold md:font-light md:text-sm border-t-2 py-6 md:border-b-4 md:border-t-0 md:border-transparent md:p-0 md:h-full text-softRed hover:text-paleRed"
-        }
-      >
-        Reset Demo
-      </button>
+      <ResetDemoButton />
     </>
   );
 }
