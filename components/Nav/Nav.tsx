@@ -26,6 +26,8 @@ const NAV_LINKS = [
   },
 ];
 
+const POPOVER_TEXT_RESET: string = `Your comments and replies\nare stored in Local Storage\nand can be cleared.`;
+
 function NavLink(props: {
   name: string;
   link: string;
@@ -61,10 +63,7 @@ function NavLinks(): JSX.Element {
 
   function ResetDemoButton(): JSX.Element {
     return (
-      <Popover
-        width={56}
-        label="Submitted comment/reply data is stored in Local Storage and can be cleared"
-      >
+      <Popover label={POPOVER_TEXT_RESET}>
         <button
           onClick={resetLocalStorage}
           className={

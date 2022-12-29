@@ -3,7 +3,6 @@ import { useState } from "react";
 export default function Popover(props: {
   children: React.ReactNode;
   label: string;
-  width: number;
 }): JSX.Element {
   const [showPopover, setShowPopover] = useState(false);
 
@@ -23,13 +22,11 @@ export default function Popover(props: {
     >
       {props.children}
       <div
-        className={`${
-          showPopover ? "visible" : "invisible"
-        } z-30 absolute text-center top-16 md:top-8 p-2 rounded-md bg-grayishBlue/80 text-white w-${
-          props.width
+        className={`z-30 w-60 absolute top-16 md:top-8 p-2 rounded-md bg-grayishBlue/80 text-white text-center ${
+          showPopover ? "block" : "hidden"
         }`}
       >
-        <p className="text-sm">{props.label}</p>
+        <p className="text-sm whitespace-pre">{props.label}</p>
       </div>
     </div>
   );
