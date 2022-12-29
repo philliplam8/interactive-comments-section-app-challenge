@@ -3,7 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useContext, useEffect, useState } from "react";
 import { CommentsContext } from "../context/CommentsContext";
 import { Layout } from "../components/Layout";
-import { Comments } from "../components/Comment";
+import { Comments, EmptyComments } from "../components/Comment";
 import { CommentInput } from "../components/CommentInput";
 import { SkeletonGroup } from "../components/Skeleton";
 
@@ -27,7 +27,13 @@ export default function Home() {
         <SkeletonGroup />
       ) : (
         <div id="card-group" className="flex flex-col gap-5">
-          <Comments currentUser={user ? user?.displayName : allData.demoUser} />
+          {Object.keys(allData.comments).length === 0 ? (
+            <EmptyComments />
+          ) : (
+            <Comments
+              currentUser={user ? user?.displayName : allData.demoUser}
+            />
+          )}
           <CommentInput isReply={false} />
         </div>
       )}
