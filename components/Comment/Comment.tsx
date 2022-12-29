@@ -8,7 +8,7 @@ import { Badge } from "../Badge";
 import { Score } from "../Score";
 import { Textarea } from "../UI/Input";
 import { CommentInput } from "../CommentInput";
-import { formatNoSpaces } from "../../utils";
+import { formatNoSpaces, stringOnlySpaces } from "../../utils";
 import { CommentProps } from "./CommentInterface";
 
 export default function Comment(props: CommentProps): JSX.Element {
@@ -62,7 +62,7 @@ export default function Comment(props: CommentProps): JSX.Element {
     // Update the read-only comment value with the new value updated in the textarea
     if (textareaRef.current !== null) {
       let textVal = textareaRef.current.value;
-      if (textVal == "") {
+      if (textVal == "" || stringOnlySpaces(textVal)) {
         setShowError(true);
       } else {
         // Create deep copy of the comments context state

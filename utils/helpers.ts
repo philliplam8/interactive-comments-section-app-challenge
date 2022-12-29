@@ -13,6 +13,10 @@ export function formatNoSpaces(id: string | null): string {
   return "";
 }
 
+export function stringOnlySpaces(expression: string): boolean {
+  return /^\s*$/.test(expression);
+}
+
 export function getTime(): number {
   const d = new Date();
   const time = d.getTime();

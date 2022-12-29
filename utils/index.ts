@@ -1,3 +1,8 @@
-import { formatHyphenDelimiters, formatNoSpaces, getTime } from "./helpers";
+import {
+  formatHyphenDelimiters,
+  formatNoSpaces,
+  stringOnlySpaces,
+  getTime,
+} from "./helpers";
 
-export { formatHyphenDelimiters, formatNoSpaces, getTime };
+export { formatHyphenDelimiters, formatNoSpaces, stringOnlySpaces, getTime };
