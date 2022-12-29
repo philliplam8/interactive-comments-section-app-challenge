@@ -54,7 +54,7 @@ export default function Menu(props: {
         return <AiOutlineTwitter />;
       // Github
       case "github.com":
-        return <AiFillGithub />;
+        return <AiFillGithub className="h-[18px] w-[18px] text-black" />;
       default:
         return <></>;
     }
@@ -159,7 +159,7 @@ export default function Menu(props: {
           <div className="flex flex-col">
             <div className="flex flex-row gap-1 items-center text-moderateBlue">
               <h3 className="text-darkBlue">{props.currentUser}</h3>
-              {user ? <ProviderIcon /> : <></>}
+              {user && <ProviderIcon />}
             </div>
             <h3 className={`text-moderateBlue ${user && "font-medium"}`}>
               {user ? `${secondaryInfo()}` : "Demo User"}
