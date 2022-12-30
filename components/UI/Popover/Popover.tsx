@@ -22,7 +22,7 @@ export default function Popover(props: {
     >
       {props.children}
       <div
-        className={`z-30 w-60 absolute top-16 md:top-8 p-2 rounded-md bg-grayishBlue/80 text-white text-center ${
+        className={`z-30 w-60 absolute top-10 md:top-8 p-2 rounded-md bg-grayishBlue/80 text-white text-center ${
           showPopover ? "block" : "hidden"
         }`}
       >

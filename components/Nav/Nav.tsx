@@ -78,7 +78,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
           <button
             onClick={resetLocalStorage}
             className={
-              "w-full flex items-center text-lg font-bold md:font-light md:text-sm border-t-2 py-6 md:border-b-4 md:border-t-0 md:border-transparent md:p-0 md:h-full text-softRed hover:text-paleRed"
+              "w-full flex items-center text-lg font-bold md:font-light md:text-sm md:h-full text-softRed hover:text-paleRed"
             }
           >
             Reset Demo
