@@ -62,7 +62,7 @@ export default function Comment(props: CommentProps): JSX.Element {
     // Update the read-only comment value with the new value updated in the textarea
     if (textareaRef.current !== null) {
       let textVal = textareaRef.current.value;
-      if (textVal == "" || stringOnlySpaces(textVal)) {
+      if (stringOnlySpaces(textVal)) {
         setShowError(true);
       } else {
         // Create deep copy of the comments context state

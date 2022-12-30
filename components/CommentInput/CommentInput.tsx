@@ -6,7 +6,7 @@ import { Card } from "../UI/Card";
 import { Avatar } from "../Avatar";
 import { ReplyButton, SendButton } from "../UI/Buttons";
 import { Textarea } from "../UI/Input";
-import { formatNoSpaces, getTime } from "../../utils";
+import { formatNoSpaces, getTime, stringOnlySpaces } from "../../utils";
 
 export interface CommentInputProps {
   avatarPng: string;
@@ -105,7 +105,7 @@ export default function CommentInput(props: {
     if (textareaRef.current !== null) {
       // Get the value updated in the textarea
       let textVal = textareaRef.current.value;
-      if (textVal === "") {
+      if (stringOnlySpaces(textVal)) {
         setShowError(true);
       } else {
         // Create new id and comment object
@@ -137,7 +137,7 @@ export default function CommentInput(props: {
     ) {
       // Get the value updated in the textarea
       let textVal = textareaRef.current.value;
-      if (textVal === "") {
+      if (stringOnlySpaces(textVal)) {
         setShowError(true);
       } else {
         // Create new id and reply object
