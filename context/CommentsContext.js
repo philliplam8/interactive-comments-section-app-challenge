@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import cloneDeep from "lodash/cloneDeep";
 
-const INITIAL_JSON = {
+export const INITIAL_JSON = {
     "demoUser": "juliusomo",
     "users": {
         "amyrobson": {
@@ -79,6 +79,7 @@ export const CommentsProvider = (props) => {
                 return INITIAL_JSON
             }
         }
+        return INITIAL_JSON
     });
 
     // Delete Comment Modal
