@@ -35,9 +35,9 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
   };
 
   // Context State
-  const { allDataValue } = useContext(CommentsContext);
+  const { showResetValue, allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
-  const [edited, setEdited] = useState(allData !== INITIAL_JSON);
+  const [showReset, setShowReset] = showResetValue;
 
   function NavLink(props: {
     name: string;
@@ -70,6 +70,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
     const resetLocalStorage = () => {
       localStorage.clear();
       window.location.reload();
+      setShowReset(false);
     };
 
     function ResetDemoButton(): JSX.Element {
@@ -100,7 +101,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
           );
         })}
         {/* Dynamically show Reset button if content edited */}
-        {edited && <ResetDemoButton />}
+        {showReset && <ResetDemoButton />}
       </>
     );
   }
@@ -169,11 +170,17 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
   }
 
   // Dynamically show Reset button if content edited
-  useEffect(() => {
-    if (allData !== INITIAL_JSON) {
-      setEdited(true);
-    }
-  }, [allData]);
+  // useEffect(() => {
+  //   if (
+  //     allData.comments !== INITIAL_JSON.comments ||
+  //     allData.replies !== INITIAL_JSON.replies ||
+  //     allData.demoUser !== INITIAL_JSON.demoUser
+  //   ) {
+  //     setEdited(true);
+  //   } else {
+  //     setEdited(false);
+  //   }
+  // }, [allData]);
 
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
