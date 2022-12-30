@@ -21,9 +21,8 @@ export default function CommentInput(props: {
   handleButtonClick?: () => void;
 }): JSX.Element {
   // Comments Context
-  const { showResetValue, allDataValue } = useContext(CommentsContext);
+  const { allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
-  const [showReset, setShowReset] = showResetValue;
 
   // Google Firebase Authentication API
   const auth = getAuth();
@@ -115,10 +114,10 @@ export default function CommentInput(props: {
         let updatedComments = cloneDeep(allData);
         // Append this to context
         updatedComments.comments[newId] = newCommentBody;
+        // Show Reset Button
+        updatedComments.showReset = true;
         // Update context
         setAllData(updatedComments);
-        // Show Reset Button
-        setShowReset(true);
         // Clear textarea and error message
         textareaRef.current.value = "";
         setShowError(false);
@@ -159,10 +158,10 @@ export default function CommentInput(props: {
           updatedComments.replies[groupId][newId] = newReplyBody;
         }
 
+        // Show Reset Button
+        updatedComments.showReset = true;
         // Update context
         setAllData(updatedComments);
-        // Show Reset Button
-        setShowReset(true);
         // Hide Input Field
         props.handleButtonClick();
         // Clear textarea

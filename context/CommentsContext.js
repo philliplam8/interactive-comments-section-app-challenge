@@ -62,13 +62,13 @@ export const INITIAL_JSON = {
                 "username": "juliusomo"
             }
         }
-    }
+    },
+    "showReset": false
 }
 
 export const CommentsContext = createContext();
 
 export const CommentsProvider = (props) => {
-    const [showReset, setShowReset] = useState(false);
     const [demoUser, setDemoUser] = useState(INITIAL_JSON.demoUser)
     const [allData, setAllData] = useState(() => {
         if (typeof window !== "undefined") {
@@ -115,12 +115,10 @@ export const CommentsProvider = (props) => {
         else {
             delete updatedComments.replies[groupId][commentId];
         }
-
+        // Show Reset Button
+        updatedComments.showReset = true;
         // Update context state
         setAllData(updatedComments);
-        // Show Reset Button
-        setShowReset(true);
-
         // Hide Delete Modal
         handleModalToggle();
     };
@@ -129,11 +127,10 @@ export const CommentsProvider = (props) => {
     useEffect(() => {
         const newComments = { ...allData }
         localStorage.setItem('interactiveComments', JSON.stringify(newComments));
-    }, [allData])
+    }, [allData]);
 
     return (
         <CommentsContext.Provider value={{
-            showResetValue: [showReset, setShowReset],
             demoUserValue: [demoUser, setDemoUser],
             allDataValue: [allData, setAllData],
             modalValue: [showModal, handleModalToggle, handleDeleteComment],

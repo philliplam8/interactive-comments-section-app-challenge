@@ -33,6 +33,9 @@ export default function Score(props: {
       updatedComments.replies[props.groupId][props.commentId].score +=
         changeValue;
     }
+
+    // Show Reset Button
+    updatedComments.showReset = true;
     // Update context state
     setAllData(updatedComments);
   };

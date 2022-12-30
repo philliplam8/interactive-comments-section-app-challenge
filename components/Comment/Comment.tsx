@@ -16,10 +16,9 @@ export default function Comment(props: CommentProps): JSX.Element {
   const isCurrentUser = formatNoSpaces(props.currentUser) === props.username;
 
   // Comments state and Delete comment modal state
-  const { showResetValue, allDataValue, modalValue, commentToDeleteValue } =
+  const { allDataValue, modalValue, commentToDeleteValue } =
     useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
-  const [showReset, setShowReset] = showResetValue;
   const [showModal, handleModalToggle] = modalValue;
   const [commentToDelete, setCommentToDelete] = commentToDeleteValue;
 
@@ -79,10 +78,10 @@ export default function Comment(props: CommentProps): JSX.Element {
             textVal;
         }
 
+        // Show Reset Button
+        updatedComments.showReset = true;
         // Update context state
         setAllData(updatedComments);
-        // Show Reset Button
-        setShowReset(true);
         // Remove error message
         setShowError(false);
         // Change the comment card from edit-view to read-only

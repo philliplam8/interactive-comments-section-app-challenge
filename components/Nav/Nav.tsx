@@ -1,7 +1,8 @@
+import cloneDeep from "lodash/cloneDeep";
 import { useRouter } from "next/router";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { NavContext } from "../../context/NavContext";
 import { CommentsContext, INITIAL_JSON } from "../../context/CommentsContext";
 import Link from "next/link";
@@ -35,9 +36,8 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
   };
 
   // Context State
-  const { showResetValue, allDataValue } = useContext(CommentsContext);
+  const { allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
-  const [showReset, setShowReset] = showResetValue;
 
   function NavLink(props: {
     name: string;
@@ -68,9 +68,9 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
 
   function NavLinks(): JSX.Element {
     const resetLocalStorage = () => {
+      // Clear Local Storage
       localStorage.clear();
       window.location.reload();
-      setShowReset(false);
     };
 
     function ResetDemoButton(): JSX.Element {
@@ -101,7 +101,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
           );
         })}
         {/* Dynamically show Reset button if content edited */}
-        {showReset && <ResetDemoButton />}
+        {!loading && allData.showReset && <ResetDemoButton />}
       </>
     );
   }
@@ -169,25 +169,11 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
     );
   }
 
-  // Dynamically show Reset button if content edited
-  // useEffect(() => {
-  //   if (
-  //     allData.comments !== INITIAL_JSON.comments ||
-  //     allData.replies !== INITIAL_JSON.replies ||
-  //     allData.demoUser !== INITIAL_JSON.demoUser
-  //   ) {
-  //     setEdited(true);
-  //   } else {
-  //     setEdited(false);
-  //   }
-  // }, [allData]);
-
   // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
   if (loading) return <NavLoading />;
 
   const demoUser = allData.demoUser;
-  const currentUser = user ? user.displayName : demoUser;
   const png = user ? user.photoURL : allData.users[demoUser].png;
   const webp = user ? user.photoURL : allData.users[demoUser].webp;
 
@@ -199,7 +185,6 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
           <Menu
             status={showMenu}
             handleClick={handleAvatarClick}
-            currentUser={currentUser}
             png={png}
             webp={webp}
           />

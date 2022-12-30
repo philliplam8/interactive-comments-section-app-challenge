@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { CommentsContext } from "../../context/CommentsContext";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Link from "next/link";
@@ -26,11 +27,14 @@ const MENU_LINK_OPTIONS = [
 export default function Menu(props: {
   handleClick: () => void;
   status: boolean;
-  currentUser: string;
   png: string;
   webp: string;
 }): JSX.Element {
   const [user, loading] = useAuthState(auth);
+  // Context State
+  const { allDataValue } = useContext(CommentsContext);
+  const [allData, setAllData] = allDataValue;
+  const currentUser = !loading && user ? user.displayName : allData.demoUser;
 
   const secondaryInfo = () => {
     // Display secondary info based on the provider used
@@ -158,7 +162,7 @@ export default function Menu(props: {
           <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
           <div className="flex flex-col">
             <div className="flex flex-row gap-1 items-center text-moderateBlue">
-              <h3 className="text-darkBlue">{props.currentUser}</h3>
+              <h3 className="text-darkBlue">{currentUser}</h3>
               {user && <ProviderIcon />}
             </div>
             <h3 className={`text-moderateBlue ${user && "font-medium"}`}>
