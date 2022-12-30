@@ -19,7 +19,7 @@ function Link(props: LinkProps): JSX.Element {
 export default function Footer(): JSX.Element {
   return (
     <footer className="flex flex-row flex-wrap justify-center mx-2 py-5 text-xs text-grayishBlue">
-      <p>
+      <div>
         Challenge by{" "}
         <Link
           label="Frontend Mentor"
@@ -31,7 +31,7 @@ export default function Footer(): JSX.Element {
           link="https://github.com/philliplam8/interactive-comments-section-app-challenge"
         />
         .
-      </p>
+      </div>
     </footer>
   );
 }
