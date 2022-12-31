@@ -12,7 +12,9 @@ export default function CommentReplies(props: RepliesInterface): JSX.Element {
   const replies: RawReply[] = Object.values(props.rawData);
 
   function Divider(): JSX.Element {
-    return <div className="w-1 ml-0 mr-4 sm:mx-8 border-r-2"></div>;
+    return (
+      <div className="w-1 ml-0 mr-4 sm:mx-8 border-r-2 dark:border-darkModeCard"></div>
+    );
   }
 
   return (

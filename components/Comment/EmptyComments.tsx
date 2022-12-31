@@ -9,7 +9,7 @@ export default function EmptyComments(): JSX.Element {
         </p>
         <p className="animate-bounce">👇</p>
       </div>
-      <p className="pt-4 text-sm text-grayishBlue whitespace-pre">
+      <p className="pt-4 text-sm text-grayishBlue">
         {`Also congratulations on reaching this boundary edge case! 🎉 Are you a tester? 😜 Or just curious?`}
       </p>
     </Card>

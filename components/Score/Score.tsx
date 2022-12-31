@@ -54,7 +54,7 @@ export default function Score(props: {
   };
 
   return (
-    <div className="w-[100px] h-[40px] sm:w-[40px] sm:h-[100px] flex flex-row sm:flex-col justify-between items-center bg-veryLightGray text-moderateBlue font-medium rounded-xl">
+    <div className="w-[100px] h-[40px] sm:w-[40px] sm:h-[100px] flex flex-row sm:flex-col justify-between items-center bg-veryLightGray dark:bg-darkModeBlue text-moderateBlue font-medium rounded-xl">
       <Plus handleClick={handleIncrement} />
       <div
         className={`w-20 h-full sm:h-24 flex justify-center items-center ${

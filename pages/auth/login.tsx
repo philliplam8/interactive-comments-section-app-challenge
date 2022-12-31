@@ -105,7 +105,7 @@ export default function Login() {
     return (
       <button
         onClick={props.handleClick}
-        className="w-full flex flex-row items-center gap-2 align-middle p-4 font-medium text-darkBlue hover:text-moderateBlue bg-white hover:bg-veryLightGray rounded-lg border-2 border-lightGray"
+        className="w-full flex flex-row items-center gap-2 align-middle p-4 font-medium text-darkBlue dark:text-slate-400 hover:text-moderateBlue dark:hover:text-lightGrayishBlue bg-white dark:bg-darkModeCard hover:bg-veryLightGray dark:hover:bg-darkBlue rounded-lg border-2 border-lightGray dark:border-grayishBlue"
         aria-label="Sign in with Google"
       >
         {props.children}
@@ -124,9 +124,9 @@ export default function Login() {
 
   return (
     <LayoutLogin>
-      <div className="mx-8 p-10 shadow-xl rounded-lg text-darkBlue bg-white">
-        <h2 className="text-3xl font-medium">Sign In</h2>
-        <h3 className="text-grayishBlue py-4">
+      <div className="mx-8 p-10 shadow-xl rounded-lg text-darkBlue dark:text-slate-400 bg-white dark:bg-darkModeCard">
+        <h2 className="text-3xl font-medium dark:text-white">Sign In</h2>
+        <h3 className="text-grayishBlue dark:text-slate-400 py-4">
           Use one of the following providers
         </h3>
 

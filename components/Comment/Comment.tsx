@@ -111,7 +111,9 @@ export default function Comment(props: CommentProps): JSX.Element {
         <div>
           <Avatar pngSrc={props.avatarPng} webpSrc={props.avatarWebp} />
         </div>
-        <h1 className="font-medium text-darkBlue">{props.username}</h1>
+        <h1 className="font-medium text-darkBlue dark:text-white">
+          {props.username}
+        </h1>
         {isCurrentUser && <Badge />}
         <div className="flex flex-row items-center justify-start gap-1">
           <p>{props.displayedDate}</p>
@@ -159,7 +161,7 @@ export default function Comment(props: CommentProps): JSX.Element {
   return (
     <>
       <Card>
-        <div className="h-full flex flex-col sm:flex-row justify-between sm:justify-start sm:gap-4 text-grayishBlue">
+        <div className="h-full flex flex-col sm:flex-row justify-between sm:justify-start sm:gap-4">
           <div className="hidden sm:block">
             <Score
               initialScore={props.score}

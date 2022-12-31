@@ -12,6 +12,7 @@ export default function Textarea(props: {
     return <p className={"text-softRed"}>Error: comment cannot be empty</p>;
   }
 
+  const displayValue: string = `@ramesemiron ${props.content && props.content}`;
   return (
     <>
       <textarea
@@ -19,8 +20,13 @@ export default function Textarea(props: {
         cols={25}
         rows={3}
         placeholder={REPLY_PLACEHOLDER}
-        className={`w-full text-darkBlue px-4 py-2 rounded-lg border-2 focus:outline-none focus:border-transparent focus:ring-moderateBlue focus:ring-1 caret-moderateBlue selection:bg-lightGrayishBlue 
-        ${props.showError ? "border-softRed" : "border-lightGray"}`}
+        className={`w-full text-darkBlue dark:text-slate-400 px-4 py-2 rounded-lg border-2 focus:outline-none focus:border-transparent focus:ring-moderateBlue focus:ring-1 caret-moderateBlue selection:bg-lightGrayishBlue bg-white dark:bg-darkModeBlue
+        ${
+          props.showError
+            ? "border-softRed"
+            : "border-lightGray dark:border-darkModeCard"
+        }`}
+        // defaultValue={displayValue}
         defaultValue={props.content}
         autoFocus={props.currentUser ? true : false}
       ></textarea>

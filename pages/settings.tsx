@@ -39,19 +39,17 @@ export default function Settings(): JSX.Element {
 
     return (
       <button
-        className={`flex flex-row items-center gap-4 w-full p-4 border-2 rounded-xl ${
-          isCurrentUser ? "border-moderateBlue" : " hover:bg-veryLightGray"
+        className={`flex flex-row items-center gap-4 w-full p-4 border-2 dark:border-grayishBlue rounded-xl ${
+          isCurrentUser
+            ? "border-moderateBlue dark:border-moderateBlue text-moderateBlue font-medium"
+            : "hover:bg-veryLightGray dark:hover:bg-darkBlue text-grayishBlue dark:text-slate-400 dark:hover:text-lightGrayishBlue"
         }`}
         onClick={() => handleRowClick(props.name)}
       >
         <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
-        <p
-          className={
-            isCurrentUser ? "text-moderateBlue font-medium" : "text-grayishBlue"
-          }
-        >
-          {props.name}
-        </p>
+
+        {props.name}
+
         {isCurrentUser && (
           <BsFillPatchCheckFill className="text-moderateBlue" />
         )}
@@ -75,10 +73,12 @@ export default function Settings(): JSX.Element {
   return (
     <Layout>
       <Card>
-        <div className="py-4 md:w-[628px] text-grayishBlue">
+        <div className="py-4 md:w-[628px] text-grayishBlue dark:text-slate-400">
           <div className="flex flex-row items-center gap-2">
-            <h1 className="text-darkBlue text-2xl font-medium">Settings</h1>
-            <MdSupervisorAccount className="h-7 w-7 text-grayishBlue" />
+            <h1 className="text-darkBlue dark:text-white text-2xl font-medium">
+              Settings
+            </h1>
+            <MdSupervisorAccount className="h-7 w-7 text-grayishBlue dark:text-slate-400" />
           </div>
           <div className="pt-2">
             Switch the default demo user or{" "}

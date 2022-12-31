@@ -52,7 +52,7 @@ export default function Drawer({
       ></div>
 
       <div
-        className={`w-[300px] min-h-screen h-full absolute top-0 px-8 py-6 bg-white dark:bg-black z-50 ease-in-out duration-300 
+        className={`w-[300px] min-h-screen h-full absolute top-0 px-8 py-6 bg-white dark:bg-darkModeBlue z-50 ease-in-out duration-300 
         ${direction === "left" ? "left-0" : "right-0"}
         ${showMenu ? animateMenu().open : animateMenu().close}
         `}

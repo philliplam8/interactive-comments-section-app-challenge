@@ -9,7 +9,7 @@ function ScoreButton(props: {
 }): JSX.Element {
   return (
     <button
-      className="flex justify-center items-center h-full sm:h-24 w-full fill-lightGrayishBlue hover:fill-moderateBlue"
+      className="flex justify-center items-center h-full sm:h-24 w-full fill-lightGrayishBlue hover:fill-moderateBlue dark:hover:fill-moderateBlue"
       onClick={props.handleClick}
       aria-label={props.ariaLabel}
     >

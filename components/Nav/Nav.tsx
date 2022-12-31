@@ -51,8 +51,9 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
       <Link
         key={props.link}
         href={props.link}
-        className={`h-full flex flex-row gap-1 items-center text-lg font-bold md:font-light md:text-sm border-b-4 border-white hover:border-moderateBlue hover:text-black ${
-          router.asPath == props.link && "md:border-moderateBlue md:text-black"
+        className={`h-full flex flex-row gap-1 items-center text-lg font-bold md:font-light md:text-sm border-b-4 border-white hover:border-moderateBlue dark:border-darkModeBlue dark:md:border-darkModeCard dark:hover:border-moderateBlue hover:text-black dark:hover:text-white ${
+          router.asPath == props.link &&
+          "md:border-moderateBlue md:dark:border-moderateBlue md:text-black md:dark:text-white"
         }`}
         target={props.newTab ? "_blank" : ""}
       >
@@ -111,7 +112,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
     const [showMenu, setShowMenu] = menuValue;
 
     return (
-      <div className="md:hidden bg-white dark:bg-black z-40">
+      <div className="md:hidden bg-white dark:bg-darkModeCard z-40">
         <Drawer direction={"left"}>
           <div className="h-full flex flex-col justify-between">
             <div
@@ -130,7 +131,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
 
   function NavLinksDesktop(): JSX.Element {
     return (
-      <div className="h-full hidden md:flex flex-row md:gap-8 lg:gap-10 items-center light:bg-white dark:bg-black">
+      <div className="h-full hidden md:flex flex-row md:gap-8 lg:gap-10 items-center">
         <NavLinks />
       </div>
     );
@@ -138,13 +139,13 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
 
   function NavContainer(props: { children: React.ReactNode }): JSX.Element {
     return (
-      <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white shadow-sm">
-        <nav className="max-w-[1180px] w-full h-16 md:h-24 relative flex justify-between items-center border-b border-white text-grayishBlue px-8 mx-0 md:min-mx-8 md:mx-auto">
+      <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white dark:bg-darkModeCard shadow-sm">
+        <nav className="max-w-[1180px] w-full h-16 md:h-24 relative flex justify-between items-center border-b border-white dark:border-darkModeCard text-grayishBlue dark:text-slate-400 px-8 mx-0 md:min-mx-8 md:mx-auto">
           <div className="h-full flex flex-row gap-4 items-center md:gap-14">
             <Hamburger />
             <Link href={"/"}>
               <div
-                className={`w-full h-full flex items-center border-b-4 border-white`}
+                className={`w-full h-full flex items-center border-b-4 border-white dark:border-darkModeCard`}
               >
                 <h1 className="text-lg text-moderateBlue font-bold">
                   Interactive Comments
