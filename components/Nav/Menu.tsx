@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { DarkModeContext } from "../../context/DarkModeContext";
 import { CommentsContext } from "../../context/CommentsContext";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -16,6 +17,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import { BsFillMoonStarsFill, BsSunFill } from "react-icons/bs";
 
 const MENU_LINK_OPTIONS = [
   { name: "Switch Demo User", link: "/settings" },
@@ -24,12 +26,30 @@ const MENU_LINK_OPTIONS = [
   { name: "Sign Out", link: "/auth/logout" },
 ];
 
+function OptionIcon(props: { option: string }): JSX.Element {
+  switch (props.option) {
+    case MENU_LINK_OPTIONS[0].name:
+      return <MdOutlineManageAccounts className="w-[24px] h-[24px]" />;
+    case MENU_LINK_OPTIONS[1].name:
+      return <SunIcon />;
+    case MENU_LINK_OPTIONS[2].name:
+      return <LoginIcon />;
+    case MENU_LINK_OPTIONS[3].name:
+      return <LogoutIcon />;
+    default:
+      return <></>;
+  }
+}
+
 export default function Menu(props: {
   handleClick: () => void;
   status: boolean;
   png: string;
   webp: string;
 }): JSX.Element {
+  // Dark Mode State
+  const [darkMode, setDarkMode] = useContext(DarkModeContext);
+  // Google Firebase Authentication API
   const [user, loading] = useAuthState(auth);
   // Context State
   const { allDataValue } = useContext(CommentsContext);
@@ -64,21 +84,6 @@ export default function Menu(props: {
     }
   }
 
-  function OptionIcon(props: { option: string }): JSX.Element {
-    switch (props.option) {
-      case MENU_LINK_OPTIONS[0].name:
-        return <MdOutlineManageAccounts className="w-[24px] h-[24px]" />;
-      case MENU_LINK_OPTIONS[1].name:
-        return <SunIcon />;
-      case MENU_LINK_OPTIONS[2].name:
-        return <LoginIcon />;
-      case MENU_LINK_OPTIONS[3].name:
-        return <LogoutIcon />;
-      default:
-        return <></>;
-    }
-  }
-
   function Option(props: { label: string; link: string }): JSX.Element {
     return (
       <div
@@ -97,7 +102,7 @@ export default function Menu(props: {
           <Link
             href={props.link}
             className={
-              "w-full border-y-2 border-white hover:border-b-moderateBlue"
+              "w-full border-y-2 border-white dark:border-darkModeCard hover:border-b-moderateBlue dark:hover:border-b-moderateBlue"
             }
           >
             <h3 id={`option-label-${formatHyphenDelimiters(props.label)}`}>
@@ -126,6 +131,17 @@ export default function Menu(props: {
           link={MENU_LINK_OPTIONS[1].link}
         />
 
+        <div className="flex flex-row gap-2 items-center">
+          <div className="h-5 w-5">
+            {darkMode ? <BsFillMoonStarsFill /> : <BsSunFill />}
+          </div>
+
+          <div className="w-full flex flex-row items-center justify-between">
+            <h3 onClick={handleDarkModeClick}>Display</h3>
+            <Toggle handleClick={handleDarkModeClick} isToggleOn={darkMode} />
+          </div>
+        </div>
+
         {/* Sign In / Sign Out Links */}
         {!user ? (
           <Option
@@ -148,21 +164,50 @@ export default function Menu(props: {
     props.handleClick();
   };
 
+  /**
+   * Uodate the localStorage theme variable when the user clicks on a theme option item
+   * (Light Mode, Dark Mode)
+   */
+  const handleDarkModeClick = (): void => {
+    if (darkMode === true) {
+      // User chooses Light Mode
+      window.localStorage.theme = "light";
+    } else {
+      // User chooses Dark Mode
+      window.localStorage.theme = "dark";
+    }
+    setDarkMode(!darkMode);
+  };
+
+  useEffect(() => {
+    if (
+      window.localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   return (
     <div
       id="profile-menu"
       className="w-full md:w-[280px] absolute top-14 md:top-20 right-0 md:px-0 px-2 sm:px-8 md:mr-2"
     >
       <div
-        className={`h-full w-full flex-col font-bold text-sm drop-shadow-3xl z-10 bg-white rounded-lg ${
+        className={`h-full w-full flex-col font-bold text-sm drop-shadow-3xl z-10 bg-white dark:bg-darkModeCard rounded-lg ${
           props.status ? "flex" : "hidden"
         }`}
       >
-        <div className="w-full flex flex-row gap-4 items-center border-b border-lightGray py-5 px-4">
+        <div className="w-full flex flex-row gap-4 items-center border-b border-lightGray dark:border-slate-400 py-5 px-4">
           <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
           <div className="flex flex-col">
             <div className="flex flex-row gap-1 items-center text-moderateBlue">
-              <h3 className="text-darkBlue">{currentUser}</h3>
+              <h3 className="text-darkBlue dark:text-slate-400">
+                {currentUser}
+              </h3>
               {user && <ProviderIcon />}
             </div>
             <h3 className={`text-moderateBlue ${user && "font-medium"}`}>
@@ -172,6 +217,12 @@ export default function Menu(props: {
         </div>
         <div className="py-5 px-4">
           <Options />
+          {/* <button
+            className="w-full h-full py-2 hover:text-moderateBlue"
+            onClick={handleDarkModeClick}
+          >
+            Dark Mode
+          </button> */}
         </div>
       </div>
     </div>

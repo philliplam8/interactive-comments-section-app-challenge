@@ -2,6 +2,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
@@ -21,7 +22,9 @@ module.exports = {
       darkBlue: 'hsl(212, 24%, 26%)',
       grayishBlue: 'hsl(211, 10%, 45%)',
       lightGray: 'hsl(223, 19%, 93%)',
-      veryLightGray: 'hsl(228, 33%, 97%)'
+      veryLightGray: 'hsl(228, 33%, 97%)',
+      darkModeBlue: 'hsl(222, 47%, 11%)',
+      darkModeCard: 'hsl(217, 33%, 17%)'
     },
     extend: {
       dropShadow: {
