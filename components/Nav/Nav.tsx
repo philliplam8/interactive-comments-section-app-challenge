@@ -13,6 +13,7 @@ import { Footer } from "../Footer";
 import { OutgoingLink } from "../UI/Icons";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Popover } from "../UI/Popover";
+import { signOut } from "firebase/auth";
 
 const NAV_LINKS = [
   {
@@ -30,6 +31,8 @@ const NAV_LINKS = [
 const POPOVER_TEXT_RESET: string = `Your comments and replies\nare stored in Local Storage\nand can be cleared.`;
 
 export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
+  const route = useRouter();
+
   const [showMenu, setShowMenu] = useState(false);
   const handleAvatarClick = (): void => {
     setShowMenu(!showMenu);
@@ -69,6 +72,18 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
 
   function NavLinks(): JSX.Element {
     const resetLocalStorage = () => {
+      // Sign out if there a user logged in
+      if (user) {
+        signOut(auth)
+          .then(() => {
+            // Sign out successful
+          })
+          .catch((error) => {
+            // An error happenned
+            console.log(error);
+          });
+      }
+
       // Clear Local Storage
       localStorage.clear();
       window.location.reload();

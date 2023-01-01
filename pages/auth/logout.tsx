@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { auth } from "../../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Layout } from "../../components/Layout";
 
 export default function Logout() {
   const [user, loading] = useAuthState(auth);
