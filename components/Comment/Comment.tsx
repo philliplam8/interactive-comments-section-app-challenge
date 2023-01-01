@@ -152,7 +152,7 @@ export default function Comment(props: CommentProps): JSX.Element {
 
   function ReplyingTo(props: { username: string }): JSX.Element {
     return (
-      <div className="inline-block font-medium text-moderateBlue mr-1">
+      <div className="inline-block font-medium text-moderateBlue dark:text-darkModeModerateBlue mr-1">
         @{props.username}
       </div>
     );

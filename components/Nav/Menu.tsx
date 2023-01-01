@@ -102,7 +102,7 @@ export default function Menu(props: {
           <Link
             href={props.link}
             className={
-              "w-full border-y-2 border-white dark:border-darkModeCard hover:border-b-moderateBlue dark:hover:border-b-moderateBlue"
+              "w-full border-y-2 border-white dark:border-darkModeCard hover:border-b-moderateBlue dark:hover:border-b-darkModeModerateBlue"
             }
           >
             <h3 id={`option-label-${formatHyphenDelimiters(props.label)}`}>
@@ -208,7 +208,11 @@ export default function Menu(props: {
               </h3>
               {user && <ProviderIcon />}
             </div>
-            <h3 className={`text-moderateBlue ${user && "font-medium"}`}>
+            <h3
+              className={`text-moderateBlue dark:text-darkModeModerateBlue ${
+                user && "font-medium"
+              }`}
+            >
               {user ? `${secondaryInfo()}` : "Demo User"}
             </h3>
           </div>

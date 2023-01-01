@@ -9,7 +9,7 @@ function Link(props: LinkProps): JSX.Element {
       href={props.link}
       target="_blank"
       rel="noreferrer"
-      className="font-bold hover:text-moderateBlue hover:underline active:text-moderateBlue active:underline"
+      className="font-bold hover:text-moderateBlue dark:hover:text-darkModeModerateBlue hover:underline active:text-moderateBlue dark:active:text-darkModeModerateBlue active:underline"
     >
       {props.label}
     </a>

@@ -24,7 +24,8 @@ module.exports = {
       lightGray: 'hsl(223, 19%, 93%)',
       veryLightGray: 'hsl(228, 33%, 97%)',
       darkModeBlue: 'hsl(222, 47%, 11%)',
-      darkModeCard: 'hsl(217, 33%, 17%)'
+      darkModeCard: 'hsl(217, 33%, 17%)',
+      darkModeModerateBlue: 'hsl(238, 100%, 73%)'
     },
     extend: {
       dropShadow: {

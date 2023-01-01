@@ -11,7 +11,7 @@ export default function NavAvatar(props: {
     <div className="h-[35px] w-[35px] md:h-[50px] md:w-[50px]">
       <button
         className={
-          "hover:border-moderateBlue border-transparent border-2 rounded-[30px]"
+          "hover:border-moderateBlue dark:hover:border-darkModeModerateBlue border-transparent border-2 rounded-[30px]"
         }
         onClick={props.onButtonClick}
       >

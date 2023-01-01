@@ -1,10 +1,9 @@
-import cloneDeep from "lodash/cloneDeep";
 import { useRouter } from "next/router";
 import { auth } from "../../utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useContext } from "react";
 import { NavContext } from "../../context/NavContext";
-import { CommentsContext, INITIAL_JSON } from "../../context/CommentsContext";
+import { CommentsContext } from "../../context/CommentsContext";
 import Link from "next/link";
 import { useCommentsData } from "../../hooks/useCommentsData";
 import { NavAvatar, Menu } from "./";
@@ -31,8 +30,6 @@ const NAV_LINKS = [
 const POPOVER_TEXT_RESET: string = `Your comments and replies\nare stored in Local Storage\nand can be cleared.`;
 
 export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
-  const route = useRouter();
-
   const [showMenu, setShowMenu] = useState(false);
   const handleAvatarClick = (): void => {
     setShowMenu(!showMenu);
@@ -54,9 +51,9 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
       <Link
         key={props.link}
         href={props.link}
-        className={`h-full flex flex-row gap-1 items-center text-lg font-bold md:font-light md:text-sm border-b-4 border-white hover:border-moderateBlue dark:border-darkModeBlue dark:md:border-darkModeCard dark:hover:border-moderateBlue hover:text-black dark:hover:text-white ${
+        className={`h-full flex flex-row gap-1 items-center text-lg font-bold md:font-light md:text-sm border-b-4 border-white hover:border-moderateBlue dark:border-darkModeBlue dark:md:border-darkModeCard dark:hover:border-darkModeModerateBlue hover:text-black dark:hover:text-white ${
           router.asPath == props.link &&
-          "md:border-moderateBlue md:dark:border-moderateBlue md:text-black md:dark:text-white"
+          "md:border-moderateBlue md:dark:border-darkModeModerateBlue md:text-black md:dark:text-white"
         }`}
         target={props.newTab ? "_blank" : ""}
       >
@@ -162,7 +159,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
               <div
                 className={`w-full h-full flex items-center border-b-4 border-white dark:border-darkModeCard`}
               >
-                <h1 className="text-lg text-moderateBlue font-bold">
+                <h1 className="text-lg text-moderateBlue dark:text-darkModeModerateBlue font-bold">
                   Interactive Comments
                 </h1>
               </div>

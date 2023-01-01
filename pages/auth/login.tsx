@@ -136,7 +136,7 @@ export default function Login() {
             <p>Continue with Google</p>
           </ProviderButton>
           <ProviderButton handleClick={handleTwitterLogin}>
-            <AiOutlineTwitter className="text-moderateBlue" />
+            <AiOutlineTwitter className="text-moderateBlue dark:text-darkModeModerateBlue" />
             <p>Continue with Twitter</p>
           </ProviderButton>
           <ProviderButton handleClick={handleGithubLogin}>

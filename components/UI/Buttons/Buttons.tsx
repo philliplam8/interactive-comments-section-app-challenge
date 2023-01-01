@@ -9,7 +9,7 @@ function ScoreButton(props: {
 }): JSX.Element {
   return (
     <button
-      className="flex justify-center items-center h-full sm:h-24 w-full fill-lightGrayishBlue hover:fill-moderateBlue dark:hover:fill-moderateBlue"
+      className="flex justify-center items-center h-full sm:h-24 w-full fill-lightGrayishBlue hover:fill-moderateBlue dark:hover:fill-darkModeModerateBlue"
       onClick={props.handleClick}
       aria-label={props.ariaLabel}
     >
@@ -43,7 +43,7 @@ export function Reply(props: {
 }): JSX.Element {
   return (
     <button
-      className="flex flex-row gap-2 items-center justify-center font-medium text-moderateBlue hover:text-lightGrayishBlue fill-moderateBlue hover:fill-lightGrayishBlue"
+      className="flex flex-row gap-2 items-center justify-center font-medium text-moderateBlue hover:text-lightGrayishBlue fill-moderateBlue hover:fill-lightGrayishBlue dark:text-darkModeModerateBlue dark:hover:text-lightGrayishBlue dark:fill-darkModeModerateBlue dark:hover:fill-lightGrayishBlue"
       onClick={props.handleClick}
       aria-label={"Add a comment reply"}
     >
@@ -61,7 +61,7 @@ export function Edit(props: {
     <button
       className={`flex flex-row gap-2 items-center justify-center font-medium  ${
         props.readOnly
-          ? "fill-moderateBlue text-moderateBlue hover:text-lightGrayishBlue hover:fill-lightGrayishBlue"
+          ? "fill-moderateBlue text-moderateBlue dark:fill-darkModeModerateBlue dark:text-darkModeModerateBlue hover:text-lightGrayishBlue hover:fill-lightGrayishBlue"
           : "fill-lightGrayishBlue text-lightGrayishBlue hover:fill-lightGrayishBlue cursor-not-allowed"
       } `}
       disabled={!props.readOnly}

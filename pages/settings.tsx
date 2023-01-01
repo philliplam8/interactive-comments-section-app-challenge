@@ -41,7 +41,7 @@ export default function Settings(): JSX.Element {
       <button
         className={`flex flex-row items-center gap-4 w-full p-4 border-2 dark:border-grayishBlue rounded-xl ${
           isCurrentUser
-            ? "border-moderateBlue dark:border-moderateBlue text-moderateBlue font-medium"
+            ? "border-moderateBlue dark:border-darkModeModerateBlue text-moderateBlue dark:text-darkModeModerateBlue font-medium"
             : "hover:bg-veryLightGray dark:hover:bg-darkBlue text-grayishBlue dark:text-slate-400 dark:hover:text-lightGrayishBlue"
         }`}
         onClick={() => handleRowClick(props.name)}
@@ -51,7 +51,7 @@ export default function Settings(): JSX.Element {
         {props.name}
 
         {isCurrentUser && (
-          <BsFillPatchCheckFill className="text-moderateBlue" />
+          <BsFillPatchCheckFill className="text-moderateBlue dark:text-darkModeModerateBlue" />
         )}
       </button>
     );
@@ -64,7 +64,7 @@ export default function Settings(): JSX.Element {
   if (isLoading) {
     return (
       <div className="min-h-screen min-w-screen h-full w-full flex justify-center items-center">
-        <AiOutlineLoading3Quarters className="animate-spin h-12 w-12 text-moderateBlue" />
+        <AiOutlineLoading3Quarters className="animate-spin h-12 w-12 text-moderateBlue dark:text-darkModeModerateBlue" />
       </div>
     );
   }
@@ -84,7 +84,7 @@ export default function Settings(): JSX.Element {
             Switch the default demo user or{" "}
             <Link
               href={"/auth/login"}
-              className="text-moderateBlue font-medium hover:underline"
+              className="text-moderateBlue dark:text-darkModeModerateBlue font-medium hover:underline"
             >
               sign in with a live user
             </Link>
