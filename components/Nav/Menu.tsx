@@ -17,7 +17,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
 import { MdOutlineManageAccounts } from "react-icons/md";
-import { BsFillMoonStarsFill, BsSunFill } from "react-icons/bs";
+import { BsMoonStars, BsSun } from "react-icons/bs";
 
 const MENU_LINK_OPTIONS = [
   { name: "Switch Demo User", link: "/settings" },
@@ -94,7 +94,7 @@ export default function Menu(props: {
         <div className="flex flex-row gap-2">
           <div
             id={`option-icon-${formatHyphenDelimiters(props.label)}`}
-            className={`h-5 w-5`}
+            className={`h-5 w-6`}
           >
             <OptionIcon option={props.label} />
           </div>
@@ -125,21 +125,19 @@ export default function Menu(props: {
             link={MENU_LINK_OPTIONS[0].link}
           />
         )}
-        <Option
-          key={MENU_LINK_OPTIONS[1].name}
-          label={MENU_LINK_OPTIONS[1].name}
-          link={MENU_LINK_OPTIONS[1].link}
-        />
 
-        <div className="flex flex-row gap-2 items-center">
-          <div className="h-5 w-5">
-            {darkMode ? <BsFillMoonStarsFill /> : <BsSunFill />}
+        {/* Dark Mode */}
+        <div className="flex justify-between">
+          <div className="flex flex-row items-center gap-2">
+            <div className="w-6 pl-[3px] text-xl hover:animate-pulse">
+              {darkMode ? <BsMoonStars /> : <BsSun />}
+            </div>
+            <h3 onClick={handleDarkModeClick}>
+              {darkMode ? "Dark Mode" : "Light Mode"}
+              {/* Display Mode */}
+            </h3>
           </div>
-
-          <div className="w-full flex flex-row items-center justify-between">
-            <h3 onClick={handleDarkModeClick}>Display</h3>
-            <Toggle handleClick={handleDarkModeClick} isToggleOn={darkMode} />
-          </div>
+          <Toggle handleClick={handleDarkModeClick} isToggleOn={darkMode} />
         </div>
 
         {/* Sign In / Sign Out Links */}
@@ -194,10 +192,10 @@ export default function Menu(props: {
   return (
     <div
       id="profile-menu"
-      className="w-full md:w-[280px] absolute top-14 md:top-20 right-0 md:px-0 px-2 sm:px-8 md:mr-2"
+      className="w-[250px] absolute top-14 md:top-20 right-0 md:px-0 px-2 sm:px-8 md:mr-2"
     >
       <div
-        className={`h-full w-full flex-col font-bold text-sm drop-shadow-3xl z-10 bg-white dark:bg-darkModeCard rounded-lg ${
+        className={`h-full w-full flex-col font-bold text-sm drop-shadow-3xl z-10 bg-white dark:bg-darkModeCard rounded-lg border-lightGray/30 md:border-lightGray/10 border-[1px] ${
           props.status ? "flex" : "hidden"
         }`}
       >
