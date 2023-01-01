@@ -130,7 +130,11 @@ export default function Menu(props: {
         <div className="flex justify-between">
           <div className="flex flex-row items-center gap-2">
             <div className="w-6 pl-[3px] text-xl hover:animate-pulse">
-              {darkMode ? <BsMoonStars /> : <BsSun />}
+              {darkMode ? (
+                <BsMoonStars className="text-[#ffd94c]" />
+              ) : (
+                <BsSun className="text-[#ff7602]" />
+              )}
             </div>
             <h3 onClick={handleDarkModeClick}>
               {darkMode ? "Dark Mode" : "Light Mode"}
