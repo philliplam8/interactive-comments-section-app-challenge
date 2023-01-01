@@ -207,9 +207,7 @@ export default function Menu(props: {
           <Avatar pngSrc={props.png} webpSrc={props.webp} large={true} />
           <div className="flex flex-col">
             <div className="flex flex-row gap-1 items-center text-moderateBlue">
-              <h3 className="text-darkBlue dark:text-slate-400">
-                {currentUser}
-              </h3>
+              <h3 className="text-darkBlue dark:text-white">{currentUser}</h3>
               {user && <ProviderIcon />}
             </div>
             <h3
