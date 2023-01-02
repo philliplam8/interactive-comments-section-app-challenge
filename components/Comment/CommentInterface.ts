@@ -9,7 +9,7 @@ export interface RawComment {
   content: string;
   createdAt: number;
   displayedDate: string;
-  score: number;
+  score: { [s: string]: number };
   username: string;
   hasReplies: boolean;
 }
@@ -19,7 +19,7 @@ export interface RawReply {
   content: string;
   createdAt: number;
   displayedDate: string;
-  score: number;
+  score: { [s: string]: number };
   replyingTo: string;
   username: string;
 }
@@ -30,7 +30,7 @@ export interface CommentProps {
   commentId: string;
   groupId: string;
   content: string;
-  score: number;
+  score: { [s: string]: number };
   replyingTo?: string;
   hasReplies: boolean;
   avatarPng: string;

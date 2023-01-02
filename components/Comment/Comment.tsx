@@ -137,14 +137,21 @@ export default function Comment(props: CommentProps): JSX.Element {
     );
   }
 
+  function ScoreContainer(): JSX.Element {
+    return (
+      <Score
+        initialScore={props.score}
+        groupId={props.groupId}
+        commentId={props.commentId}
+        currentUser={props.currentUser}
+      />
+    );
+  }
+
   function CardFooterMobile(): JSX.Element {
     return (
       <div className="sm:hidden flex flex-row justify-between">
-        <Score
-          initialScore={props.score}
-          groupId={props.groupId}
-          commentId={props.commentId}
-        />
+        <ScoreContainer />
         <CardActions />
       </div>
     );
@@ -163,11 +170,7 @@ export default function Comment(props: CommentProps): JSX.Element {
       <Card>
         <div className="h-full flex flex-col sm:flex-row justify-between sm:justify-start sm:gap-4">
           <div className="hidden sm:block">
-            <Score
-              initialScore={props.score}
-              groupId={props.groupId}
-              commentId={props.commentId}
-            />
+            <ScoreContainer />
           </div>
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-row justify-between">

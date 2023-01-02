@@ -64,7 +64,7 @@ export default function CommentInput(props: {
       content: commentContent,
       createdAt: timestamp,
       displayedDate: "1 minute ago",
-      score: 0,
+      score: {},
       username: username,
       hasReplies: false,
     };
@@ -90,7 +90,7 @@ export default function CommentInput(props: {
       content: replyContent,
       createdAt: timestamp,
       displayedDate: "1 minute ago",
-      score: 0,
+      score: {},
       replyingTo: replyingTo,
       username: username,
     };

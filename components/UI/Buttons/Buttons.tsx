@@ -6,10 +6,18 @@ function ScoreButton(props: {
   children: React.ReactNode;
   ariaLabel: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
+  isClicked?: boolean;
+  isPositive: boolean;
 }): JSX.Element {
   return (
     <button
-      className="flex justify-center items-center h-full sm:h-24 w-full fill-lightGrayishBlue hover:fill-moderateBlue dark:hover:fill-darkModeModerateBlue"
+      className={`flex justify-center items-center h-full sm:h-24 w-full ${
+        props.isClicked
+          ? props.isPositive
+            ? "fill-moderateBlue dark:fill-darkModeModerateBlue"
+            : "fill-softRed"
+          : "fill-lightGrayishBlue"
+      }`}
       onClick={props.handleClick}
       aria-label={props.ariaLabel}
     >
@@ -20,9 +28,15 @@ function ScoreButton(props: {
 
 export function Plus(props: {
   handleClick?: MouseEventHandler<HTMLButtonElement>;
+  isClicked?: boolean;
 }): JSX.Element {
   return (
-    <ScoreButton handleClick={props.handleClick} ariaLabel={"Upvote comment"}>
+    <ScoreButton
+      handleClick={props.handleClick}
+      ariaLabel={"Upvote comment"}
+      isClicked={props.isClicked}
+      isPositive={true}
+    >
       <PlusIcon />
     </ScoreButton>
   );
@@ -30,9 +44,15 @@ export function Plus(props: {
 
 export function Minus(props: {
   handleClick?: MouseEventHandler<HTMLButtonElement>;
+  isClicked?: boolean;
 }): JSX.Element {
   return (
-    <ScoreButton handleClick={props.handleClick} ariaLabel={"Downvote comment"}>
+    <ScoreButton
+      handleClick={props.handleClick}
+      ariaLabel={"Downvote comment"}
+      isClicked={props.isClicked}
+      isPositive={false}
+    >
       <MinusIcon />
     </ScoreButton>
   );
