@@ -4,25 +4,24 @@ import { CommentsContext } from "../../context/CommentsContext";
 import { Plus, Minus } from "../UI/Buttons";
 
 export default function Score(props: {
-  initialScore: { [s: string]: number; };
+  initialScore: { [s: string]: number };
   groupId: string;
   commentId: string;
   currentUser: string;
 }): JSX.Element {
   const { allDataValue } = useContext(CommentsContext);
   const [allData, setAllData] = allDataValue;
-  const [totalScore, setTotalScore] = useState(() => {
-    let total: number = 0;
-    const allScores: number[] = Object.values(props.initialScore);
-    for (let i = 0; i < allScores.length; i++) {
-      total += allScores[i];
-    }
-    return total;
-  });
+
+  // Calculate total score
+  let totalScore: number = 0;
+  const allScoreArray: number[] = Object.values(props.initialScore);
+  for (let i = 0; i < allScoreArray.length; i++) {
+    totalScore += allScoreArray[i];
+  }
 
   /**
    * Change the score by +1 or -1 if the user upvotes or downvotes, respectively
-   * @param {string} changeType Either an incrememnt or decrement
+   * @param {string} changeType Either an increment or decrement
    */
   const handleScoreChange = (changeType: string) => {
     let changeValue;
@@ -37,36 +36,27 @@ export default function Score(props: {
 
     // Determine if this is a parent comment or reply
     const isParent = props.groupId === props.commentId;
+    let scoreEntry;
     // Parent Comment
     if (isParent) {
-      let scoreEntry = updatedComments.comments[props.groupId].score;
-      // if score already exists and user clicks same vote, undo it
-      if (
-        props.currentUser in scoreEntry &&
-        scoreEntry[props.currentUser] === changeValue
-      ) {
-        delete scoreEntry[props.currentUser];
-      }
-      // otherwise, add vote as a new key value
-      else {
-        scoreEntry[props.currentUser] = changeValue;
-      }
+      scoreEntry = updatedComments.comments[props.groupId].score;
     }
     // Child Reply
     else {
-      let scoreEntry =
+      scoreEntry =
         updatedComments.replies[props.groupId][props.commentId].score;
-      // if score already exists and user clicks same vote, undo it
-      if (
-        props.currentUser in scoreEntry &&
-        scoreEntry[props.currentUser] === changeValue
-      ) {
-        delete scoreEntry[props.currentUser];
-      }
-      // otherwise, add vote as a new key value
-      else {
-        scoreEntry[props.currentUser] = changeValue;
-      }
+    }
+
+    // If score already exists, and user clicks same vote button, undo vote
+    if (
+      props.currentUser in scoreEntry &&
+      scoreEntry[props.currentUser] === changeValue
+    ) {
+      delete scoreEntry[props.currentUser];
+    }
+    // Otherwise, add vote as a new key value
+    else {
+      scoreEntry[props.currentUser] = changeValue;
     }
 
     // Show Reset Button
@@ -81,6 +71,7 @@ export default function Score(props: {
   const handleIncrement = () => {
     handleScoreChange("increment");
   };
+
   /**
    * Decrement the comment score by 1
    */
