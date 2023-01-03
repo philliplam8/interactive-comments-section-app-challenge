@@ -155,7 +155,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
 
   function NavContainer(props: { children: React.ReactNode }): JSX.Element {
     return (
-      <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white dark:bg-darkModeCard shadow-sm">
+      <div className="min-w-screen w-full sticky top-0 flex flex-row z-10 bg-white dark:bg-darkModeCard shadow-sm dark:shadow-lg">
         <nav className="max-w-[1180px] w-full h-16 md:h-24 relative flex justify-between items-center border-b border-white dark:border-darkModeCard text-grayishBlue dark:text-slate-400 px-8 mx-0 md:min-mx-8 md:mx-auto">
           <div className="h-full flex flex-row gap-4 items-center md:gap-14">
             <Hamburger />
