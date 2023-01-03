@@ -80,7 +80,7 @@ export default function Score(props: {
   };
 
   return (
-    <div className="w-[100px] h-[40px] sm:w-[40px] sm:h-[100px] flex flex-row sm:flex-col justify-between items-center bg-veryLightGray dark:bg-darkModeBlue font-medium rounded-xl">
+    <div className="w-[100px] h-[40px] md:w-[40px] md:h-[100px] flex flex-row md:flex-col justify-between items-center bg-veryLightGray dark:bg-darkModeBlue font-medium rounded-xl">
       <Plus
         handleClick={handleIncrement}
         isClicked={props.initialScore[props.currentUser] > 0}
