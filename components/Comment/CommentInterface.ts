@@ -8,6 +8,7 @@ export interface RawComment {
   id: string;
   content: string;
   createdAt: number;
+  editedAt: number;
   displayedDate: string;
   score: { [s: string]: number };
   username: string;
@@ -18,6 +19,7 @@ export interface RawReply {
   id: string;
   content: string;
   createdAt: number;
+  editedAt: number;
   displayedDate: string;
   score: { [s: string]: number };
   replyingTo: string;
@@ -37,6 +39,7 @@ export interface CommentProps {
   avatarWebp: string;
   username: string;
   createdAt: number;
+  editedAt: number;
   displayedDate: string;
   currentUser: string;
 }

@@ -88,7 +88,7 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
 
     function ResetDemoButton(): JSX.Element {
       return (
-        <Popover label={POPOVER_TEXT_RESET}>
+        <Popover label={POPOVER_TEXT_RESET} position="bottom">
           <button
             onClick={resetLocalStorage}
             className={

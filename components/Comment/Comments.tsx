@@ -31,6 +31,7 @@ export default function Comments(props: { currentUser: string }): JSX.Element {
               avatarPng={png}
               avatarWebp={webp}
               createdAt={entry.createdAt}
+              editedAt={entry.editedAt}
               displayedDate={entry.displayedDate}
               score={entry.score}
               username={entry.username}

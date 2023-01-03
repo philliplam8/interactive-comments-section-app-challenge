@@ -10,7 +10,8 @@ import { Textarea } from "../UI/Input";
 import { CommentInput } from "../CommentInput";
 import { formatNoSpaces, stringOnlySpaces } from "../../utils";
 import { CommentProps } from "./CommentInterface";
-import { stringifyTime } from "../../utils/helpers";
+import { getTime, stringifyTime } from "../../utils/helpers";
+import { Popover } from "../UI/Popover";
 
 export default function Comment(props: CommentProps): JSX.Element {
   // Determine if the author of the current comment is the current user logged in
@@ -71,12 +72,21 @@ export default function Comment(props: CommentProps): JSX.Element {
 
         // Determine if this is a parent comment or reply
         const isParent = props.groupId === props.commentId;
-        // Update comment content value
+        // Update comment content value (and timestamp if content changed)
         if (isParent) {
           updatedComments.comments[props.groupId].content = textVal;
+          if (allData.comments[props.groupId].content !== textVal) {
+            updatedComments.comments[props.groupId].editedAt = getTime();
+          }
         } else {
           updatedComments.replies[props.groupId][props.commentId].content =
             textVal;
+          if (
+            allData.replies[props.groupId][props.commentId].content !== textVal
+          ) {
+            updatedComments.replies[props.groupId][props.commentId].editedAt =
+              getTime();
+          }
         }
 
         // Show Reset Button
@@ -107,6 +117,15 @@ export default function Comment(props: CommentProps): JSX.Element {
   };
 
   function CardHeader(): JSX.Element {
+    let displayedDate = props.createdAt;
+    const isEdited = props.createdAt !== props.editedAt;
+    // Check if comment has been edited
+    if (isEdited) {
+      displayedDate = props.editedAt;
+    }
+    const formattedDate = stringifyTime(displayedDate);
+    const formattedCreatedAt = stringifyTime(props.createdAt);
+
     return (
       <div className="flex flex-row flex-wrap items-center gap-4">
         <div>
@@ -115,10 +134,19 @@ export default function Comment(props: CommentProps): JSX.Element {
         <h1 className="font-medium text-darkBlue dark:text-white">
           {props.username}
         </h1>
+
         {isCurrentUser && <Badge />}
-        <div className="flex flex-row items-center justify-start gap-1">
-          <p>{stringifyTime(props.createdAt)}</p>
-        </div>
+
+        <Popover
+          position="top"
+          hide={!isEdited}
+          label={`Edited ${formattedDate}. \nCreated ${formattedCreatedAt}.`}
+        >
+          <div className={`flex flex-row items-center justify-start gap-0}`}>
+            <p>{stringifyTime(displayedDate)}</p>
+            {isEdited ? <p>*</p> : <></>}
+          </div>
+        </Popover>
       </div>
     );
   }

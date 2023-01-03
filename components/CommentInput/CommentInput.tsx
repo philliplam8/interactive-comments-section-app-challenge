@@ -58,11 +58,11 @@ export default function CommentInput(props: {
     // Create new id
     const newId = `${username}-${timestamp}`;
     // Create new Comment body
-    // TODO: make displayedDate a dynamic stringified version of createdAt value
     const newCommentBody = {
       id: newId,
       content: commentContent,
       createdAt: timestamp,
+      editedAt: timestamp,
       displayedDate: "A few seconds ago",
       score: {},
       username: username,
@@ -84,11 +84,11 @@ export default function CommentInput(props: {
     // Create new id
     const newId = `${username}-${timestamp}`;
     // Create new reply body
-    // TODO: make displayedDate a dynamic stringified version of createdAt value
     const newReplyBody = {
       id: newId,
       content: replyContent,
       createdAt: timestamp,
+      editedAt: timestamp,
       displayedDate: "A few seconds ago",
       score: {},
       replyingTo: replyingTo,
