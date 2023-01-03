@@ -198,7 +198,7 @@ export default function Menu(props: {
   return (
     <div
       id="profile-menu"
-      className="w-[250px] absolute top-14 md:top-20 right-0 md:px-0 px-2 sm:px-8 md:mr-2"
+      className="w-[250px] absolute top-14 md:top-20 right-0 md:px-0 px-2 md:mr-2"
     >
       <div
         className={`h-full w-full flex-col font-bold text-sm drop-shadow-3xl z-10 bg-white dark:bg-darkModeCard rounded-lg border-lightGray/30 md:border-lightGray/10 border-[1px] ${
