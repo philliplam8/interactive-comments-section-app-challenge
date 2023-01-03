@@ -223,12 +223,6 @@ export default function Menu(props: {
         </div>
         <div className="py-5 px-4">
           <Options />
-          {/* <button
-            className="w-full h-full py-2 hover:text-moderateBlue"
-            onClick={handleDarkModeClick}
-          >
-            Dark Mode
-          </button> */}
         </div>
       </div>
     </div>
