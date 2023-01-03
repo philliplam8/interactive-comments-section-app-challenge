@@ -104,6 +104,10 @@ export default function Nav(prop: { showAvatar: boolean }): JSX.Element {
     return (
       <>
         {NAV_LINKS.map((item) => {
+          // Hide Settings Navlink when user is signed in
+          if (item.name === "Settings" && user) {
+            return;
+          }
           return (
             <NavLink
               key={item.name}
