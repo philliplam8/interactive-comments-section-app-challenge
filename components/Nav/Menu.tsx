@@ -78,7 +78,9 @@ export default function Menu(props: {
         return <AiOutlineTwitter />;
       // Github
       case "github.com":
-        return <AiFillGithub className="h-[18px] w-[18px] text-black" />;
+        return (
+          <AiFillGithub className="h-[18px] w-[18px] text-black dark:text-white" />
+        );
       default:
         return <></>;
     }
