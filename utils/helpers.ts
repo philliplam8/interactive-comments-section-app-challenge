@@ -56,8 +56,11 @@ export function stringifyTime(time: number): string {
   function createMessage(ratio: number, unit: string): string {
     const formattedTime: string = Math.round(ratio).toString();
 
+    if (unit === UNIT_MINUTE && ratio <= 1) {
+      return "A few seconds ago";
+    }
     // Update time unit with plural "s" if more than 1
-    if (ratio >= 2) {
+    if (ratio > 1) {
       return `${formattedTime} ${unit}s ago`;
     } else {
       return `${formattedTime} ${unit} ago`;

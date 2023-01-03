@@ -10,6 +10,7 @@ import { Textarea } from "../UI/Input";
 import { CommentInput } from "../CommentInput";
 import { formatNoSpaces, stringOnlySpaces } from "../../utils";
 import { CommentProps } from "./CommentInterface";
+import { stringifyTime } from "../../utils/helpers";
 
 export default function Comment(props: CommentProps): JSX.Element {
   // Determine if the author of the current comment is the current user logged in
@@ -116,7 +117,7 @@ export default function Comment(props: CommentProps): JSX.Element {
         </h1>
         {isCurrentUser && <Badge />}
         <div className="flex flex-row items-center justify-start gap-1">
-          <p>{props.displayedDate}</p>
+          <p>{stringifyTime(props.createdAt)}</p>
         </div>
       </div>
     );
