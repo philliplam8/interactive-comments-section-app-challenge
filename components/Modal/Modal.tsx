@@ -17,7 +17,7 @@ export default function Modal(): JSX.Element {
 
   function ModalContent(): JSX.Element {
     return (
-      <div className="w-full max-w-[400px] z-30">
+      <div className="w-full max-w-[400px]">
         <Card>
           <div className="flex flex-col gap-4 p-2">
             <h1 className="text-xl sm:text-2xl text-darkBlue dark:text-white font-medium ">
@@ -48,7 +48,7 @@ export default function Modal(): JSX.Element {
   });
 
   return (
-    <div className="sticky top-0">
+    <div className="z-30 sticky top-0">
       {showModal && (
         <>
           <Backdrop show={showModal}>
