@@ -34,9 +34,12 @@ Users should be able to:
 
 #### Desktop
 
+<img src='./public/demo/desktop.png' alt="demo screenshot desktop">
+
 #### Mobile
 
-![](./screenshot.jpg)
+<img src='./public/demo/mobile-light.png' alt="demo screenshot mobile light mode">
+<img src='./public/demo/mobile-dark.png' alt="demo screenshot mobile dark mode">
 
 ## My process
 
