@@ -58,7 +58,7 @@ export function stringifyTime(time: number): string {
     let formattedUnit: string = unit;
 
     if (unit === UNIT_MINUTE && ratio <= 1) {
-      return "A few seconds ago";
+      return "a few seconds ago";
     }
     // Update time unit with plural "s" if more than 1
     if (Math.round(ratio) > 1) {

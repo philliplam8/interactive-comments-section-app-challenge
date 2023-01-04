@@ -117,36 +117,36 @@ export default function Comment(props: CommentProps): JSX.Element {
   };
 
   function CardHeader(): JSX.Element {
-    let displayedDate = props.createdAt;
-    const isEdited = props.createdAt !== props.editedAt;
     // Check if comment has been edited
-    if (isEdited) {
-      displayedDate = props.editedAt;
-    }
-    const formattedDate = stringifyTime(displayedDate);
+    const isEdited = props.createdAt !== props.editedAt;
+
     const formattedCreatedAt = stringifyTime(props.createdAt);
+    let formattedEditedAt = stringifyTime(props.editedAt);
 
     return (
-      <div className="flex flex-row flex-wrap items-center gap-4">
+      <div className="flex flex-row items-center gap-4">
         <div>
           <Avatar pngSrc={props.avatarPng} webpSrc={props.avatarWebp} />
         </div>
         <h1 className="font-medium text-darkBlue dark:text-white">
           {props.username}
         </h1>
-
         {isCurrentUser && <Badge />}
 
-        <Popover
-          position="top"
-          hide={!isEdited}
-          label={`Edited ${formattedDate}. \nCreated ${formattedCreatedAt}.`}
-        >
-          <div className={`flex flex-row items-center justify-start gap-0}`}>
-            <p>{stringifyTime(displayedDate)}</p>
-            {isEdited ? <p>*</p> : <></>}
-          </div>
-        </Popover>
+        <div className="flex flex-row items-center justify-start text-sm min-[400px]:text-base">
+          <p>{formattedCreatedAt}</p>
+
+          <Popover position="top" label={`Edited ${formattedEditedAt}`}>
+            {isEdited ? (
+              <div className="italics text-xs hover:underline hover:text-moderateBlue dark:hover:text-lightGrayishBlue">
+                <p className="sm:hidden">*</p>
+                <p className="hidden sm:block pl-1">(Edited)</p>
+              </div>
+            ) : (
+              <></>
+            )}
+          </Popover>
+        </div>
       </div>
     );
   }
@@ -179,7 +179,7 @@ export default function Comment(props: CommentProps): JSX.Element {
 
   function CardFooterMobile(): JSX.Element {
     return (
-      <div className="sm:hidden flex flex-row justify-between">
+      <div className="md:hidden flex flex-row justify-between">
         <ScoreContainer />
         <CardActions />
       </div>
@@ -198,13 +198,13 @@ export default function Comment(props: CommentProps): JSX.Element {
     <>
       <Card>
         <div className="h-full flex flex-col sm:flex-row justify-between sm:justify-start sm:gap-4">
-          <div className="hidden sm:block">
+          <div className="hidden md:block">
             <ScoreContainer />
           </div>
           <div className="w-full flex flex-col gap-4">
             <div className="flex flex-row justify-between">
               <CardHeader />
-              <div className="hidden sm:block">
+              <div className="hidden md:block">
                 <CardActions />
               </div>
             </div>

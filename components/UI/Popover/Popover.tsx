@@ -17,19 +17,20 @@ export default function Popover(props: {
 
   return (
     <div
-      className={`flex md:justify-center items-center relative`}
+      className={"flex flex-col items-end min-[460px]:items-center relative"}
       onMouseOver={togglePopover}
       onMouseLeave={hidePopover}
     >
-      {props.children}
       <div
-        className={`z-30 w-60 absolute p-2 rounded-md bg-grayishBlue/80 text-white text-center 
+        className={`w-60 p-2 absolute rounded-md bg-grayishBlue/80 text-white text-center 
         ${showPopover ? "visible" : "hidden"}
         ${props.position == "bottom" && "top-10 md:top-8"}
-        ${props.position == "top" && "bottom-7 w-auto"}`}
+        ${props.position == "top" && "bottom-6 w-auto"}`}
       >
         <p className="text-sm whitespace-pre">{props.label}</p>
       </div>
+
+      {props.children}
     </div>
   );
 }
