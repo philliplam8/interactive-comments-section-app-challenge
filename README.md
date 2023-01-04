@@ -14,6 +14,7 @@ This is a solution to the [Interactive comments section challenge on Frontend Me
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
 - [Author](#author)
 
 ## Overview
@@ -68,16 +69,23 @@ Something I've been struggling to fix is a NextJS + localStorage related issue. 
 
 **Extra fun stuff**
 
-I reused the nav component design from the e-Commerce Product Page Frontend Mentor challenge to add some more features:
+I reused the nav component design from the e-Commerce Product Page Frontend Mentor challenge and added some more features:
 
 - Ability to swap demo users from the design mockup
 - Ability to sign in with a live user using Firebase Auth (with providers for Google, Twitter, Github)
 - Dark/Light Mode
 - Skeleton Loading
+- Timestamp includes edit badge when user edits comment
+- Popover revealed when user hovers over the timestamp edit badge
 
 ### Continued development
 
 I was originally thinking of using the Firebase Realtime database and even flattened the JSON file provided to prepare for this, but for the sake of a demo site that publicly available, I chose to store all comments on localStorage for now so that nothing sensitive can be submitted. As a next step, connecting to a live database instead of using `localStorage` would be an interesting challenge.
+
+### Useful resources
+
+- [Firebase Authentication](https://firebase.google.com/docs/auth/web/firebaseui) - This Google Firebase documentation provided a step by step guide on setting up and adding Firebase authentication, along with specific nuances for the various auth providers allowed (i.e. Google, Twitter, Github)
+- [Structuring Database Data](https://firebase.google.com/docs/database/web/structure-data) - Another Google Firebase documentation, specifically for setting up data on the Realtime Database. This guide recommended flattening the data structure in addition to adding some redundancy/duplicates to support two-way relationships. Although I didn't implement the Realtime Database, restructuring the initial JSON file provided in the challenge using these recommendations made easier to parse and access the data for different use cases/components.
 
 ## Author
 
