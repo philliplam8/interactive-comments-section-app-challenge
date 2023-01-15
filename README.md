@@ -2,7 +2,7 @@
 
 This is a solution to the [Interactive comments section challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-- 👉 Live Site: [DEMO](https://interactive-comments-section-app-challenge.vercel.app//)
+- 👉 Live Site: [DEMO](https://interactivecomments.vercel.app/)
 - [GitHub Repository](https://github.com/philliplam8/interactive-comments-section-app-challenge)
 
 ## Table of contents
